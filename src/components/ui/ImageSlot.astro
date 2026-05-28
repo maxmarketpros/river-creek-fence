@@ -26,8 +26,18 @@ const {
 
 const config = imageManifest[imageKey];
 
-const publicDir = fileURLToPath(new URL("../../../public", import.meta.url));
-const imageExists = !!config && existsSync(publicDir + config.src);
+// Only probe the filesystem during `astro dev` so missing images show as
+// helpful placeholders while authoring. In production builds we trust the
+// manifest and always render the <img>. Using `import.meta.url` here at
+// build time resolves against the compiled module location (e.g.
+// node_modules/.astro/...), not this source file, so `../../../public`
+// walks to the wrong directory and existsSync returns false for every
+// image — turning every real image into a gray placeholder in dist/.
+let imageExists = true;
+if (import.meta.env.DEV && config) {
+  const publicDir = fileURLToPath(new URL("../../../public", import.meta.url));
+  imageExists = existsSync(publicDir + config.src);
+}
 const shouldRender = !!config && imageExists;
 
 const focalX = config?.focalPoint?.x ?? 0.5;
