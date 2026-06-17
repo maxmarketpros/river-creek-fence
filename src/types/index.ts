@@ -253,20 +253,28 @@ export interface StatItem {
 export interface NavLink {
   label: string;
   href: string;
+  /** Optional lucide-react icon name. */
+  icon?: string;
 }
 
 export interface NavColumn {
   title: string;
   href?: string;
+  /** Optional lucide-react icon name for the column header. */
+  icon?: string;
   links: NavLink[];
 }
 
 export interface NavItem {
   label: string;
   href: string;
+  /** Optional lucide-react icon name. */
+  icon?: string;
   children?: NavItem[];
   /** Mega-menu columns (takes precedence over children when present) */
   columns?: NavColumn[];
+  /** Mega-panel layout variant (controls how the dropdown renders). */
+  megaVariant?: "services" | "areas";
 }
 
 export interface FooterGroup {

@@ -1,10 +1,97 @@
 import { useState, useEffect } from "react";
 import { createPortal } from "react-dom";
-import { Phone, Menu, X, ChevronDown } from "lucide-react";
+import {
+  Phone,
+  Menu,
+  X,
+  ChevronDown,
+  Plus,
+  Minus,
+  MapPin,
+  // category + link icons referenced by name from the nav config
+  Fence,
+  TreePine,
+  Grid3x3,
+  Grid2x2,
+  PanelsTopLeft,
+  Crown,
+  CircleDashed,
+  RectangleHorizontal,
+  Trees,
+  Wheat,
+  ShieldCheck,
+  Sparkles,
+  Hammer,
+  Wrench,
+  RefreshCw,
+  Home,
+  Building2,
+  Tractor,
+  Lock,
+  PenTool,
+  DoorOpen,
+  Construction,
+  CloudLightning,
+  Trash2,
+  Dog,
+  Waves,
+  Sprout,
+  Package,
+  Calculator,
+  CreditCard,
+  HelpCircle,
+  Star,
+  Images,
+  type LucideIcon,
+} from "lucide-react";
 import { businessConfig } from "@/config/business";
 import { mainNav } from "@/config/navigation";
 import type { NavItem } from "@/types";
 import { cn } from "@/lib/utils";
+
+// Explicit map (named imports only — no namespace import, so the island bundle
+// ships just these icons rather than all of lucide-react).
+const NAV_ICONS: Record<string, LucideIcon> = {
+  Fence,
+  TreePine,
+  Grid3x3,
+  Grid2x2,
+  PanelsTopLeft,
+  Crown,
+  CircleDashed,
+  RectangleHorizontal,
+  Trees,
+  Wheat,
+  ShieldCheck,
+  Sparkles,
+  Hammer,
+  Wrench,
+  RefreshCw,
+  Home,
+  Building2,
+  Tractor,
+  Lock,
+  PenTool,
+  DoorOpen,
+  Construction,
+  CloudLightning,
+  Trash2,
+  Dog,
+  Waves,
+  Sprout,
+  Package,
+  MapPin,
+  Calculator,
+  CreditCard,
+  HelpCircle,
+  Star,
+  Images,
+};
+
+function NavIcon({ name, className }: { name?: string; className?: string }) {
+  const Icon = (name && NAV_ICONS[name]) || Fence;
+  return <Icon className={className} />;
+}
 
 function Container({
   children,
@@ -41,6 +128,111 @@ function QuoteButton({
   );
 }
 
+/** Small charcoal tile with a lime glyph — mirrors IconTile.astro. */
+function CategoryBadge({ icon }: { icon?: string }) {
+  return (
+    <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-foreground text-primary-400">
+      <NavIcon name={icon} className="h-4 w-4" />
+    </span>
+  );
+}
+
+/** Services menu — four icon columns. */
+function ServicesContent({ item }: { item: NavItem }) {
+  return (
+    <div className="grid grid-cols-2 gap-x-6 gap-y-7 md:grid-cols-4">
+      {item.columns!.map((col) => (
+        <div key={col.title}>
+          <div className="mb-3 flex items-center gap-2.5 border-b border-border pb-3">
+            <CategoryBadge icon={col.icon} />
+            <p className="text-xs font-bold uppercase tracking-wider text-primary-700">
+              {col.title}
+            </p>
+          </div>
+          <ul className="space-y-0.5">
+            {col.links.map((link) => (
+              <li key={link.href}>
+                <a
+                  href={link.href}
+                  className="group flex items-center gap-2.5 rounded-lg px-2 py-1.5 text-sm text-foreground-light transition-colors hover:bg-surface hover:text-primary-700"
+                >
+                  <NavIcon
+                    name={link.icon}
+                    className="h-4 w-4 shrink-0 text-primary-600 transition-colors group-hover:text-primary-700"
+                  />
+                  <span className="leading-tight">{link.label}</span>
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+/** Service Areas menu — dense city grid + CTA strip. */
+function AreasContent({ item }: { item: NavItem }) {
+  return (
+    <div>
+      <div className="grid gap-x-8 gap-y-6 md:grid-cols-2">
+        {item.columns!.map((col) => (
+          <div key={col.title}>
+            <div className="mb-3 flex items-center gap-2.5 border-b border-border pb-3">
+              <CategoryBadge icon={col.icon} />
+              <p className="text-xs font-bold uppercase tracking-wider text-primary-700">
+                {col.title}
+              </p>
+              <span className="ml-auto text-xs font-medium text-muted">
+                {col.links.length} towns
+              </span>
+            </div>
+            <ul className="grid grid-cols-2 gap-x-3 gap-y-0.5">
+              {col.links.map((link) => (
+                <li key={link.href}>
+                  <a
+                    href={link.href}
+                    className="group flex items-center gap-2 rounded-lg px-2 py-1.5 text-sm text-foreground-light transition-colors hover:bg-surface hover:text-primary-700"
+                  >
+                    <NavIcon
+                      name={link.icon}
+                      className="h-3.5 w-3.5 shrink-0 text-primary-600"
+                    />
+                    <span className="truncate leading-tight">{link.label}</span>
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </div>
+
+      <div className="mt-6 flex flex-col items-start justify-between gap-3 rounded-xl bg-surface p-4 sm:flex-row sm:items-center">
+        <p className="text-sm text-foreground-light">
+          <span className="font-semibold text-foreground">
+            Serving all of Reno County &amp; Central Kansas.
+          </span>{" "}
+          Don&apos;t see your town? We probably cover it.
+        </p>
+        <div className="flex shrink-0 items-center gap-4">
+          <a
+            href="/service-areas"
+            className="text-sm font-semibold text-primary-700 transition-colors hover:text-primary-800"
+          >
+            All service areas →
+          </a>
+          <a
+            href="/contact"
+            className="inline-flex items-center rounded-lg bg-primary-500 px-4 py-2 text-sm font-bold text-black transition-colors hover:bg-primary-400"
+          >
+            Get a Free Quote
+          </a>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function MegaPanel({
   item,
   open,
@@ -53,38 +245,21 @@ function MegaPanel({
   onLeave: () => void;
 }) {
   if (!item.columns) return null;
+  const isAreas = item.megaVariant === "areas";
   return (
     <div
       onMouseEnter={onEnter}
       onMouseLeave={onLeave}
       className={cn(
-        "fixed left-1/2 top-[80px] z-[9998] w-[min(94vw,1000px)] -translate-x-1/2 rounded-2xl border border-border bg-white p-6 shadow-card-hover transition-all duration-200",
+        "fixed left-1/2 top-[80px] z-[9998] -translate-x-1/2 rounded-2xl border border-border bg-white p-6 shadow-card-hover transition-all duration-200",
+        "max-h-[calc(100vh-100px)] overflow-y-auto",
+        isAreas ? "w-[min(94vw,900px)]" : "w-[min(94vw,1000px)]",
         open
           ? "visible translate-y-0 opacity-100"
           : "invisible -translate-y-2 opacity-0",
       )}
     >
-      <div className="grid grid-cols-2 gap-x-6 gap-y-6 md:grid-cols-4">
-        {item.columns.map((col) => (
-          <div key={col.title}>
-            <p className="mb-3 border-b border-border pb-2 text-xs font-bold uppercase tracking-wider text-primary-700">
-              {col.title}
-            </p>
-            <ul className="space-y-1.5">
-              {col.links.map((link) => (
-                <li key={link.href}>
-                  <a
-                    href={link.href}
-                    className="block rounded-md px-2 py-1 text-sm text-foreground-light transition-colors hover:bg-surface hover:text-primary-700"
-                  >
-                    {link.label}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
-        ))}
-      </div>
+      {isAreas ? <AreasContent item={item} /> : <ServicesContent item={item} />}
     </div>
   );
 }
@@ -118,32 +293,47 @@ function MobileMenu({
           const groups = item.columns
             ? item.columns
             : item.children
-              ? [{ title: "", links: item.children.map((c) => ({ label: c.label, href: c.href })) }]
+              ? [
+                  {
+                    title: "",
+                    links: item.children.map((c) => ({
+                      label: c.label,
+                      href: c.href,
+                      icon: c.icon,
+                    })),
+                  },
+                ]
               : null;
+          const isOpen = openDropdown === item.label;
           return (
             <div key={item.label} className="border-b border-white/10">
               {groups ? (
                 <>
                   <button
                     onClick={() =>
-                      setOpenDropdown(openDropdown === item.label ? null : item.label)
+                      setOpenDropdown(isOpen ? null : item.label)
                     }
                     className="flex w-full items-center justify-between py-3 text-lg font-semibold"
                   >
                     {item.label}
-                    <ChevronDown
-                      className={cn(
-                        "h-4 w-4 transition-transform",
-                        openDropdown === item.label && "rotate-180",
-                      )}
-                    />
+                    {isOpen ? (
+                      <Minus className="h-5 w-5 text-primary-400" />
+                    ) : (
+                      <Plus className="h-5 w-5 text-primary-400" />
+                    )}
                   </button>
-                  {openDropdown === item.label && (
+                  {isOpen && (
                     <div className="pb-3">
                       {groups.map((col) => (
                         <div key={col.title} className="mb-3">
                           {col.title && (
-                            <p className="mb-1 mt-1 text-xs font-bold uppercase tracking-wider text-primary-400">
+                            <p className="mb-1 mt-1 flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-primary-400">
+                              {col.icon && (
+                                <NavIcon
+                                  name={col.icon}
+                                  className="h-3.5 w-3.5"
+                                />
+                              )}
                               {col.title}
                             </p>
                           )}
@@ -153,8 +343,12 @@ function MobileMenu({
                                 key={link.href}
                                 href={link.href}
                                 onClick={onClose}
-                                className="py-2 pl-3 text-sm text-white/75 transition-colors hover:text-primary-400"
+                                className="flex items-center gap-2.5 py-2 pl-3 text-sm text-white/75 transition-colors hover:text-primary-400"
                               >
+                                <NavIcon
+                                  name={link.icon}
+                                  className="h-4 w-4 shrink-0 text-primary-400"
+                                />
                                 {link.label}
                               </a>
                             ))}
@@ -272,7 +466,7 @@ export function Header({ solidNav = false }: { solidNav?: boolean }) {
                     ) : (
                       <div
                         className={cn(
-                          "absolute left-0 top-full min-w-[230px] rounded-xl border border-border bg-white py-2 shadow-card-hover transition-all duration-200",
+                          "absolute left-0 top-full min-w-[260px] rounded-xl border border-border bg-white py-2 shadow-card-hover transition-all duration-200",
                           openDropdown === item.label
                             ? "visible translate-y-0 opacity-100"
                             : "invisible -translate-y-2 opacity-0",
@@ -282,8 +476,12 @@ export function Header({ solidNav = false }: { solidNav?: boolean }) {
                           <a
                             key={child.href}
                             href={child.href}
-                            className="block px-4 py-2.5 text-sm text-foreground-light transition-colors hover:bg-surface hover:text-primary-700"
+                            className="group flex items-center gap-3 px-4 py-2.5 text-sm text-foreground-light transition-colors hover:bg-surface hover:text-primary-700"
                           >
+                            <NavIcon
+                              name={child.icon}
+                              className="h-4 w-4 shrink-0 text-primary-600 transition-colors group-hover:text-primary-700"
+                            />
                             {child.label}
                           </a>
                         ))}
