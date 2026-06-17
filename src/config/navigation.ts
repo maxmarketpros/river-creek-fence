@@ -33,6 +33,7 @@ export const mainNav: NavItem[] = [
       { title: "Fence Materials", href: "/services", links: toLinks(materials, materialsBase) },
     ],
   },
+  { label: "Fence Visualizer", href: "/fence-visualizer" },
   {
     label: "Service Areas",
     href: "/service-areas",
@@ -77,6 +78,7 @@ export const footerGroups: FooterGroup[] = [
       { label: "About River Creek", href: "/about" },
       { label: "Reviews", href: "/reviews" },
       { label: "Project Gallery", href: "/gallery" },
+      { label: "Fence Visualizer", href: "/fence-visualizer" },
       { label: "Service Areas", href: "/service-areas" },
       { label: "Fence Cost Guide", href: "/fence-cost-guide" },
       { label: "Financing & Payments", href: "/fence-financing" },
