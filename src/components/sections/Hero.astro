@@ -23,7 +23,7 @@ const { hero } = homepageContent;
   />
 
   {/* Content */}
-  <Container class="relative z-10 py-32 text-center">
+  <Container class="relative z-10 w-full min-w-0 py-32 text-center">
     <span
       class="mb-4 inline-block rounded-full bg-white/10 px-5 py-2 text-xs font-semibold uppercase tracking-widest text-white backdrop-blur-sm"
     >
@@ -68,11 +68,11 @@ const { hero } = homepageContent;
 
     {/* Stats Row */}
     <div
-      class="mx-auto mt-16 flex max-w-lg items-center justify-center gap-8 md:gap-12"
+      class="mx-auto mt-16 flex max-w-lg items-center justify-center gap-4 sm:gap-8 md:gap-12"
     >
       {
         heroStats.map((stat, i) => (
-          <div class="flex items-center gap-8">
+          <div class="flex items-center gap-4 sm:gap-8">
             <StatItem value={stat.value} label={stat.label} light />
             {i < heroStats.length - 1 && (
               <div class="h-10 w-px bg-white/20" />
