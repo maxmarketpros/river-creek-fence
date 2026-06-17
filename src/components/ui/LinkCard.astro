@@ -1,0 +1,66 @@
+---
+import { ArrowRight } from "lucide-react";
+import * as LucideIcons from "lucide-react";
+import ImageSlot from "./ImageSlot.astro";
+import { cn } from "@/lib/utils";
+
+interface Props {
+  href: string;
+  title: string;
+  description?: string;
+  imageKey: string;
+  /** Optional Lucide icon name for the badge over the image. */
+  icon?: string;
+  class?: string;
+}
+
+const { href, title, description, imageKey, icon, class: className } =
+  Astro.props as Props;
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const IconComponent = icon ? (LucideIcons as any)[icon] || LucideIcons.Fence : null;
+---
+
+<a
+  href={href}
+  class={cn(
+    "group relative flex flex-col overflow-hidden rounded-2xl bg-white shadow-card transition-all duration-300 hover:-translate-y-1 hover:shadow-card-hover",
+    className,
+  )}
+>
+  <div class="relative">
+    <ImageSlot
+      imageKey={imageKey}
+      aspectRatio="4/3"
+      class="rounded-none rounded-t-2xl"
+      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+    />
+    {
+      IconComponent && (
+        <div class="absolute -bottom-5 right-5 flex h-10 w-10 items-center justify-center rounded-xl bg-black shadow-badge">
+          <IconComponent className="h-5 w-5 text-primary-500" />
+        </div>
+      )
+    }
+  </div>
+
+  <div class="flex flex-1 flex-col p-6 pt-8">
+    <h3 class="text-xl font-bold text-foreground group-hover:text-primary-700">
+      {title}
+    </h3>
+    {
+      description && (
+        <p class="mt-2 flex-1 text-sm leading-relaxed text-muted">
+          {description}
+        </p>
+      )
+    }
+    <span
+      class="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold uppercase tracking-wider text-primary-700"
+    >
+      Learn More
+      <ArrowRight
+        className="h-4 w-4 transition-transform group-hover:translate-x-1"
+      />
+    </span>
+  </div>
+</a>

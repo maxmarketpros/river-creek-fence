@@ -1,5 +1,4 @@
 ---
-import { ArrowUpRight } from "lucide-react";
 import Layout from "@/layouts/Layout.astro";
 import PageHero from "@/components/sections/PageHero.astro";
 import CTASection from "@/components/sections/CTASection.astro";
@@ -7,15 +6,12 @@ import QuoteSection from "@/components/sections/QuoteSection.astro";
 import Container from "@/components/ui/Container.astro";
 import SectionHeading from "@/components/ui/SectionHeading.astro";
 import ServiceCard from "@/components/ui/ServiceCard.astro";
+import LinkCard from "@/components/ui/LinkCard.astro";
 import { services } from "@/config/services";
-import {
-  fenceTypes,
-  propertyPages,
-  materials,
-  fenceTypesBase,
-  propertyBase,
-  materialsBase,
-} from "@/config/catalog";
+import { fenceTypeConfigs } from "@/config/fence-types";
+import { propertyConfigs } from "@/config/property";
+import { materialsConfigs } from "@/config/materials";
+import { fenceTypesBase, propertyBase, materialsBase } from "@/config/catalog";
 import { businessConfig } from "@/config/business";
 import { generatePageMetadata } from "@/lib/metadata";
 import { generateBreadcrumbSchema } from "@/lib/structured-data";
@@ -33,9 +29,9 @@ const breadcrumbSchema = generateBreadcrumbSchema([
 ]);
 
 const linkGroups = [
-  { title: "Fence Types", subtitle: "From cedar privacy to barbed wire — built for how you use your property.", items: fenceTypes, base: fenceTypesBase },
-  { title: "Property & Animal Fencing", subtitle: "Fencing designed around your animals, acreage, and the way you work your land.", items: propertyPages, base: propertyBase },
-  { title: "Fence Materials (Coming Soon)", subtitle: "We're expanding into materials and supplies for Central Kansas farms, ranches, and homeowners.", items: materials, base: materialsBase },
+  { title: "Fence Types", subtitle: "From cedar privacy to barbed wire — built for how you use your property.", items: fenceTypeConfigs, base: fenceTypesBase },
+  { title: "Property & Animal Fencing", subtitle: "Fencing designed around your animals, acreage, and the way you work your land.", items: propertyConfigs, base: propertyBase },
+  { title: "Fence Materials", subtitle: "Quality fence materials and supplies for Central Kansas farms, ranches, and homeowners — wire, posts, pipe, gates, and hardware for your project.", items: materialsConfigs, base: materialsBase },
 ];
 ---
 
@@ -90,17 +86,15 @@ const linkGroups = [
             subtitle={group.subtitle}
             align="center"
           />
-          <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
             {group.items.map((item) => (
-              <a
+              <LinkCard
                 href={`${group.base}/${item.slug}`}
-                class="group flex items-center justify-between gap-3 rounded-xl border border-border bg-white px-5 py-4 shadow-card transition-all hover:-translate-y-0.5 hover:border-primary-500 hover:shadow-card-hover"
-              >
-                <span class="font-semibold text-foreground group-hover:text-primary-700">
-                  {item.title}
-                </span>
-                <ArrowUpRight className="h-5 w-5 shrink-0 text-primary-700" />
-              </a>
+                title={item.title}
+                description={item.excerpt}
+                imageKey={`${item.slug}-a`}
+                icon={item.icon}
+              />
             ))}
           </div>
         </Container>

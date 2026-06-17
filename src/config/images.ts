@@ -86,9 +86,9 @@ export const imageManifest: Record<string, ImageSlotConfig> = {
   "logo-white": { src: "/images/logo.png", alt: "River Creek Fence logo", width: 500, height: 393 },
 
   // ===== HOMEPAGE =====
-  "hero-home": img(13, "Ranch rail fence stretching across Central Kansas farmland at golden hour", 0.5),
-  "about-preview": img(17, "Cedar privacy fence and finished workmanship at a Central Kansas home", 0.45),
-  "standards-feature": img(1, "Quality wood fence built to withstand Kansas wind and weather", 0.5),
+  "hero-home": img(63, "Decorative ornamental iron fence at a Central Kansas home", 0.5),
+  "about-preview": img(38, "White vinyl fence and finished workmanship at a Central Kansas home", 0.45),
+  "standards-feature": img(53, "Four-rail horse fence built to withstand Kansas wind and weather", 0.5),
 
   // ===== CONTACT / ABOUT / SHARED =====
   "about-hero": img(14, "River Creek Fence — ranch and residential fencing across Central Kansas", 0.5),

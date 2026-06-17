@@ -31,14 +31,9 @@ const {
   )}
 >
   <span
-    class="flex h-12 w-12 items-center justify-center rounded-full bg-primary-500 text-lg font-bold text-white"
+    class="flex h-12 min-w-[3rem] items-center justify-center whitespace-nowrap rounded-full bg-primary-500 px-3 text-base font-bold leading-none text-white"
   >
     {value}
   </span>
-  <div>
-    <span class="text-xs font-medium uppercase tracking-wider text-muted">
-      Over
-    </span>
-    <p class="text-sm font-bold text-foreground">{label}</p>
-  </div>
+  <p class="whitespace-nowrap text-sm font-bold text-foreground">{label}</p>
 </div>
