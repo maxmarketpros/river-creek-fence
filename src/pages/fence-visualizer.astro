@@ -1,5 +1,5 @@
 ---
-import { ChevronRight, ArrowRight } from "lucide-react";
+import { ChevronRight, ArrowRight, Sparkles, Upload, MessageSquareQuote } from "lucide-react";
 import Layout from "@/layouts/Layout.astro";
 import CTASection from "@/components/sections/CTASection.astro";
 import QuoteSection from "@/components/sections/QuoteSection.astro";
@@ -25,6 +25,12 @@ const breadcrumbSchema = generateBreadcrumbSchema([
   { name: "Home", href: "/" },
   { name: "Fence Visualizer", href: "/fence-visualizer" },
 ]);
+
+const steps = [
+  { icon: Upload, label: "Upload your yard photo" },
+  { icon: Sparkles, label: "Pick a fence style" },
+  { icon: MessageSquareQuote, label: "Get your free quote" },
+];
 
 const styles = [
   { label: "Cedar Privacy", href: "/fence-types/cedar-privacy-fence-installation" },
@@ -85,6 +91,7 @@ const visualizerFaqs: FAQItem[] = [
   canonical={meta.canonical}
   ogImage={meta.ogImage}
   ogTitle={meta.ogTitle}
+  solidNav={true}
 >
   <script
     type="application/ld+json"
@@ -92,27 +99,63 @@ const visualizerFaqs: FAQItem[] = [
     set:html={JSON.stringify(breadcrumbSchema)}
   />
 
-  {/* Compact title band (no hero image / CTAs) */}
-  <section class="bg-foreground pb-8 pt-28 md:pb-10 md:pt-32">
+  {/* Hero — light mode, with a skinny 3-step tutorial banner */}
+  <section
+    class="border-b border-border bg-gradient-to-b from-primary-50 to-white pb-10 pt-28 md:pb-12 md:pt-32"
+  >
     <Container>
-      <nav class="mb-4 flex items-center gap-1.5 text-sm text-white/60">
-        <a href="/" class="transition-colors hover:text-white">Home</a>
-        <ChevronRight className="h-3.5 w-3.5" />
-        <span class="text-white">Fence Visualizer</span>
-      </nav>
-      <span
-        class="mb-3 inline-block rounded-full bg-white/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-widest text-white"
-      >
-        AI Fence Visualizer
-      </span>
-      <h1 class="max-w-3xl text-3xl font-bold text-white md:text-4xl lg:text-5xl">
-        See Your New Fence Before We Build It
-      </h1>
-      <p class="mt-4 max-w-2xl text-lg text-white/80">
-        Upload a photo of your yard, try on different fence styles below, and
-        get a free estimate for the one you love — serving Reno County and
-        Central Kansas.
-      </p>
+      <div class="mx-auto max-w-3xl text-center">
+        <nav
+          class="mb-5 flex items-center justify-center gap-1.5 text-sm text-muted"
+        >
+          <a href="/" class="transition-colors hover:text-primary-700">Home</a>
+          <ChevronRight className="h-3.5 w-3.5" />
+          <span class="font-medium text-foreground">Fence Visualizer</span>
+        </nav>
+
+        <span
+          class="mb-4 inline-flex items-center gap-1.5 rounded-full bg-primary-100 px-4 py-1.5 text-xs font-semibold uppercase tracking-widest text-primary-800"
+        >
+          <Sparkles className="h-3.5 w-3.5" />
+          AI Fence Visualizer
+        </span>
+
+        <h1
+          class="text-balance text-4xl font-bold tracking-tight text-foreground md:text-5xl"
+        >
+          See Your New Fence
+          <span class="text-primary-700">Before We Build It</span>
+        </h1>
+
+        <p class="mx-auto mt-5 max-w-xl text-lg leading-relaxed text-muted">
+          Upload a photo of your yard, try on different fence styles, and get a
+          free estimate for the one you love — serving Reno County and Central
+          Kansas.
+        </p>
+
+        {/* Skinny 3-step tutorial banner */}
+        <div
+          class="mx-auto mt-8 flex max-w-2xl flex-col divide-y divide-border overflow-hidden rounded-2xl border border-border bg-white shadow-sm sm:flex-row sm:divide-x sm:divide-y-0"
+        >
+          {
+            steps.map((step, i) => (
+              <div class="flex flex-1 items-center gap-3 px-4 py-3">
+                <span class="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-black">
+                  <step.icon className="h-5 w-5 text-primary-500" />
+                </span>
+                <div class="text-left">
+                  <p class="text-[0.7rem] font-bold uppercase tracking-wider text-primary-700">
+                    Step {i + 1}
+                  </p>
+                  <p class="text-sm font-semibold leading-tight text-foreground">
+                    {step.label}
+                  </p>
+                </div>
+              </div>
+            ))
+          }
+        </div>
+      </div>
     </Container>
   </section>
 

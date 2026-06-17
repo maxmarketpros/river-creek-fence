@@ -21,6 +21,8 @@ interface Props {
   ogTitle?: string;
   noindex?: boolean;
   preloadImage?: string;
+  /** Force the nav into its solid (black) state from the top — for light-hero pages. */
+  solidNav?: boolean;
 }
 
 const {
@@ -31,6 +33,7 @@ const {
   ogTitle,
   noindex = false,
   preloadImage,
+  solidNav = false,
 } = Astro.props as Props;
 
 const canonicalUrl =
@@ -133,7 +136,7 @@ const websiteSchema = generateWebsiteSchema();
     >
       Skip to main content
     </a>
-    <Header client:load />
+    <Header client:load solidNav={solidNav} />
     <main id="main-content" class="flex-1">
       <slot />
     </main>

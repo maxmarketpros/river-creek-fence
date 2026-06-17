@@ -192,7 +192,7 @@ function MobileMenu({
   );
 }
 
-export function Header() {
+export function Header({ solidNav = false }: { solidNav?: boolean }) {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
@@ -219,7 +219,7 @@ export function Header() {
       <header
         className={cn(
           "fixed top-0 left-0 right-0 z-[9999] transition-all duration-300",
-          scrolled || mobileOpen
+          scrolled || mobileOpen || solidNav
             ? "bg-black shadow-lg"
             : "bg-gradient-to-b from-black/70 to-transparent",
         )}
