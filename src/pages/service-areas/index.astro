@@ -1,0 +1,117 @@
+---
+import { MapPin, ArrowUpRight } from "lucide-react";
+import Layout from "@/layouts/Layout.astro";
+import PageHero from "@/components/sections/PageHero.astro";
+import CTASection from "@/components/sections/CTASection.astro";
+import QuoteSection from "@/components/sections/QuoteSection.astro";
+import Container from "@/components/ui/Container.astro";
+import SectionHeading from "@/components/ui/SectionHeading.astro";
+import MapEmbed from "@/components/ui/MapEmbed.astro";
+import { cities, serviceAreasBase } from "@/config/catalog";
+import { businessConfig } from "@/config/business";
+import { generatePageMetadata } from "@/lib/metadata";
+import { generateBreadcrumbSchema } from "@/lib/structured-data";
+
+const meta = generatePageMetadata({
+  title: "Service Areas | River Creek Fence — Central Kansas",
+  description:
+    "River Creek Fence serves Haven, Hutchinson, Wichita, Newton, McPherson, and communities across Reno County and Central Kansas. Find your town and get a free fence estimate.",
+  path: "/service-areas",
+});
+
+const breadcrumbSchema = generateBreadcrumbSchema([
+  { name: "Home", href: "/" },
+  { name: "Service Areas", href: "/service-areas" },
+]);
+
+// Group cities by county, preserving order.
+const counties: { county: string; items: typeof cities }[] = [];
+for (const city of cities) {
+  let group = counties.find((c) => c.county === city.county);
+  if (!group) {
+    group = { county: city.county, items: [] };
+    counties.push(group);
+  }
+  group.items.push(city);
+}
+---
+
+<Layout
+  title={meta.title}
+  description={meta.description}
+  canonical={meta.canonical}
+  ogImage={meta.ogImage}
+  ogTitle={meta.ogTitle}
+>
+  <script
+    type="application/ld+json"
+    is:inline
+    set:html={JSON.stringify(breadcrumbSchema)}
+  />
+
+  <PageHero
+    heading="Where We Work"
+    subtitle={businessConfig.positioningLine}
+    imageKey="stock-73"
+    breadcrumbs={[{ label: "Home", href: "/" }, { label: "Service Areas" }]}
+    primaryCta={{ label: "Get a Free Quote", href: "/contact" }}
+    secondaryCta={{
+      label: `Call ${businessConfig.phone}`,
+      href: `tel:${businessConfig.phoneRaw}`,
+    }}
+  />
+
+  <section class="section-padding">
+    <Container>
+      <SectionHeading
+        eyebrow="Service Areas"
+        heading="Serving Reno County & Central Kansas"
+        subtitle="Based in Haven and working throughout the towns below. Don't see yours? Give us a call — we likely cover it."
+        align="center"
+      />
+
+      <div class="space-y-10">
+        {
+          counties.map((group) => (
+            <div>
+              <h3 class="mb-4 flex items-center gap-2 text-lg font-bold text-foreground">
+                <MapPin className="h-5 w-5 text-primary-700" />
+                {group.county}
+              </h3>
+              <div class="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+                {group.items.map((city) => (
+                  <a
+                    href={`${serviceAreasBase}/${city.slug}`}
+                    class="group flex items-center justify-between gap-3 rounded-xl border border-border bg-white px-5 py-4 shadow-card transition-all hover:-translate-y-0.5 hover:border-primary-500 hover:shadow-card-hover"
+                  >
+                    <span class="font-semibold text-foreground group-hover:text-primary-700">
+                      Fence Company in {city.name}, KS
+                    </span>
+                    <ArrowUpRight className="h-5 w-5 shrink-0 text-primary-700" />
+                  </a>
+                ))}
+              </div>
+            </div>
+          ))
+        }
+      </div>
+    </Container>
+  </section>
+
+  <section class="pb-16 md:pb-24">
+    <Container>
+      <div class="overflow-hidden rounded-2xl border border-border shadow-card">
+        <MapEmbed class="h-[360px] w-full md:h-[440px]" />
+      </div>
+    </Container>
+  </section>
+
+  <CTASection
+    heading="Serving Your Corner of Central Kansas"
+    text="Wherever you are in Reno County and the surrounding area, we'll come give you a free estimate."
+    primaryCta={{ label: "Get a Free Quote", href: "/contact" }}
+    secondaryCta={{ label: "View Our Services", href: "/services" }}
+  />
+
+  <QuoteSection />
+</Layout>

@@ -1,0 +1,34 @@
+# 301 redirects from the old rivercreekfenceks.com URLs to the new pages.
+
+# Core pages
+/about-us                                /about                                              301
+/contact-us                              /contact                                            301
+
+# Service pages
+/residential-fencing-wichita-ks          /services/residential-fence-installation            301
+/commercial-security-fencing-wichita-ks  /services/commercial-fence-installation             301
+/specialty-fencing-wichita-ks            /services/custom-fence-installation                 301
+/agricultural-fencing                    /services/agricultural-fence-installation           301
+
+# Fence type pages
+/cedar-privacy-fencing                   /fence-types/cedar-privacy-fence-installation       301
+/barbed-wire-fencing                     /fence-types/barbed-wire-fence-installation         301
+/continuous-fencing                      /fence-types/continuous-fence-installation          301
+/four-rail-horse-fencing                 /fence-types/four-rail-horse-fence-installation     301
+/metal-fencing                           /fence-types/metal-fence-installation               301
+/pipe-fencing                            /fence-types/pipe-fence-installation                301
+/wood-ranch-rail-fencing                 /fence-types/wood-ranch-rail-fencing                301
+/woven-wire-fencing                      /fence-types/woven-wire-fence-installation          301
+/wrought-iron-fencing                    /fence-types/wrought-iron-fence-installation        301
+
+# City pages
+/arlington-ks                            /service-areas/arlington-ks                         301
+/buhler-ks                               /service-areas/buhler-ks                            301
+/hutchinson-ks                           /service-areas/hutchinson-ks                        301
+/nickerson-ks                            /service-areas/nickerson-ks                         301
+/partridge-ks                            /service-areas/partridge-ks                         301
+/plevna-ks                               /service-areas/plevna-ks                            301
+/pretty-prairie-ks                       /service-areas/pretty-prairie-ks                    301
+/south-hutchinson-ks                     /service-areas/south-hutchinson-ks                  301
+/wichita-ks                              /service-areas/wichita-ks                           301
+/yoder-ks                                /service-areas/yoder-ks                             301

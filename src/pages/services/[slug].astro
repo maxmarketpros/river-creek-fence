@@ -1,5 +1,5 @@
 ---
-import { ArrowRight, Phone } from "lucide-react";
+import { ArrowRight, Phone, ArrowUpRight } from "lucide-react";
 import Layout from "@/layouts/Layout.astro";
 import PageHero from "@/components/sections/PageHero.astro";
 import SplitSection from "@/components/sections/SplitSection.astro";
@@ -9,8 +9,8 @@ import TopicCardGrid from "@/components/sections/TopicCardGrid.astro";
 import FAQSection from "@/components/sections/FAQSection.astro";
 import CTASection from "@/components/sections/CTASection.astro";
 import QuoteSection from "@/components/sections/QuoteSection.astro";
-import FeatureList from "@/components/sections/FeatureList.astro";
 import SectionHeading from "@/components/ui/SectionHeading.astro";
+import Container from "@/components/ui/Container.astro";
 import Button from "@/components/ui/Button.astro";
 import { services } from "@/config/services";
 import { businessConfig } from "@/config/business";
@@ -21,8 +21,6 @@ import {
   generateBreadcrumbSchema,
 } from "@/lib/structured-data";
 import type { ServiceConfig } from "@/types";
-import { existsSync } from "node:fs";
-import { fileURLToPath } from "node:url";
 
 export async function getStaticPaths() {
   return services.map((service) => ({
@@ -36,11 +34,9 @@ interface Props {
 }
 
 const { service } = Astro.props as Props;
-const { city, state } = businessConfig.address;
-const cityState = `${city}, ${state}`;
 
 const ctaProps = {
-  primary: { label: "Get a Quote", href: "/contact" },
+  primary: { label: "Get a Free Quote", href: "/contact" },
   secondary: {
     label: `Call ${businessConfig.phone}`,
     href: `tel:${businessConfig.phoneRaw}`,
@@ -48,12 +44,10 @@ const ctaProps = {
 };
 
 const meta = generatePageMetadata({
-  title: `${service.title} in ${cityState}`,
+  title: service.metaTitle,
   description: service.excerpt,
   path: `/services/${service.slug}`,
 });
-
-const featureListItems = service.featureHighlights;
 
 const serviceSchema = generateServiceSchema(service);
 const breadcrumbSchema = generateBreadcrumbSchema([
@@ -62,10 +56,13 @@ const breadcrumbSchema = generateBreadcrumbSchema([
   { name: service.title, href: `/services/${service.slug}` },
 ]);
 
-const heroImg = imageManifest[service.heroImage];
-const publicDir = fileURLToPath(new URL("../../../public", import.meta.url));
-const heroPreload =
-  heroImg && existsSync(publicDir + heroImg.src) ? heroImg.src : undefined;
+const faqItems = service.faqs.map((f, i) => ({
+  id: `${service.slug}-faq-${i}`,
+  question: f.question,
+  answer: f.answer,
+}));
+
+const heroPreload = imageManifest[`${service.slug}-hero`]?.src;
 ---
 
 <Layout
@@ -87,11 +84,11 @@ const heroPreload =
     set:html={JSON.stringify(breadcrumbSchema)}
   />
 
-  {/* Page Hero */}
+  {/* Hero */}
   <PageHero
-    heading={`${service.title} in ${cityState}`}
+    heading={service.h1}
     subtitle={service.excerpt}
-    imageKey={service.heroImage}
+    imageKey={`${service.slug}-hero`}
     breadcrumbs={[
       { label: "Home", href: "/" },
       { label: "Services", href: "/services" },
@@ -101,9 +98,9 @@ const heroPreload =
     secondaryCta={ctaProps.secondary}
   />
 
-  {/* Overview */}
+  {/* Overview (content image #1: `${slug}-b`) */}
   <SplitSection
-    imageKey={service.cardImage}
+    imageKey={`${service.slug}-b`}
     imagePosition="right"
     imageAspect="4/3"
   >
@@ -115,7 +112,7 @@ const heroPreload =
     }
     <div class="mt-6 flex flex-wrap gap-4">
       <Button href="/contact">
-        Get a Quote
+        Get a Free Quote
         <ArrowRight slot="icon" className="h-5 w-5" />
       </Button>
       <Button href={`tel:${businessConfig.phoneRaw}`} variant="outline">
@@ -128,16 +125,11 @@ const heroPreload =
   {/* Benefits */}
   <BenefitGrid
     benefits={service.benefits}
-    eyebrow="What Sets Us Apart"
+    eyebrow="Why River Creek Fence"
     heading={service.benefitsHeading}
     subtitle={service.benefitsSubtitle}
     bgColor="surface"
-    primaryCta={ctaProps.primary}
-    secondaryCta={ctaProps.secondary}
   />
-
-  {/* Feature showcase */}
-  <FeatureList features={featureListItems} />
 
   {/* SEO Topic Section A */}
   <TopicCardGrid
@@ -145,15 +137,28 @@ const heroPreload =
     heading={service.topicSectionA.heading}
     subtitle={service.topicSectionA.subtitle}
     items={service.topicSectionA.items}
-    bgColor="surface"
-    primaryCta={ctaProps.primary}
-    secondaryCta={ctaProps.secondary}
   />
+
+  {/* Feature (content image #2: `${slug}-a`) */}
+  <SplitSection
+    imageKey={`${service.slug}-a`}
+    imagePosition="left"
+    imageAspect="4/3"
+    bgColor="surface"
+  >
+    <SectionHeading eyebrow="Built to Last" heading={service.featureHeading} />
+    {
+      service.featureBody.map((p) => (
+        <p class="mb-4 text-base leading-relaxed text-muted md:text-lg">{p}</p>
+      ))
+    }
+  </SplitSection>
 
   {/* What's Included */}
   <ServiceScopeSection
     items={service.features}
     heading={service.scopeHeading}
+    subtitle={service.scopeIntro}
     primaryCta={ctaProps.primary}
     secondaryCta={ctaProps.secondary}
   />
@@ -165,16 +170,38 @@ const heroPreload =
     subtitle={service.topicSectionB.subtitle}
     items={service.topicSectionB.items}
     bgColor="surface"
-    primaryCta={ctaProps.primary}
-    secondaryCta={ctaProps.secondary}
   />
 
   {/* FAQ */}
   <FAQSection
     eyebrow="Common Questions"
     heading={`${service.title} FAQ`}
-    faqKeys={service.faqKeys}
+    items={faqItems}
   />
+
+  {/* Related links */}
+  {
+    service.related.length > 0 && (
+      <section class="section-padding-sm">
+        <Container>
+          <h2 class="mb-6 text-xl font-bold text-foreground">
+            Related services & resources
+          </h2>
+          <div class="flex flex-wrap gap-3">
+            {service.related.map((link) => (
+              <a
+                href={link.href}
+                class="inline-flex items-center gap-1.5 rounded-full border border-border bg-white px-4 py-2 text-sm font-medium text-foreground-light transition-colors hover:border-primary-500 hover:text-primary-700"
+              >
+                {link.label}
+                <ArrowUpRight className="h-4 w-4 text-primary-700" />
+              </a>
+            ))}
+          </div>
+        </Container>
+      </section>
+    )
+  }
 
   {/* CTA */}
   <CTASection

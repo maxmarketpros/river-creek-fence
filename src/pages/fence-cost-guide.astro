@@ -1,0 +1,154 @@
+---
+import { Ruler, Mountain, Layers, DoorOpen } from "lucide-react";
+import Layout from "@/layouts/Layout.astro";
+import PageHero from "@/components/sections/PageHero.astro";
+import CTASection from "@/components/sections/CTASection.astro";
+import QuoteSection from "@/components/sections/QuoteSection.astro";
+import Container from "@/components/ui/Container.astro";
+import SectionHeading from "@/components/ui/SectionHeading.astro";
+import CostTable from "@/components/ui/CostTable.astro";
+import Button from "@/components/ui/Button.astro";
+import { businessConfig } from "@/config/business";
+import { generatePageMetadata } from "@/lib/metadata";
+import { generateBreadcrumbSchema } from "@/lib/structured-data";
+
+const meta = generatePageMetadata({
+  title: "Fence Cost Guide | River Creek Fence — Central Kansas Prices",
+  description:
+    "What does a fence cost in Central Kansas? Local installed price ranges for wood, vinyl, chain link, ranch, and farm fencing in Reno County — plus what affects your price. Free estimates.",
+  path: "/fence-cost-guide",
+});
+
+const breadcrumbSchema = generateBreadcrumbSchema([
+  { name: "Home", href: "/" },
+  { name: "Fence Cost Guide", href: "/fence-cost-guide" },
+]);
+
+const residentialRows = [
+  { type: "Cedar Privacy Fence", range: "$25–$45 / ft", notes: "Most popular for backyards; cedar weathers beautifully and lasts." },
+  { type: "Treated Pine Privacy", range: "$22–$38 / ft", notes: "A budget-friendly solid privacy option." },
+  { type: "Chain Link", range: "$18–$35 / ft", notes: "Durable and affordable — great for pets and security." },
+  { type: "Vinyl / PVC", range: "$30–$55 / ft", notes: "Low-maintenance, never needs painting." },
+  { type: "Ornamental Aluminum/Steel", range: "$30–$55 / ft", notes: "Decorative look with low upkeep." },
+  { type: "Wrought Iron", range: "$35–$65 / ft", notes: "Classic, heavy-duty, and long-lasting." },
+];
+
+const agRows = [
+  { type: "Barbed Wire (3–5 strand)", range: "$2–$5 / ft", notes: "The Kansas standard for cattle boundaries." },
+  { type: "Woven / Field Wire", range: "$4–$8 / ft", notes: "Best for hogs, sheep, goats, and weaned calves." },
+  { type: "High-Tensile (electric-ready)", range: "$2.50–$5 / ft", notes: "Low-maintenance fencing for rotational grazing." },
+  { type: "Pipe / Continuous Fence", range: "$12–$25 / ft", notes: "Heavy-duty ranch and corral fencing." },
+  { type: "Split Rail / Ranch Rail", range: "$15–$30 / ft", notes: "Defines property lines with a rustic look." },
+  { type: "Walk & Drive Gates", range: "$200–$2,500+", notes: "Per gate, depending on size, material, and automation." },
+];
+
+const factors = [
+  { icon: Ruler, title: "Length & Height", description: "Longer runs lower your per-foot cost; taller fences use more material and labor." },
+  { icon: Mountain, title: "Terrain & Soil", description: "Slopes, rock, clearing, and old-fence removal all affect the work involved." },
+  { icon: Layers, title: "Material & Grade", description: "Cedar vs. pine, aluminum vs. iron, and wire gauge all change the price." },
+  { icon: DoorOpen, title: "Gates & Extras", description: "Drive gates, automation, and custom touches add to the total." },
+];
+---
+
+<Layout
+  title={meta.title}
+  description={meta.description}
+  canonical={meta.canonical}
+  ogImage={meta.ogImage}
+  ogTitle={meta.ogTitle}
+>
+  <script
+    type="application/ld+json"
+    is:inline
+    set:html={JSON.stringify(breadcrumbSchema)}
+  />
+
+  <PageHero
+    heading="Fence Cost Guide for Central Kansas"
+    subtitle="Real, local price ranges so you can budget with confidence — then get an exact number with a free on-site estimate."
+    imageKey="stock-5"
+    breadcrumbs={[{ label: "Home", href: "/" }, { label: "Fence Cost Guide" }]}
+    primaryCta={{ label: "Get a Free Quote", href: "/contact" }}
+    secondaryCta={{
+      label: `Call ${businessConfig.phone}`,
+      href: `tel:${businessConfig.phoneRaw}`,
+    }}
+  />
+
+  <section class="section-padding">
+    <Container class="max-w-4xl">
+      <p class="text-lg leading-relaxed text-muted">
+        Fence pricing isn't one-size-fits-all — but you deserve a real ballpark
+        before anyone shows up at your door. Below are typical <strong
+          class="text-foreground">installed</strong
+        > price ranges for fences in Reno County and Central Kansas. Your exact
+        price depends on length, terrain, materials, and gates, and the only way
+        to know for sure is a free on-site estimate. We never charge to come
+        look and quote your project.
+      </p>
+
+      <div class="mt-10">
+        <h2 class="mb-4 text-2xl font-bold text-foreground">
+          Residential Fence Prices
+        </h2>
+        <CostTable rows={residentialRows} unitLabel="Installed price range" />
+      </div>
+
+      <div class="mt-12">
+        <h2 class="mb-4 text-2xl font-bold text-foreground">
+          Farm & Ranch Fence Prices
+        </h2>
+        <CostTable rows={agRows} unitLabel="Installed price range" />
+      </div>
+
+      <p class="mt-6 text-sm text-muted">
+        Prices shown are general estimates for Central Kansas as of 2026 and are
+        not a quote. Material costs and site conditions vary — your written
+        estimate is always free.
+      </p>
+    </Container>
+  </section>
+
+  <section class="section-padding bg-surface">
+    <Container>
+      <SectionHeading
+        eyebrow="What Affects Your Price"
+        heading="Why Two Fences Rarely Cost the Same"
+        align="center"
+      />
+      <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        {
+          factors.map((f) => (
+            <div class="rounded-2xl border border-border bg-white p-6 shadow-card">
+              <div class="flex h-12 w-12 items-center justify-center rounded-xl bg-primary-100">
+                <f.icon className="h-6 w-6 text-primary-700" />
+              </div>
+              <h3 class="mt-4 text-lg font-bold text-foreground">{f.title}</h3>
+              <p class="mt-2 text-sm leading-relaxed text-muted">
+                {f.description}
+              </p>
+            </div>
+          ))
+        }
+      </div>
+      <div class="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
+        <Button href="/contact">Get Your Free Estimate</Button>
+        <Button href="/fence-financing" variant="outline">
+          See Payment & Financing Options
+        </Button>
+      </div>
+    </Container>
+  </section>
+
+  <CTASection
+    heading="Want an Exact Number?"
+    text="We'll measure your project, talk through materials, and hand you an honest written quote — free."
+    primaryCta={{ label: "Get a Free Quote", href: "/contact" }}
+    secondaryCta={{
+      label: `Call ${businessConfig.phone}`,
+      href: `tel:${businessConfig.phoneRaw}`,
+    }}
+  />
+
+  <QuoteSection />
+</Layout>

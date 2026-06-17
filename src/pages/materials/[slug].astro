@@ -1,0 +1,80 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import PageHero from "@/components/sections/PageHero.astro";
+import ComingSoon from "@/components/sections/ComingSoon.astro";
+import QuoteSection from "@/components/sections/QuoteSection.astro";
+import { materials } from "@/config/catalog";
+import { generatePageMetadata } from "@/lib/metadata";
+import { generateBreadcrumbSchema } from "@/lib/structured-data";
+
+export function getStaticPaths() {
+  return materials.map((item) => ({ params: { slug: item.slug }, props: { item } }));
+}
+
+const heroMap: Record<string, string> = {
+  "fence-materials-central-kansas": "stock-1",
+  "farm-fence-supplies": "stock-11",
+  "ranch-fence-materials": "stock-13",
+  "gate-hardware-fence-accessories": "stock-23",
+  "wood-fence-materials": "stock-33",
+  "pipe-fence-materials": "stock-45",
+  "barbed-wire-woven-wire-materials": "stock-47",
+};
+
+const { item } = Astro.props;
+const h1 = item.title;
+
+const meta = generatePageMetadata({
+  title: item.title,
+  description: `${item.title} from River Creek Fence in Haven, KS. We're expanding into fence materials and supplies for Central Kansas farms, ranches, and homeowners — call for availability.`,
+  path: `/materials/${item.slug}`,
+});
+
+const breadcrumbSchema = generateBreadcrumbSchema([
+  { name: "Home", href: "/" },
+  { name: "Fence Materials", href: "/services" },
+  { name: item.title, href: `/materials/${item.slug}` },
+]);
+
+const related = [
+  { label: "Farm Fence Installation", href: "/services/farm-fence-installation" },
+  { label: "Ranch Fence Installation", href: "/services/ranch-fence-installation" },
+  { label: "Fence Cost Guide", href: "/fence-cost-guide" },
+  { label: "Contact Us", href: "/contact" },
+];
+---
+
+<Layout
+  title={meta.title}
+  description={meta.description}
+  canonical={meta.canonical}
+  ogImage={meta.ogImage}
+  ogTitle={meta.ogTitle}
+>
+  <script
+    type="application/ld+json"
+    is:inline
+    set:html={JSON.stringify(breadcrumbSchema)}
+  />
+
+  <PageHero
+    heading={h1}
+    subtitle="We're growing — soon you'll be able to source quality fence materials right here in Central Kansas."
+    imageKey={heroMap[item.slug] ?? "stock-1"}
+    breadcrumbs={[
+      { label: "Home", href: "/" },
+      { label: "Fence Materials", href: "/services" },
+      { label: item.title },
+    ]}
+    primaryCta={{ label: "Get a Free Quote", href: "/contact" }}
+    secondaryCta={{ label: "Call Us", href: "/contact" }}
+  />
+
+  <ComingSoon
+    title={item.title}
+    intro={`River Creek Fence is expanding beyond installation into ${item.title.toLowerCase()} for Central Kansas. We're building out this part of the business now. If you need materials for a project today, give us a call — we're glad to point you in the right direction or quote a full installation.`}
+    relatedLinks={related}
+  />
+
+  <QuoteSection />
+</Layout>

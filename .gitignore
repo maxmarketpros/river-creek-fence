@@ -1,6 +1,9 @@
 node_modules/
 dist/
 .astro/
+
+# Raw source images — duplicated into public/images/stock/ which IS tracked
+assets/
 .env
 .env.*
 !.env.example

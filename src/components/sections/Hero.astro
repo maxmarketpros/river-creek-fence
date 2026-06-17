@@ -4,6 +4,7 @@ import Container from "@/components/ui/Container.astro";
 import Button from "@/components/ui/Button.astro";
 import StatItem from "@/components/ui/StatItem.astro";
 import ImageSlot from "@/components/ui/ImageSlot.astro";
+import GoogleReviewBadge from "@/components/ui/GoogleReviewBadge.astro";
 import { homepageContent } from "@/config/homepage";
 import { heroStats } from "@/config/stats";
 
@@ -26,7 +27,7 @@ const { hero } = homepageContent;
     <span
       class="mb-4 inline-block rounded-full bg-white/10 px-5 py-2 text-xs font-semibold uppercase tracking-widest text-white backdrop-blur-sm"
     >
-      Local Service Provider · Springfield, IL
+      Fence Company in Haven, KS · Serving Central Kansas
     </span>
 
     <h1
@@ -58,6 +59,11 @@ const { hero } = homepageContent;
         {hero.secondaryCta.label}
         <Phone slot="icon" className="h-5 w-5" />
       </Button>
+    </div>
+
+    {/* Google rating badge */}
+    <div class="mt-8 flex justify-center">
+      <GoogleReviewBadge variant="dark" />
     </div>
 
     {/* Stats Row */}

@@ -1,0 +1,152 @@
+---
+import { Sun, Snowflake, Wind, Droplets, Wrench, TreePine } from "lucide-react";
+import Layout from "@/layouts/Layout.astro";
+import PageHero from "@/components/sections/PageHero.astro";
+import CTASection from "@/components/sections/CTASection.astro";
+import QuoteSection from "@/components/sections/QuoteSection.astro";
+import Container from "@/components/ui/Container.astro";
+import SectionHeading from "@/components/ui/SectionHeading.astro";
+import { businessConfig } from "@/config/business";
+import { generatePageMetadata } from "@/lib/metadata";
+import { generateBreadcrumbSchema } from "@/lib/structured-data";
+
+const meta = generatePageMetadata({
+  title: "Fence Maintenance Guide | River Creek Fence — Central Kansas",
+  description:
+    "How to keep your fence standing strong through Central Kansas wind, storms, and seasons. Seasonal and material-by-material fence maintenance tips from River Creek Fence in Haven, KS.",
+  path: "/fence-maintenance-guide",
+});
+
+const breadcrumbSchema = generateBreadcrumbSchema([
+  { name: "Home", href: "/" },
+  { name: "Fence Maintenance Guide", href: "/fence-maintenance-guide" },
+]);
+
+const seasonal = [
+  { icon: Sun, title: "Spring", description: "Walk the whole line after winter. Reset any posts heaved by the freeze-thaw, tighten loose hardware, and reseal wood before the summer sun hits it." },
+  { icon: Wind, title: "Summer", description: "Check gates and latches after storm season — Kansas wind loosens things fast. Trim grass and weeds off the fence line to slow rot and rust." },
+  { icon: TreePine, title: "Fall", description: "Clear leaves and debris from the base, trim back branches that could fall on the fence, and re-stain wood before the cold sets in." },
+  { icon: Snowflake, title: "Winter", description: "Knock heavy snow off panels and gates so the weight doesn't bow them, and watch for drifting that puts pressure on the line." },
+];
+
+const materials = [
+  { icon: Droplets, title: "Wood & Cedar", description: "Reseal or stain every 2–3 years to fight Kansas sun and moisture. Replace cracked pickets early before water gets into the posts." },
+  { icon: Wrench, title: "Chain Link & Metal", description: "Hit any chips or rust spots with primer and paint, keep hinges oiled, and tighten tension bands so the fabric stays taut." },
+  { icon: Wind, title: "Vinyl", description: "Rinse with a hose and mild soap once or twice a year. Check that posts haven't shifted and caps are seated after big storms." },
+  { icon: TreePine, title: "Farm & Ranch Wire", description: "Walk it regularly. Re-stretch sagging wire, replace broken staples and clips, and reset leaning braces before a small gap becomes an escape." },
+];
+---
+
+<Layout
+  title={meta.title}
+  description={meta.description}
+  canonical={meta.canonical}
+  ogImage={meta.ogImage}
+  ogTitle={meta.ogTitle}
+>
+  <script
+    type="application/ld+json"
+    is:inline
+    set:html={JSON.stringify(breadcrumbSchema)}
+  />
+
+  <PageHero
+    heading="Fence Maintenance Guide"
+    subtitle="A little upkeep goes a long way out here. Keep your fence strong through every Central Kansas season."
+    imageKey="stock-3"
+    breadcrumbs={[{ label: "Home", href: "/" }, { label: "Fence Maintenance Guide" }]}
+    primaryCta={{ label: "Get a Free Quote", href: "/contact" }}
+    secondaryCta={{
+      label: `Call ${businessConfig.phone}`,
+      href: `tel:${businessConfig.phoneRaw}`,
+    }}
+  />
+
+  <section class="section-padding">
+    <Container class="max-w-4xl">
+      <p class="text-lg leading-relaxed text-muted">
+        Central Kansas is hard on fences. Between the wind, ice storms, dry
+        summers, and ground that heaves with every freeze and thaw, even a
+        well-built fence needs a little attention to go the distance. The good
+        news: a few simple habits each season will keep yours standing straight
+        for decades. Here's how we'd care for it.
+      </p>
+    </Container>
+  </section>
+
+  <section class="pb-16 md:pb-24">
+    <Container>
+      <SectionHeading
+        eyebrow="Season by Season"
+        heading="Year-Round Fence Care in Kansas"
+        align="center"
+      />
+      <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        {
+          seasonal.map((s) => (
+            <div class="rounded-2xl border border-border bg-white p-6 shadow-card">
+              <div class="flex h-12 w-12 items-center justify-center rounded-xl bg-primary-100">
+                <s.icon className="h-6 w-6 text-primary-700" />
+              </div>
+              <h3 class="mt-4 text-lg font-bold text-foreground">{s.title}</h3>
+              <p class="mt-2 text-sm leading-relaxed text-muted">
+                {s.description}
+              </p>
+            </div>
+          ))
+        }
+      </div>
+    </Container>
+  </section>
+
+  <section class="section-padding bg-surface">
+    <Container>
+      <SectionHeading
+        eyebrow="By Material"
+        heading="Care Tips for Your Type of Fence"
+        align="center"
+      />
+      <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        {
+          materials.map((m) => (
+            <div class="rounded-2xl border border-border bg-white p-6 shadow-card">
+              <div class="flex h-12 w-12 items-center justify-center rounded-xl bg-primary-100">
+                <m.icon className="h-6 w-6 text-primary-700" />
+              </div>
+              <h3 class="mt-4 text-lg font-bold text-foreground">{m.title}</h3>
+              <p class="mt-2 text-sm leading-relaxed text-muted">
+                {m.description}
+              </p>
+            </div>
+          ))
+        }
+      </div>
+    </Container>
+  </section>
+
+  <section class="section-padding">
+    <Container class="max-w-3xl text-center">
+      <SectionHeading
+        eyebrow="When to Call Us"
+        heading="Some Fixes Are Better Left to a Pro"
+        align="center"
+      />
+      <p class="text-base leading-relaxed text-muted md:text-lg">
+        Leaning posts, storm damage, sagging gates, or long sections of failing
+        wire are worth a professional look before they get worse — and more
+        expensive. If your fence has taken a beating or just isn't standing the
+        way it should, we'll come out, tell you honestly whether it's a repair
+        or a replacement, and quote it free.
+      </p>
+    </Container>
+  </section>
+
+  <CTASection
+    heading="Fence Seen Better Days?"
+    text="From a few posts to a full rebuild, we'll get your fence back in shape. Get a free estimate today."
+    primaryCta={{ label: "Get a Free Quote", href: "/contact" }}
+    secondaryCta={{ label: "See Fence Repair", href: "/services/fence-repair" }}
+  />
+
+  <QuoteSection />
+</Layout>

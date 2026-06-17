@@ -1,0 +1,74 @@
+---
+import { Phone, ArrowRight, Clock, ArrowUpRight } from "lucide-react";
+import Container from "@/components/ui/Container.astro";
+import Button from "@/components/ui/Button.astro";
+import { businessConfig } from "@/config/business";
+import type { NavLink } from "@/types";
+
+interface Props {
+  title: string;
+  intro?: string;
+  relatedHeading?: string;
+  relatedLinks?: NavLink[];
+}
+
+const {
+  title,
+  intro,
+  relatedHeading = "In the meantime, explore",
+  relatedLinks = [],
+} = Astro.props as Props;
+---
+
+<section class="section-padding">
+  <Container class="max-w-3xl text-center">
+    <span
+      class="inline-flex items-center gap-2 rounded-full bg-primary-100 px-4 py-1.5 text-sm font-semibold text-primary-800"
+    >
+      <Clock className="h-4 w-4" /> Full page coming soon
+    </span>
+
+    <h2 class="mt-6 text-2xl font-bold text-foreground md:text-3xl">
+      We're putting the finishing touches on our {title} page
+    </h2>
+
+    <p class="mx-auto mt-4 max-w-2xl text-base leading-relaxed text-muted md:text-lg">
+      {
+        intro ||
+          `River Creek Fence handles ${title.toLowerCase()} throughout Haven, Hutchinson, Wichita, and the rest of Central Kansas. While we finish this page, the fastest way to get answers and a free estimate is to give us a call — Cody and the crew are happy to talk through your project.`
+      }
+    </p>
+
+    <div class="mt-8 flex flex-col items-center justify-center gap-4 sm:flex-row">
+      <Button href={`tel:${businessConfig.phoneRaw}`}>
+        Call {businessConfig.phone}
+        <Phone slot="icon" className="h-5 w-5" />
+      </Button>
+      <Button href="/contact" variant="outline">
+        Request a Free Estimate
+        <ArrowRight slot="icon" className="h-5 w-5" />
+      </Button>
+    </div>
+
+    {
+      relatedLinks.length > 0 && (
+        <div class="mt-12 border-t border-border pt-8">
+          <p class="text-sm font-semibold uppercase tracking-wider text-muted">
+            {relatedHeading}
+          </p>
+          <div class="mt-4 flex flex-wrap justify-center gap-3">
+            {relatedLinks.map((link) => (
+              <a
+                href={link.href}
+                class="inline-flex items-center gap-1.5 rounded-full border border-border bg-white px-4 py-2 text-sm font-medium text-foreground-light transition-colors hover:border-primary-500 hover:text-primary-700"
+              >
+                {link.label}
+                <ArrowUpRight className="h-4 w-4 text-primary-700" />
+              </a>
+            ))}
+          </div>
+        </div>
+      )
+    }
+  </Container>
+</section>

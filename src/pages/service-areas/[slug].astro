@@ -1,0 +1,82 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import PageHero from "@/components/sections/PageHero.astro";
+import ComingSoon from "@/components/sections/ComingSoon.astro";
+import QuoteSection from "@/components/sections/QuoteSection.astro";
+import { cities } from "@/config/catalog";
+import { generatePageMetadata } from "@/lib/metadata";
+import { generateBreadcrumbSchema } from "@/lib/structured-data";
+
+export function getStaticPaths() {
+  return cities.map((city, index) => ({
+    params: { slug: city.slug },
+    props: { city, index },
+  }));
+}
+
+const { city, index } = Astro.props;
+const h1 = `Fence Company in ${city.name}, KS`;
+
+const meta = generatePageMetadata({
+  title: `Fence Company in ${city.name}, KS`,
+  description: `River Creek Fence is a trusted fence company serving ${city.name}, KS and ${city.county}. Residential, farm, ranch, and commercial fence installation and repair. Free estimates, 5-year warranty.`,
+  path: `/service-areas/${city.slug}`,
+});
+
+const breadcrumbSchema = generateBreadcrumbSchema([
+  { name: "Home", href: "/" },
+  { name: "Service Areas", href: "/service-areas" },
+  { name: `${city.name}, KS`, href: `/service-areas/${city.slug}` },
+]);
+
+const heroRotation = [13, 73, 1, 11, 17, 33, 23];
+const heroKey = `stock-${heroRotation[index % heroRotation.length]}`;
+
+const nearby = cities
+  .filter((c) => c.county === city.county && c.slug !== city.slug)
+  .slice(0, 3)
+  .map((c) => ({ label: c.name, href: `/service-areas/${c.slug}` }));
+
+const related = [
+  { label: "Fence Installation", href: "/services/fence-installation" },
+  { label: "Privacy Fence", href: "/services/privacy-fence-installation" },
+  { label: "Farm & Ranch Fencing", href: "/services/farm-fence-installation" },
+  ...nearby,
+  { label: "All Service Areas", href: "/service-areas" },
+];
+---
+
+<Layout
+  title={meta.title}
+  description={meta.description}
+  canonical={meta.canonical}
+  ogImage={meta.ogImage}
+  ogTitle={meta.ogTitle}
+>
+  <script
+    type="application/ld+json"
+    is:inline
+    set:html={JSON.stringify(breadcrumbSchema)}
+  />
+
+  <PageHero
+    heading={h1}
+    subtitle={`Fence installation and repair for homeowners, farmers, and ranchers in ${city.name} and across ${city.county}.`}
+    imageKey={heroKey}
+    breadcrumbs={[
+      { label: "Home", href: "/" },
+      { label: "Service Areas", href: "/service-areas" },
+      { label: `${city.name}, KS` },
+    ]}
+    primaryCta={{ label: "Get a Free Quote", href: "/contact" }}
+    secondaryCta={{ label: "View Our Services", href: "/services" }}
+  />
+
+  <ComingSoon
+    title={`fencing in ${city.name}, KS`}
+    intro={`River Creek Fence proudly serves ${city.name} and the surrounding ${city.county} area with residential, farm, ranch, and commercial fencing. We're finishing a dedicated ${city.name} page with local project photos and details — but we're already taking ${city.name} jobs today. Call Cody for a free, no-pressure estimate.`}
+    relatedLinks={related}
+  />
+
+  <QuoteSection />
+</Layout>

@@ -1,0 +1,68 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import PageHero from "@/components/sections/PageHero.astro";
+import FAQSection from "@/components/sections/FAQSection.astro";
+import CTASection from "@/components/sections/CTASection.astro";
+import QuoteSection from "@/components/sections/QuoteSection.astro";
+import { faqs } from "@/config/faqs";
+import { businessConfig } from "@/config/business";
+import { generatePageMetadata } from "@/lib/metadata";
+import { generateBreadcrumbSchema } from "@/lib/structured-data";
+
+const meta = generatePageMetadata({
+  title: "Fence FAQ | River Creek Fence — Central Kansas",
+  description:
+    "Answers to common fence questions for Central Kansas property owners — cost, materials, timelines, warranty, farm fencing, and how we beat Kansas wind. River Creek Fence, Haven KS.",
+  path: "/fence-faq",
+});
+
+const breadcrumbSchema = generateBreadcrumbSchema([
+  { name: "Home", href: "/" },
+  { name: "Fence FAQ", href: "/fence-faq" },
+]);
+---
+
+<Layout
+  title={meta.title}
+  description={meta.description}
+  canonical={meta.canonical}
+  ogImage={meta.ogImage}
+  ogTitle={meta.ogTitle}
+>
+  <script
+    type="application/ld+json"
+    is:inline
+    set:html={JSON.stringify(breadcrumbSchema)}
+  />
+
+  <PageHero
+    heading="Fence FAQ"
+    subtitle="Straight answers to the questions Central Kansas homeowners, farmers, and ranchers ask us most."
+    imageKey="stock-33"
+    breadcrumbs={[{ label: "Home", href: "/" }, { label: "Fence FAQ" }]}
+    primaryCta={{ label: "Get a Free Quote", href: "/contact" }}
+    secondaryCta={{
+      label: `Call ${businessConfig.phone}`,
+      href: `tel:${businessConfig.phoneRaw}`,
+    }}
+  />
+
+  <FAQSection
+    eyebrow="Common Questions"
+    heading="Fence Questions, Answered"
+    subtitle="Still have a question? Call Cody at (620) 899-5595 — happy to help."
+    items={faqs}
+  />
+
+  <CTASection
+    heading="Have a Question We Didn't Cover?"
+    text="Give us a call or send your project details. We'll give you a straight answer and a free estimate."
+    primaryCta={{ label: "Get a Free Quote", href: "/contact" }}
+    secondaryCta={{
+      label: `Call ${businessConfig.phone}`,
+      href: `tel:${businessConfig.phoneRaw}`,
+    }}
+  />
+
+  <QuoteSection />
+</Layout>

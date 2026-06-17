@@ -1,0 +1,69 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import PageHero from "@/components/sections/PageHero.astro";
+import ComingSoon from "@/components/sections/ComingSoon.astro";
+import QuoteSection from "@/components/sections/QuoteSection.astro";
+import { propertyPages } from "@/config/catalog";
+import { generatePageMetadata } from "@/lib/metadata";
+import { generateBreadcrumbSchema } from "@/lib/structured-data";
+
+export function getStaticPaths() {
+  return propertyPages.map((item) => ({
+    params: { slug: item.slug },
+    props: { item },
+  }));
+}
+
+const { item } = Astro.props;
+const h1 = `${item.title} in Central Kansas`;
+
+const meta = generatePageMetadata({
+  title: item.title,
+  description: `${item.title} for farms, ranches, and acreages across Reno County and Central Kansas. River Creek Fence brings real farm experience to every job — free estimates, 5-year warranty.`,
+  path: `/property/${item.slug}`,
+});
+
+const breadcrumbSchema = generateBreadcrumbSchema([
+  { name: "Home", href: "/" },
+  { name: "Property & Animal Fencing", href: "/services" },
+  { name: item.title, href: `/property/${item.slug}` },
+]);
+
+const related = [
+  { label: "Farm Fence Installation", href: "/services/farm-fence-installation" },
+  { label: "Ranch Fence Installation", href: "/services/ranch-fence-installation" },
+  { label: "Agricultural Fence", href: "/services/agricultural-fence-installation" },
+  { label: "Get a Free Quote", href: "/contact" },
+];
+---
+
+<Layout
+  title={meta.title}
+  description={meta.description}
+  canonical={meta.canonical}
+  ogImage={meta.ogImage}
+  ogTitle={meta.ogTitle}
+>
+  <script
+    type="application/ld+json"
+    is:inline
+    set:html={JSON.stringify(breadcrumbSchema)}
+  />
+
+  <PageHero
+    heading={h1}
+    subtitle={`${item.title} done right — designed around your animals, your land, and how you actually work it.`}
+    imageKey={`${item.slug}-hero`}
+    breadcrumbs={[
+      { label: "Home", href: "/" },
+      { label: "Services", href: "/services" },
+      { label: item.title },
+    ]}
+    primaryCta={{ label: "Get a Free Quote", href: "/contact" }}
+    secondaryCta={{ label: "View Our Services", href: "/services" }}
+  />
+
+  <ComingSoon title={item.title} relatedLinks={related} />
+
+  <QuoteSection />
+</Layout>

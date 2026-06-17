@@ -1,0 +1,112 @@
+---
+import { CalendarClock, HandCoins, ShieldCheck } from "lucide-react";
+import Layout from "@/layouts/Layout.astro";
+import PageHero from "@/components/sections/PageHero.astro";
+import PaymentOptions from "@/components/sections/PaymentOptions.astro";
+import CTASection from "@/components/sections/CTASection.astro";
+import QuoteSection from "@/components/sections/QuoteSection.astro";
+import Container from "@/components/ui/Container.astro";
+import SectionHeading from "@/components/ui/SectionHeading.astro";
+import { businessConfig } from "@/config/business";
+import { generatePageMetadata } from "@/lib/metadata";
+import { generateBreadcrumbSchema } from "@/lib/structured-data";
+
+const meta = generatePageMetadata({
+  title: "Fence Financing & Payment Options | River Creek Fence",
+  description:
+    "River Creek Fence makes paying for your fence easy — cash, check, all major cards, plus financing and payment plans for larger ranch and acreage projects in Central Kansas.",
+  path: "/fence-financing",
+});
+
+const breadcrumbSchema = generateBreadcrumbSchema([
+  { name: "Home", href: "/" },
+  { name: "Financing & Payments", href: "/fence-financing" },
+]);
+
+const financing = [
+  { icon: HandCoins, title: "Pay Your Way", description: "Cash, check, and all major credit and debit cards — whatever's easiest for you." },
+  { icon: CalendarClock, title: "Financing & Payment Plans", description: "For larger ranch, farm, and acreage fences, we can break the cost into manageable payments. Just ask." },
+  { icon: ShieldCheck, title: "No Surprises", description: "Your written estimate is the price. No hidden fees, no pressure, and no charge to come quote it." },
+];
+---
+
+<Layout
+  title={meta.title}
+  description={meta.description}
+  canonical={meta.canonical}
+  ogImage={meta.ogImage}
+  ogTitle={meta.ogTitle}
+>
+  <script
+    type="application/ld+json"
+    is:inline
+    set:html={JSON.stringify(breadcrumbSchema)}
+  />
+
+  <PageHero
+    heading="Financing & Payment Options"
+    subtitle="A good fence is an investment in your property. We make paying for it simple and flexible."
+    imageKey="stock-7"
+    breadcrumbs={[{ label: "Home", href: "/" }, { label: "Financing & Payments" }]}
+    primaryCta={{ label: "Get a Free Quote", href: "/contact" }}
+    secondaryCta={{
+      label: `Call ${businessConfig.phone}`,
+      href: `tel:${businessConfig.phoneRaw}`,
+    }}
+  />
+
+  <section class="section-padding">
+    <Container class="max-w-4xl">
+      <p class="text-lg leading-relaxed text-muted">
+        Whether you're fencing a backyard in Hutchinson or running new wire
+        across a quarter-section, the last thing you need is a complicated
+        payment process. River Creek Fence keeps it straightforward: pick the
+        payment method that works best for you, and for bigger projects, ask us
+        about financing and payment plans that spread the cost out over time.
+      </p>
+
+      <div class="mt-10 grid gap-6 md:grid-cols-3">
+        {
+          financing.map((f) => (
+            <div class="rounded-2xl border border-border bg-white p-6 shadow-card">
+              <div class="flex h-12 w-12 items-center justify-center rounded-xl bg-primary-100">
+                <f.icon className="h-6 w-6 text-primary-700" />
+              </div>
+              <h3 class="mt-4 text-lg font-bold text-foreground">{f.title}</h3>
+              <p class="mt-2 text-sm leading-relaxed text-muted">
+                {f.description}
+              </p>
+            </div>
+          ))
+        }
+      </div>
+    </Container>
+  </section>
+
+  <PaymentOptions bgColor="surface" />
+
+  <section class="section-padding">
+    <Container class="max-w-3xl text-center">
+      <SectionHeading
+        eyebrow="Ask Us About Financing"
+        heading="Bigger Project? Let's Make It Work"
+        align="center"
+      />
+      <p class="text-base leading-relaxed text-muted md:text-lg">
+        Ranch and acreage fencing can be a big line item. When you request your
+        free estimate, just let us know you'd like to explore financing or a
+        payment plan, and we'll walk you through the options so the project fits
+        your budget and your timeline.
+      </p>
+    </Container>
+  </section>
+
+  <CTASection
+    heading="Let's Talk Numbers"
+    text="Get a free estimate and we'll lay out exactly what your fence costs — and the easiest way to pay for it."
+    primaryCta={{ label: "Get a Free Quote", href: "/contact" }}
+    secondaryCta={{ label: "View the Cost Guide", href: "/fence-cost-guide" }}
+  />
+
+  <QuoteSection />
+</Layout>

@@ -1,16 +1,26 @@
 {
-  "name": "Premier Services",
-  "short_name": "Premier",
-  "description": "Professional service company delivering premium quality work.",
+  "name": "River Creek Fence",
+  "short_name": "River Creek",
+  "description": "Fence company in Haven, KS serving Reno County, Hutchinson, Wichita & Central Kansas.",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#ffffff",
-  "theme_color": "#2563eb",
+  "background_color": "#0a0a0a",
+  "theme_color": "#a5c021",
   "icons": [
     {
-      "src": "/favicon.ico",
+      "src": "/favicon-32.png",
       "sizes": "32x32",
-      "type": "image/x-icon"
+      "type": "image/png"
+    },
+    {
+      "src": "/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
     }
   ]
 }

@@ -1,0 +1,54 @@
+---
+import {
+  Banknote,
+  CreditCard,
+  CheckCircle2,
+  Landmark,
+  CalendarClock,
+} from "lucide-react";
+import Container from "@/components/ui/Container.astro";
+import SectionHeading from "@/components/ui/SectionHeading.astro";
+import { cn } from "@/lib/utils";
+
+interface Props {
+  bgColor?: "white" | "surface";
+  class?: string;
+}
+
+const { bgColor = "white", class: className } = Astro.props as Props;
+
+const methods = [
+  { icon: Banknote, title: "Cash", description: "Always welcome, with a receipt for your records." },
+  { icon: CheckCircle2, title: "Check", description: "Personal and business checks accepted." },
+  { icon: CreditCard, title: "Credit & Debit", description: "Visa, Mastercard, American Express, and Discover." },
+  { icon: CalendarClock, title: "Payment Plans", description: "Split larger projects into manageable payments." },
+  { icon: Landmark, title: "Financing Available", description: "Ask about financing options to spread out the cost." },
+];
+---
+
+<section
+  class={cn("section-padding", bgColor === "surface" && "bg-surface", className)}
+>
+  <Container>
+    <SectionHeading
+      eyebrow="Payment Options"
+      heading="Flexible Ways to Pay for Your Fence"
+      subtitle="We keep payment simple so you can focus on the fence — not the paperwork. River Creek Fence accepts every common payment method and offers financing for bigger ranch and acreage projects."
+      align="center"
+    />
+
+    <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      {
+        methods.map((m) => (
+          <div class="rounded-2xl border border-border bg-white p-6 shadow-card">
+            <div class="flex h-12 w-12 items-center justify-center rounded-xl bg-primary-100">
+              <m.icon className="h-6 w-6 text-primary-700" />
+            </div>
+            <h3 class="mt-4 text-lg font-bold text-foreground">{m.title}</h3>
+            <p class="mt-2 text-sm leading-relaxed text-muted">{m.description}</p>
+          </div>
+        ))
+      }
+    </div>
+  </Container>
+</section>

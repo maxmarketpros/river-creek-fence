@@ -18,42 +18,56 @@ export interface FeatureHighlight {
   imageKey: string;
 }
 
+export interface ServiceFAQ {
+  question: string;
+  answer: string;
+}
+
+export interface RelatedLink {
+  label: string;
+  href: string;
+}
+
+export interface ServiceTopicSection {
+  eyebrow: string;
+  heading: string;
+  subtitle: string;
+  items: ServiceSubTopic[];
+}
+
 export interface ServiceConfig {
   slug: string;
   title: string;
+  /** H1 for the page — lets us reuse the exact legacy H1 on matching pages. */
+  h1: string;
+  /** Short summary — used for the hero subtitle + meta description. */
   excerpt: string;
+  /** Lucide icon name. */
   icon: string;
-  cardImage: string;
-  heroImage: string;
-  description: string[];
-  /** H2 for the intro/overview section (replaces generic "Why Choose Our X") */
+  metaTitle: string;
+  /** Overview section (image: `${slug}-b`). 2-3 paragraphs of unique copy. */
   overviewHeading: string;
-  /** H2 + subtitle for the Key Benefits section — unique per service */
+  description: string[];
+  /** Key benefits — exactly 4 cards. */
   benefitsHeading: string;
   benefitsSubtitle: string;
   benefits: BenefitItem[];
-  /** Alternating feature showcase — 2 unique items per service, each with its own image */
-  featureHighlights: FeatureHighlight[];
-  /** H2 for the Scope/What's Included section (replaces generic "Complete Service Scope") */
+  /** Single image feature section (image: `${slug}-a`). */
+  featureHeading: string;
+  featureBody: string[];
+  /** What's included checklist. */
   scopeHeading: string;
+  scopeIntro?: string;
   features: string[];
-  faqKeys: string[];
+  /** SEO topic grids — A has 6 cards, B has 4 cards. */
+  topicSectionA: ServiceTopicSection;
+  topicSectionB: ServiceTopicSection;
+  /** Inline FAQs (5-6) — also emitted as FAQPage schema. */
+  faqs: ServiceFAQ[];
   ctaHeading: string;
   ctaText: string;
-  // SEO-focused sub-topic sections for service pages
-  // These provide keyword-rich content with icon cards
-  topicSectionA: {
-    eyebrow: string;
-    heading: string;
-    subtitle: string;
-    items: ServiceSubTopic[];
-  };
-  topicSectionB: {
-    eyebrow: string;
-    heading: string;
-    subtitle: string;
-    items: ServiceSubTopic[];
-  };
+  /** Internal links to 3-4 related pages. */
+  related: RelatedLink[];
 }
 
 export interface BenefitItem {
@@ -88,10 +102,23 @@ export interface StatItem {
   label: string;
 }
 
+export interface NavLink {
+  label: string;
+  href: string;
+}
+
+export interface NavColumn {
+  title: string;
+  href?: string;
+  links: NavLink[];
+}
+
 export interface NavItem {
   label: string;
   href: string;
   children?: NavItem[];
+  /** Mega-menu columns (takes precedence over children when present) */
+  columns?: NavColumn[];
 }
 
 export interface FooterGroup {

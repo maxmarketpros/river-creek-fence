@@ -8,10 +8,17 @@ import { services } from "@/config/services";
 import { businessConfig } from "@/config/business";
 import { homepageContent } from "@/config/homepage";
 
+interface Props {
+  limit?: number;
+  bgColor?: "white" | "surface";
+}
+
+const { limit, bgColor = "white" } = Astro.props as Props;
 const { services: content } = homepageContent;
+const shown = limit ? services.slice(0, limit) : services;
 ---
 
-<section class="section-padding">
+<section class={bgColor === "surface" ? "section-padding bg-surface" : "section-padding"}>
   <Container>
     <SectionHeading
       eyebrow={content.eyebrow}
@@ -21,14 +28,14 @@ const { services: content } = homepageContent;
     />
 
     <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-      {services.map((service) => <ServiceCard service={service} />)}
+      {shown.map((service) => <ServiceCard service={service} />)}
     </div>
 
     <div
       class="mt-12 flex flex-col items-center justify-center gap-4 sm:flex-row"
     >
-      <Button href="/contact" size="lg">
-        Get a Quote
+      <Button href="/services" size="lg">
+        View All Services
         <ArrowRight slot="icon" className="h-5 w-5" />
       </Button>
       <Button

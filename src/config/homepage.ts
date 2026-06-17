@@ -1,88 +1,87 @@
 export const homepageContent = {
   hero: {
     heading: {
-      main: "Professional Services in",
-      location: "Springfield, IL",
+      main: "Fence Company in Haven, KS",
+      location: "Serving Reno County & Central Kansas",
     },
     subtitle:
-      "Premium quality work, transparent pricing, and full project accountability across Springfield and the surrounding region.",
-    primaryCta: { label: "Get a Quote", href: "/contact" },
-    secondaryCta: { label: "Call (555) 123-4567", href: "tel:+15551234567" },
+      "Residential, farm, ranch, and commercial fencing built by a Central Kansas crew with real farm experience. Free estimates, honest pricing, and a 5-year warranty.",
+    primaryCta: { label: "Get a Free Quote", href: "/contact" },
+    secondaryCta: { label: "Call (620) 899-5595", href: "tel:+16208995595" },
   },
   aboutPreview: {
-    eyebrow: "About Us",
-    heading:
-      "Your Local Service Experts in Springfield, IL",
+    eyebrow: "About River Creek Fence",
+    heading: "Built by Someone Who Knows Fences — and Farms",
     paragraph:
-      "We are a premium service company based in Springfield, Illinois. For more than 15 years, we have helped property owners across the region turn their vision into reality with meticulous craftsmanship and transparent communication.",
+      "River Creek Fence started with one truck, one crew, and a simple idea: build fences correctly and let the work speak for itself. Owner Cody Yoder comes from a farm background, so he understands soil, livestock, and the way a fence really gets used out here. Most of our new customers still come from a neighbor passing along our number.",
     bullets: [
       {
-        title: "Transparent Line-Item Pricing",
+        title: "Real Farm Experience",
         description:
-          "No hidden fees. You see exactly where your money goes before we start.",
+          "We come from this work, so we build fencing that holds up on working farms, ranches, and acreages.",
       },
       {
-        title: "Owner-Led Accountability",
+        title: "Honest, Up-Front Pricing",
         description:
-          "We lead every project in person. Direct communication at every phase.",
+          "A clear written estimate before we start — no hidden fees and no pressure.",
       },
       {
-        title: "Regional Expertise",
+        title: "Local to Central Kansas",
         description:
-          "Built for the local climate, codes, and conditions of our service area.",
+          "Based in Haven and serving Reno County, Hutchinson, Wichita, and the towns in between.",
       },
     ],
     image: "about-preview",
-    badge: { value: "15+", label: "Years of Experience" },
+    badge: { value: "5.0★", label: "Google Rating" },
   },
   services: {
-    eyebrow: "Our Services",
-    heading: "Our Services in Springfield, IL",
+    eyebrow: "What We Do",
+    heading: "Fencing for Homes, Farms, Ranches & Business",
     subtitle:
-      "Comprehensive solutions tailored to your needs, delivered with precision and care.",
+      "From a backyard privacy fence to miles of livestock fence, we build it right the first time.",
   },
   standards: {
     eyebrow: "Our Approach",
-    heading: "Standards Every Springfield Project Deserves",
+    heading: "Fences Built to Beat Kansas Weather",
     paragraphs: [
-      "Every project is held to a relentless standard of execution covering initial planning through final completion. This isn't just a marketing promise — it forms the daily operational backbone of every project we manage.",
-      "The quality of professional work is determined long before the finishing touches. It lives in the precision of the schedule, the coordination of complex tasks, and the rigorous oversight that only an owner-led team can guarantee.",
+      "Out here a fence has to stand up to hard wind, ice storms, dry summers, and ground that shifts with every freeze and thaw. We account for all of it — setting posts deep, bracing corners and gates, and pulling every line tight so your fence stays straight for years, not months.",
+      "The difference between a fence that lasts and one that leans is in the details most people never see. We get those details right on every job, whether it's a city backyard or a working pasture.",
     ],
     checklist: [
-      "Documented scope of work before every phase",
-      "Daily coordination with all team members",
-      "Quality-first sequencing and critical hold points",
-      "Clean, organized work sites maintained daily",
-      "Safety protocols enforced rigorously",
-      "Inspection readiness at every checkpoint",
-      "Transparent budget tracking and updates",
-      "Owner-present milestone walkthroughs",
+      "Posts set below the frost line in concrete",
+      "Corners and gates braced against sag",
+      "Tight, level lines on every run",
+      "Materials chosen for your site and use",
+      "Clean job sites, every single day",
+      "Utility locates handled before we dig",
+      "Final walkthrough with you before we leave",
+      "Backed by a 5-year workmanship warranty",
     ],
     image: "standards-feature",
-    badge: { value: "250+", label: "Projects Delivered" },
+    badge: { value: "5-Year", label: "Warranty" },
   },
   process: {
-    eyebrow: "Our Process",
-    heading: "Our Service Process in Springfield, IL",
+    eyebrow: "How It Works",
+    heading: "Getting a Fence Should Be Simple",
     subtitle:
-      "A proven process refined over 15 years to deliver exceptional results, every time.",
+      "From your first call to the final walkthrough, here's how we keep it easy.",
   },
   testimonials: {
-    eyebrow: "Client Reviews",
-    heading: "What Our Springfield Clients Say",
+    eyebrow: "Reviews",
+    heading: "What Central Kansas Says About Us",
     subtitle:
-      "Don't just take our word for it. Here's what our clients have to say about working with us.",
+      "A 5.0-star Google rating, built one satisfied neighbor at a time.",
   },
   faq: {
     eyebrow: "FAQ",
-    heading: "Frequently Asked Questions",
+    heading: "Fence Questions, Answered",
     subtitle:
-      "Answers to common questions about our services, process, and what to expect.",
+      "A few of the things Central Kansas property owners ask us most.",
   },
   cta: {
-    heading: "Ready to Start Your Springfield Project?",
-    text: "Schedule a free consultation today and discover why hundreds of clients trust us with their most important projects.",
-    primaryCta: { label: "Get a Quote", href: "/contact" },
-    secondaryCta: { label: "Call (555) 123-4567", href: "tel:+15551234567" },
+    heading: "Ready to Get Started on Your Fence?",
+    text: "Call Cody for a free, no-pressure estimate — or send us your project details and we'll get right back to you.",
+    primaryCta: { label: "Get a Free Quote", href: "/contact" },
+    secondaryCta: { label: "Call (620) 899-5595", href: "tel:+16208995595" },
   },
 } as const;

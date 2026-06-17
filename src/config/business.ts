@@ -1,72 +1,127 @@
 export const businessConfig = {
-  phone: "(555) 123-4567",
-  phoneRaw: "+15551234567",
-  email: "info@premierservices.com",
+  phone: "(620) 899-5595",
+  phoneRaw: "+16208995595",
+  email: "codeyoder@icloud.com",
+  ownerName: "Cody Yoder",
+
   address: {
-    street: "1234 Main Street",
-    city: "Springfield",
-    state: "IL",
-    zip: "62701",
-    full: "1234 Main Street, Springfield, IL 62701",
+    // Service-area business — no public street address.
+    street: "",
+    city: "Haven",
+    state: "KS",
+    zip: "67543",
+    full: "Haven, KS 67543",
   },
+
   hours: {
-    display: "Mon-Sat: 8 AM - 6 PM",
+    display: "Open Daily · 8 AM – 6 PM",
+    short: "Open 7 days a week, 8 AM – 6 PM",
     structured: [
-      { days: "Mo-Sa", opens: "08:00", closes: "18:00" },
+      {
+        dayOfWeek: [
+          "Monday",
+          "Tuesday",
+          "Wednesday",
+          "Thursday",
+          "Friday",
+          "Saturday",
+          "Sunday",
+        ],
+        opens: "08:00",
+        closes: "18:00",
+      },
     ],
   },
 
+  // Positioning line — replaces the old "Wichita, KS and surrounding areas".
+  positioningLine:
+    "Located in Haven, KS — serving Reno County, Wichita, Hutchinson, and Central Kansas communities.",
+
+  // ===== TRUST FACTS =====
+  yearEstablished: 2019,
+  yearsExperience: "5+",
+  warrantyYears: 5,
+  rating: { value: "5.0", count: 17 },
+  googleReviewUrl: "https://maps.app.goo.gl/AHTaffhixGmUVW5J6",
+
+  // ===== PAYMENTS =====
+  paymentMethods: [
+    "Cash",
+    "Check",
+    "Visa",
+    "Mastercard",
+    "American Express",
+    "Discover",
+    "Financing available",
+  ],
+
   // ===== SERVICE AREAS =====
-  // Primary list used in footer, structured data, etc.
+  // Primary list — used in footer + LocalBusiness schema areaServed.
   serviceAreas: [
-    "Springfield",
-    "Shelbyville",
-    "Capital City",
-    "Ogdenville",
-    "North Haverbrook",
+    "Haven",
+    "Hutchinson",
+    "South Hutchinson",
+    "Buhler",
+    "Nickerson",
+    "Yoder",
+    "Pretty Prairie",
+    "Partridge",
+    "Arlington",
+    "Plevna",
+    "Mount Hope",
+    "Burrton",
+    "Halstead",
+    "Newton",
+    "Kingman",
+    "Sterling",
+    "Lyons",
+    "McPherson",
+    "Maize",
+    "Wichita",
+    "Pratt",
+    "Stafford",
   ],
 
-  // Expanded city list for the Service Areas section on the homepage.
-  // Each city can optionally link to a dedicated area page in the future.
+  // Expanded list for the Service Areas section — each links to its page.
   serviceAreaCities: [
-    { name: "Springfield", href: "" },
-    { name: "Shelbyville", href: "" },
-    { name: "Capital City", href: "" },
-    { name: "Ogdenville", href: "" },
-    { name: "North Haverbrook", href: "" },
-    { name: "Cypress Creek", href: "" },
-    { name: "Brockway", href: "" },
-    { name: "East Springfield", href: "" },
-    { name: "West Springfield", href: "" },
-    { name: "Shelbyville Heights", href: "" },
-    { name: "Springfield Junction", href: "" },
-    { name: "Waverly", href: "" },
+    { name: "Haven", href: "/service-areas/haven-ks" },
+    { name: "Hutchinson", href: "/service-areas/hutchinson-ks" },
+    { name: "South Hutchinson", href: "/service-areas/south-hutchinson-ks" },
+    { name: "Buhler", href: "/service-areas/buhler-ks" },
+    { name: "Nickerson", href: "/service-areas/nickerson-ks" },
+    { name: "Yoder", href: "/service-areas/yoder-ks" },
+    { name: "Pretty Prairie", href: "/service-areas/pretty-prairie-ks" },
+    { name: "Partridge", href: "/service-areas/partridge-ks" },
+    { name: "Arlington", href: "/service-areas/arlington-ks" },
+    { name: "Plevna", href: "/service-areas/plevna-ks" },
+    { name: "Mount Hope", href: "/service-areas/mount-hope-ks" },
+    { name: "Burrton", href: "/service-areas/burrton-ks" },
+    { name: "Halstead", href: "/service-areas/halstead-ks" },
+    { name: "Newton", href: "/service-areas/newton-ks" },
+    { name: "Kingman", href: "/service-areas/kingman-ks" },
+    { name: "Sterling", href: "/service-areas/sterling-ks" },
+    { name: "Lyons", href: "/service-areas/lyons-ks" },
+    { name: "McPherson", href: "/service-areas/mcpherson-ks" },
+    { name: "Maize", href: "/service-areas/maize-ks" },
+    { name: "Wichita", href: "/service-areas/wichita-ks" },
+    { name: "Pratt", href: "/service-areas/pratt-ks" },
+    { name: "Stafford", href: "/service-areas/stafford-ks" },
   ],
 
-  // Service areas section content
-  serviceAreasHeading: "Serving Springfield & Central Illinois",
+  serviceAreasHeading: "Serving Reno County & Central Kansas",
   serviceAreasSubtitle:
-    "and surrounding areas including Shelbyville, Capital City, and the greater metro region.",
+    "Based in Haven and working throughout Hutchinson, Wichita, Newton, McPherson, and the small towns in between.",
 
-  // ===== MAP EMBED =====
-  // If you have a Google Business Profile, paste the full embed src URL here.
-  // To get it: Google Maps → search your business → Share → Embed a map → copy the src="" value
-  // If left empty, falls back to a generic map centered on the business address city.
+  // ===== MAP EMBED ===== (River Creek Fence LLC — Google Business Profile)
   googleBusinessMapEmbed:
-    "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3320.355408359939!2d-117.85053459999999!3d33.6738603!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x80dce7a447c59297%3A0x47ae50923ef7bc34!2sMax%20Market%20Pros!5e0!3m2!1sen!2sus!4v1775504357479!5m2!1sen!2sus",
+    "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d403536.74662575894!2d-97.5594215!3d37.7986905!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x947f84e6f34a78d%3A0xb168aaf107f186b9!2sRiver%20Creek%20Fence%20LLC!5e0!3m2!1sen!2sus!4v1781710604333!5m2!1sen!2sus",
 
-  // ===== FORM EMBED =====
-  // Paste your iframe embed URL here (e.g. from Jobber, HouseCall Pro, GoHighLevel, Jotform, etc.)
-  // This is used on the contact page and the "Get a Quote" section across all pages.
-  // Leave empty to show a styled placeholder.
-  formEmbedUrl: "",
-  formEmbedHeight: "600px",
+  // ===== FORM EMBED ===== (GoHighLevel / LeadConnector)
+  formEmbedUrl: "https://api.leadconnectorhq.com/widget/form/owDLf1RM9julZuk5cMfJ",
+  formEmbedId: "inline-owDLf1RM9julZuk5cMfJ",
+  formEmbedHeight: "720px",
 
-  coordinates: { lat: 39.7817, lng: -89.6501 },
-  yearEstablished: 2009,
-  yearsExperience: "15+",
-  projectsCompleted: "250+",
-  ownerName: "John Smith",
+  coordinates: { lat: 37.8997, lng: -97.7817 },
 } as const;
 
 // Helper: returns the map embed URL — Google Business embed if set, otherwise a generic city map
@@ -74,7 +129,6 @@ export function getMapEmbedUrl(): string {
   if (businessConfig.googleBusinessMapEmbed) {
     return businessConfig.googleBusinessMapEmbed;
   }
-  // Fallback: generic Google Maps embed centered on the business city
   const { city, state } = businessConfig.address;
   return `https://www.google.com/maps/embed/v1/place?key=&q=${encodeURIComponent(`${city}, ${state}`)}`;
 }

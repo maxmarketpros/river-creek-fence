@@ -1,32 +1,34 @@
 ---
+import { Phone, Mail, MapPin, Clock, Star } from "lucide-react";
 import Layout from "@/layouts/Layout.astro";
 import PageHero from "@/components/sections/PageHero.astro";
-import QuoteSection from "@/components/sections/QuoteSection.astro";
 import FAQSection from "@/components/sections/FAQSection.astro";
 import CTASection from "@/components/sections/CTASection.astro";
+import Container from "@/components/ui/Container.astro";
+import FormEmbed from "@/components/ui/FormEmbed.astro";
+import MapEmbed from "@/components/ui/MapEmbed.astro";
 import { contactFaqKeys } from "@/config/faqs";
 import { businessConfig } from "@/config/business";
-import { imageManifest } from "@/config/images";
 import { generatePageMetadata } from "@/lib/metadata";
 import { generateBreadcrumbSchema } from "@/lib/structured-data";
-import { existsSync } from "node:fs";
-import { fileURLToPath } from "node:url";
 
 const meta = generatePageMetadata({
-  title: "Contact Us",
-  description: `Get in touch with our team for a free consultation. Call ${businessConfig.phone} or fill out our contact form.`,
+  title: "Contact River Creek Fence | Free Estimate in Central Kansas",
+  description: `Get in touch with River Creek Fence for a free fence estimate. Call ${businessConfig.phone} or send us your project details. Serving Haven, Hutchinson, Wichita & Central Kansas.`,
   path: "/contact",
 });
-
-const heroImg = imageManifest["contact-hero"];
-const publicDir = fileURLToPath(new URL("../../public", import.meta.url));
-const heroPreload =
-  heroImg && existsSync(publicDir + heroImg.src) ? heroImg.src : undefined;
 
 const breadcrumbSchema = generateBreadcrumbSchema([
   { name: "Home", href: "/" },
   { name: "Contact", href: "/contact" },
 ]);
+
+const details = [
+  { icon: Phone, label: "Call or Text", value: businessConfig.phone, href: `tel:${businessConfig.phoneRaw}` },
+  { icon: Mail, label: "Email", value: businessConfig.email, href: `mailto:${businessConfig.email}` },
+  { icon: MapPin, label: "Based In", value: businessConfig.address.full, href: null },
+  { icon: Clock, label: "Hours", value: businessConfig.hours.display, href: null },
+];
 ---
 
 <Layout
@@ -35,7 +37,6 @@ const breadcrumbSchema = generateBreadcrumbSchema([
   canonical={meta.canonical}
   ogImage={meta.ogImage}
   ogTitle={meta.ogTitle}
-  preloadImage={heroPreload}
 >
   <script
     type="application/ld+json"
@@ -44,33 +45,109 @@ const breadcrumbSchema = generateBreadcrumbSchema([
   />
 
   <PageHero
-    heading="Contact Us"
-    subtitle="Ready to start your project? Get in touch and let's discuss how we can help."
+    heading="Get in Touch"
+    subtitle="Ready for a fence? Call Cody or send your project details and we'll get you a free, no-pressure estimate."
     imageKey="contact-hero"
-    breadcrumbs={[
-      { label: "Home", href: "/" },
-      { label: "Contact" },
-    ]}
-    primaryCta={{ label: "Get a Quote", href: "#quote" }}
-    secondaryCta={{ label: "Call (555) 123-4567", href: "tel:+15551234567" }}
+    breadcrumbs={[{ label: "Home", href: "/" }, { label: "Contact" }]}
+    primaryCta={{ label: "Call (620) 899-5595", href: `tel:${businessConfig.phoneRaw}` }}
+    secondaryCta={{ label: "Jump to Form", href: "#quote" }}
   />
 
-  <QuoteSection id="quote" />
+  <section class="section-padding">
+    <Container>
+      <div class="grid gap-12 lg:grid-cols-2 lg:gap-16">
+        {/* Left: details */}
+        <div>
+          <span class="mb-3 inline-block rounded-full bg-primary-100 px-4 py-1.5 text-xs font-semibold uppercase tracking-widest text-primary-800">
+            Free Estimates
+          </span>
+          <h2 class="text-3xl font-bold text-foreground md:text-4xl">
+            Let's Talk About Your Fence
+          </h2>
+          <p class="mt-4 text-base leading-relaxed text-muted md:text-lg">
+            {businessConfig.positioningLine} The fastest way to get started is a
+            quick call — but the form works great too, and we usually reply the
+            same day.
+          </p>
+
+          <div class="mt-8 space-y-4">
+            {
+              details.map((d) => (
+                <div class="flex items-center gap-4 rounded-2xl border border-border bg-white p-5 shadow-card">
+                  <div class="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-primary-100">
+                    <d.icon className="h-6 w-6 text-primary-700" />
+                  </div>
+                  <div>
+                    <p class="text-xs font-semibold uppercase tracking-wider text-muted">
+                      {d.label}
+                    </p>
+                    {d.href ? (
+                      <a
+                        href={d.href}
+                        class="text-lg font-bold text-foreground transition-colors hover:text-primary-700"
+                      >
+                        {d.value}
+                      </a>
+                    ) : (
+                      <p class="text-lg font-bold text-foreground">{d.value}</p>
+                    )}
+                  </div>
+                </div>
+              ))
+            }
+          </div>
+
+          <a
+            href={businessConfig.googleReviewUrl}
+            target="_blank"
+            rel="noopener"
+            class="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-foreground"
+          >
+            <span class="flex">
+              {Array.from({ length: 5 }).map(() => (
+                <Star className="h-4 w-4 fill-secondary-400 text-secondary-400" />
+              ))}
+            </span>
+            Rated 5.0 on Google
+          </a>
+        </div>
+
+        {/* Right: form */}
+        <div id="quote" class="scroll-mt-24">
+          <div class="rounded-2xl border border-border bg-white p-4 shadow-card md:p-6">
+            <h2 class="mb-4 text-xl font-bold text-foreground">
+              Request a Free Estimate
+            </h2>
+            <FormEmbed class="min-h-[700px]" />
+          </div>
+        </div>
+      </div>
+    </Container>
+  </section>
+
+  {/* Map */}
+  <section class="pb-16 md:pb-24">
+    <Container>
+      <div class="overflow-hidden rounded-2xl border border-border shadow-card">
+        <MapEmbed class="h-[360px] w-full md:h-[440px]" />
+      </div>
+    </Container>
+  </section>
 
   <FAQSection
-    eyebrow="Questions"
-    heading="Before You Reach Out"
-    subtitle="Answers to common questions about getting started."
+    eyebrow="Before You Reach Out"
+    heading="Quick Answers"
     faqKeys={contactFaqKeys}
     bgColor="surface"
   />
 
   <CTASection
     heading="Prefer to Talk?"
-    text={`Give us a call at ${businessConfig.phone}. We're available ${businessConfig.hours.display}.`}
+    text={`Give Cody a call at ${businessConfig.phone}. We're open ${businessConfig.hours.display.toLowerCase()}.`}
     primaryCta={{
       label: `Call ${businessConfig.phone}`,
       href: `tel:${businessConfig.phoneRaw}`,
     }}
+    secondaryCta={{ label: "View Our Services", href: "/services" }}
   />
 </Layout>

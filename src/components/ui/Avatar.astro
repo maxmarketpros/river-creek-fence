@@ -1,0 +1,42 @@
+---
+import { cn } from "@/lib/utils";
+
+interface Props {
+  name: string;
+  class?: string;
+}
+
+const { name, class: className } = Astro.props as Props;
+
+const initials = name
+  .split(/\s+/)
+  .map((w) => w[0])
+  .slice(0, 2)
+  .join("")
+  .toUpperCase();
+
+const palettes = [
+  { bg: "#a5c021", text: "#0a0a0a" },
+  { bg: "#0a0a0a", text: "#a5c021" },
+  { bg: "#5f7016", text: "#ffffff" },
+  { bg: "#47540f", text: "#ffffff" },
+  { bg: "#2a2a2a", text: "#ffffff" },
+];
+
+let hash = 0;
+for (let i = 0; i < name.length; i++) {
+  hash = (hash * 31 + name.charCodeAt(i)) >>> 0;
+}
+const p = palettes[hash % palettes.length];
+---
+
+<span
+  class={cn(
+    "flex h-11 w-11 shrink-0 items-center justify-center rounded-full text-sm font-bold",
+    className,
+  )}
+  style={`background:${p.bg};color:${p.text}`}
+  aria-hidden="true"
+>
+  {initials}
+</span>

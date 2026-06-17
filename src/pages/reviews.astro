@@ -1,0 +1,75 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import PageHero from "@/components/sections/PageHero.astro";
+import ReviewsGrid from "@/components/sections/ReviewsGrid.astro";
+import CTASection from "@/components/sections/CTASection.astro";
+import QuoteSection from "@/components/sections/QuoteSection.astro";
+import { reviews } from "@/config/reviews";
+import { businessConfig } from "@/config/business";
+import { generatePageMetadata } from "@/lib/metadata";
+import {
+  generateBreadcrumbSchema,
+  generateReviewSchema,
+} from "@/lib/structured-data";
+
+const meta = generatePageMetadata({
+  title: "Reviews | River Creek Fence — 5.0★ in Central Kansas",
+  description:
+    "Read what Central Kansas homeowners, farmers, and ranchers say about River Creek Fence. Rated 5.0 on Google for quality fence installation and repair across Reno County.",
+  path: "/reviews",
+});
+
+const breadcrumbSchema = generateBreadcrumbSchema([
+  { name: "Home", href: "/" },
+  { name: "Reviews", href: "/reviews" },
+]);
+
+const reviewSchema = generateReviewSchema(reviews);
+---
+
+<Layout
+  title={meta.title}
+  description={meta.description}
+  canonical={meta.canonical}
+  ogImage={meta.ogImage}
+  ogTitle={meta.ogTitle}
+>
+  <script
+    type="application/ld+json"
+    is:inline
+    set:html={JSON.stringify(breadcrumbSchema)}
+  />
+  <script
+    type="application/ld+json"
+    is:inline
+    set:html={JSON.stringify(reviewSchema)}
+  />
+
+  <PageHero
+    heading="Reviews from Across Central Kansas"
+    subtitle={`A 5.0-star rating built one fence at a time. Here's what our ${businessConfig.address.city}-area customers have to say.`}
+    imageKey="stock-17"
+    breadcrumbs={[{ label: "Home", href: "/" }, { label: "Reviews" }]}
+    primaryCta={{ label: "Get a Free Quote", href: "/contact" }}
+    secondaryCta={{ label: "Write a Review", href: businessConfig.googleReviewUrl }}
+  />
+
+  <ReviewsGrid
+    eyebrow="Reviews"
+    heading="What Our Customers Say"
+    subtitle="Every review below is from a verified Google review of River Creek Fence."
+    bgColor="white"
+  />
+
+  <CTASection
+    heading="Ready to Join Our Happy Customers?"
+    text="Get a free estimate and find out why Central Kansas keeps recommending River Creek Fence."
+    primaryCta={{ label: "Get a Free Quote", href: "/contact" }}
+    secondaryCta={{
+      label: `Call ${businessConfig.phone}`,
+      href: `tel:${businessConfig.phoneRaw}`,
+    }}
+  />
+
+  <QuoteSection />
+</Layout>

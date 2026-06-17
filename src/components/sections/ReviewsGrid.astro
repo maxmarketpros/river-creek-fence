@@ -1,0 +1,71 @@
+---
+import { Star, ArrowUpRight } from "lucide-react";
+import Container from "@/components/ui/Container.astro";
+import SectionHeading from "@/components/ui/SectionHeading.astro";
+import ReviewCard from "@/components/ui/ReviewCard.astro";
+import GoogleReviewBadge from "@/components/ui/GoogleReviewBadge.astro";
+import Button from "@/components/ui/Button.astro";
+import { reviews as allReviews, type Review } from "@/config/reviews";
+import { businessConfig } from "@/config/business";
+import { cn } from "@/lib/utils";
+
+interface Props {
+  items?: Review[];
+  limit?: number;
+  eyebrow?: string;
+  heading?: string;
+  subtitle?: string;
+  bgColor?: "white" | "surface";
+  showButtons?: boolean;
+  class?: string;
+}
+
+const {
+  items,
+  limit,
+  eyebrow = "Reviews",
+  heading = "What Central Kansas Says About Us",
+  subtitle,
+  bgColor = "surface",
+  showButtons = true,
+  class: className,
+} = Astro.props as Props;
+
+const list = (items ?? allReviews).slice(0, limit ?? (items ?? allReviews).length);
+---
+
+<section
+  class={cn("section-padding", bgColor === "surface" && "bg-surface", className)}
+>
+  <Container>
+    <SectionHeading
+      eyebrow={eyebrow}
+      heading={heading}
+      subtitle={subtitle}
+      align="center"
+    />
+
+    <div class="mb-10 flex justify-center">
+      <GoogleReviewBadge variant="light" />
+    </div>
+
+    <div class="columns-1 gap-6 md:columns-2 lg:columns-3">
+      {list.map((review) => <ReviewCard review={review} />)}
+    </div>
+
+    {
+      showButtons && (
+        <div class="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
+          <Button href={businessConfig.googleReviewUrl}>
+            Write a Review
+            <Star slot="icon" className="h-5 w-5" />
+          </Button>
+          <Button href={businessConfig.googleReviewUrl} variant="outline">
+            Read More Reviews on Google
+            <ArrowUpRight slot="icon" className="h-5 w-5" />
+          </Button>
+        </div>
+      )
+    }
+  </Container>
+</section>

@@ -11,16 +11,29 @@ interface Props {
 const { class: className, height } = Astro.props as Props;
 const embedUrl = businessConfig.formEmbedUrl;
 const embedHeight = height || businessConfig.formEmbedHeight;
+const formId = businessConfig.formEmbedId;
 ---
 
 {
   embedUrl ? (
-    <iframe
-      src={embedUrl}
-      title="Request a quote"
-      class={cn("w-full border-0 rounded-xl", className)}
-      style={`height: ${embedHeight}`}
-    />
+    <>
+      <iframe
+        src={embedUrl}
+        title="Request a free fence estimate"
+        id={formId}
+        data-layout="{'id':'INLINE'}"
+        data-trigger-type="alwaysShow"
+        data-activation-type="alwaysActivated"
+        data-deactivation-type="neverDeactivate"
+        data-form-name="River Creek Fence — Request a Quote"
+        data-height={parseInt(embedHeight)}
+        data-layout-iframe-id={formId}
+        data-form-id={businessConfig.formEmbedId.replace("inline-", "")}
+        class={cn("w-full border-0 rounded-xl bg-white", className)}
+        style={`height: ${embedHeight}`}
+      />
+      <script is:inline src="https://link.msgsndr.com/js/form_embed.js" />
+    </>
   ) : (
     <div
       class={cn(
@@ -30,24 +43,9 @@ const embedHeight = height || businessConfig.formEmbedHeight;
       style={`height: ${embedHeight}`}
     >
       <div class="flex h-16 w-16 items-center justify-center rounded-full bg-primary-50">
-        <FileText className="h-8 w-8 text-primary-400" />
+        <FileText className="h-8 w-8 text-primary-700" />
       </div>
-      <div class="text-center">
-        <p class="text-sm font-semibold text-foreground">
-          Form Embed Placeholder
-        </p>
-        <p class="mt-1 max-w-xs text-xs text-foreground-light">
-          Set{" "}
-          <code class="rounded bg-surface-dark px-1 py-0.5 text-xs">
-            formEmbedUrl
-          </code>{" "}
-          in{" "}
-          <code class="rounded bg-surface-dark px-1 py-0.5 text-xs">
-            business.ts
-          </code>{" "}
-          to display your booking or quote form here.
-        </p>
-      </div>
+      <p class="text-sm font-semibold text-foreground">Quote form loading…</p>
     </div>
   )
 }

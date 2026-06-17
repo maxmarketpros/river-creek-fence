@@ -1,0 +1,72 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import PageHero from "@/components/sections/PageHero.astro";
+import Gallery from "@/components/sections/Gallery.astro";
+import CTASection from "@/components/sections/CTASection.astro";
+import QuoteSection from "@/components/sections/QuoteSection.astro";
+import Container from "@/components/ui/Container.astro";
+import SectionHeading from "@/components/ui/SectionHeading.astro";
+import { businessConfig } from "@/config/business";
+import { generatePageMetadata } from "@/lib/metadata";
+import { generateBreadcrumbSchema } from "@/lib/structured-data";
+
+const meta = generatePageMetadata({
+  title: "Project Gallery | River Creek Fence — Central Kansas",
+  description:
+    "Browse fence projects from River Creek Fence — wood privacy, ranch rail, pipe, chain link, and farm fencing across Reno County and Central Kansas. Get a free estimate today.",
+  path: "/gallery",
+});
+
+const breadcrumbSchema = generateBreadcrumbSchema([
+  { name: "Home", href: "/" },
+  { name: "Project Gallery", href: "/gallery" },
+]);
+---
+
+<Layout
+  title={meta.title}
+  description={meta.description}
+  canonical={meta.canonical}
+  ogImage={meta.ogImage}
+  ogTitle={meta.ogTitle}
+>
+  <script
+    type="application/ld+json"
+    is:inline
+    set:html={JSON.stringify(breadcrumbSchema)}
+  />
+
+  <PageHero
+    heading="Project Gallery"
+    subtitle="A look at the kinds of fences we build for homes, farms, ranches, and businesses across Central Kansas."
+    imageKey="stock-13"
+    breadcrumbs={[{ label: "Home", href: "/" }, { label: "Project Gallery" }]}
+    primaryCta={{ label: "Get a Free Quote", href: "/contact" }}
+    secondaryCta={{
+      label: `Call ${businessConfig.phone}`,
+      href: `tel:${businessConfig.phoneRaw}`,
+    }}
+  />
+
+  <section class="pt-16 md:pt-24">
+    <Container>
+      <SectionHeading
+        eyebrow="Our Work"
+        heading="Fences Built Across Central Kansas"
+        subtitle="Tap any photo to view it larger. Every job gets the same attention to detail, whether it's a backyard in Hutchinson or a pasture outside Haven."
+        align="center"
+      />
+    </Container>
+  </section>
+
+  <Gallery />
+
+  <CTASection
+    heading="See Something You Like?"
+    text="Let's build yours next. Get a free, no-pressure estimate from a local crew."
+    primaryCta={{ label: "Get a Free Quote", href: "/contact" }}
+    secondaryCta={{ label: "View Our Services", href: "/services" }}
+  />
+
+  <QuoteSection />
+</Layout>

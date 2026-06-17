@@ -1,13 +1,16 @@
 export const siteConfig = {
-  name: "Premier Services",
-  tagline: "Professional Services in Springfield, IL",
+  name: "River Creek Fence",
+  tagline: "Fence Company in Haven, KS & Central Kansas",
   description:
-    "Professional service company in Springfield, IL delivering premium quality work with transparent pricing, owner-led accountability, and over 15 years of local experience.",
-  url: "https://example.com",
+    "River Creek Fence is a Central Kansas fence company in Haven, KS — built on real farm experience. We install and repair residential, ranch, farm, and commercial fencing across Reno County, Hutchinson, Wichita, and the surrounding communities. Free estimates and a 5-year warranty.",
+  url: "https://rivercreekfenceks.com",
   ogImage: "/images/og-image.jpg",
   social: {
-    facebook: "https://facebook.com/",
-    instagram: "https://instagram.com/",
-    google: "https://g.page/",
+    google: "https://maps.app.goo.gl/AHTaffhixGmUVW5J6",
+    facebook:
+      "https://www.facebook.com/people/Rivercreek-Fence/61583242478907/",
+    yelp: "https://www.yelp.com/biz/rivercreek-fence-haven",
+    homeadvisor:
+      "https://www.homeadvisor.com/rated.rivercreekfence.145551851.html",
   },
 } as const;

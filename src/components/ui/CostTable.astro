@@ -1,0 +1,47 @@
+---
+import { cn } from "@/lib/utils";
+
+export interface CostRow {
+  type: string;
+  range: string;
+  notes?: string;
+}
+
+interface Props {
+  rows: CostRow[];
+  unitLabel?: string;
+  class?: string;
+}
+
+const { rows, unitLabel = "Installed price range", class: className } =
+  Astro.props as Props;
+---
+
+<div class={cn("overflow-hidden rounded-2xl border border-border", className)}>
+  <table class="w-full border-collapse text-left text-sm">
+    <thead>
+      <tr class="bg-black text-white">
+        <th class="px-4 py-3 font-bold md:px-6">Fence Type</th>
+        <th class="px-4 py-3 font-bold md:px-6">{unitLabel}</th>
+        <th class="hidden px-4 py-3 font-bold md:table-cell md:px-6">Good to know</th>
+      </tr>
+    </thead>
+    <tbody>
+      {
+        rows.map((row, i) => (
+          <tr class={cn("border-t border-border", i % 2 === 1 && "bg-surface")}>
+            <td class="px-4 py-3 font-semibold text-foreground md:px-6">
+              {row.type}
+            </td>
+            <td class="whitespace-nowrap px-4 py-3 font-bold text-primary-700 md:px-6">
+              {row.range}
+            </td>
+            <td class="hidden px-4 py-3 text-muted md:table-cell md:px-6">
+              {row.notes}
+            </td>
+          </tr>
+        ))
+      }
+    </tbody>
+  </table>
+</div>

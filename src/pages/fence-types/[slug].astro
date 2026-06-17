@@ -1,0 +1,66 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import PageHero from "@/components/sections/PageHero.astro";
+import ComingSoon from "@/components/sections/ComingSoon.astro";
+import QuoteSection from "@/components/sections/QuoteSection.astro";
+import { fenceTypes } from "@/config/catalog";
+import { generatePageMetadata } from "@/lib/metadata";
+import { generateBreadcrumbSchema } from "@/lib/structured-data";
+
+export function getStaticPaths() {
+  return fenceTypes.map((item) => ({ params: { slug: item.slug }, props: { item } }));
+}
+
+const { item } = Astro.props;
+const h1 = `${item.title} in Central Kansas`;
+
+const meta = generatePageMetadata({
+  title: item.title,
+  description: `${item.title} by River Creek Fence — serving Haven, Hutchinson, Wichita, and Reno County, KS. Free estimates and a 5-year warranty from a fence company with real farm experience.`,
+  path: `/fence-types/${item.slug}`,
+});
+
+const breadcrumbSchema = generateBreadcrumbSchema([
+  { name: "Home", href: "/" },
+  { name: "Fence Types", href: "/services" },
+  { name: item.title, href: `/fence-types/${item.slug}` },
+]);
+
+const related = [
+  { label: "Fence Installation", href: "/services/fence-installation" },
+  { label: "Privacy Fence", href: "/services/privacy-fence-installation" },
+  { label: "Fence Cost Guide", href: "/fence-cost-guide" },
+  { label: "Get a Free Quote", href: "/contact" },
+];
+---
+
+<Layout
+  title={meta.title}
+  description={meta.description}
+  canonical={meta.canonical}
+  ogImage={meta.ogImage}
+  ogTitle={meta.ogTitle}
+>
+  <script
+    type="application/ld+json"
+    is:inline
+    set:html={JSON.stringify(breadcrumbSchema)}
+  />
+
+  <PageHero
+    heading={h1}
+    subtitle={`Durable ${item.title.toLowerCase()} built for Kansas wind, weather, and the way you use your property.`}
+    imageKey={`${item.slug}-hero`}
+    breadcrumbs={[
+      { label: "Home", href: "/" },
+      { label: "Services", href: "/services" },
+      { label: item.title },
+    ]}
+    primaryCta={{ label: "Get a Free Quote", href: "/contact" }}
+    secondaryCta={{ label: "View Our Services", href: "/services" }}
+  />
+
+  <ComingSoon title={item.title} relatedLinks={related} />
+
+  <QuoteSection />
+</Layout>
