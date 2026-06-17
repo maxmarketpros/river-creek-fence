@@ -99,7 +99,7 @@ const config: FenceTypeConfig = {
   galleryHeading: "Recent Wrought Iron Fence Installation Projects",
 
   costSnapshot: {
-    range: "$35–$65",
+    range: "$35–$75",
     unit: "per linear foot, installed",
     summary:
       "Most installed wrought iron fences in Central Kansas land in this range. Plain panels run toward the low end, while taller heights, ornamental scrollwork, and custom gates push toward the top.",
@@ -159,7 +159,7 @@ const config: FenceTypeConfig = {
     {
       question: "How much does a wrought iron fence cost in Central Kansas?",
       answer:
-        "Most installed wrought iron fences run about $35–$65 per linear foot here, depending on height, picket gauge, how much ornamental detail you want, and the gates. The only way to get a real number is a free on-site estimate — we'll measure, talk design, and hand you a written price with no pressure.",
+        "Most installed wrought iron fences run about $35–$75 per linear foot here, depending on height, picket gauge, how much ornamental detail you want, and the gates. The only way to get a real number is a free on-site estimate — we'll measure, talk design, and hand you a written price with no pressure.",
     },
     {
       question: "Will an iron fence hold up to Kansas wind?",

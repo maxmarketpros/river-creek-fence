@@ -82,7 +82,7 @@ export const footerGroups: FooterGroup[] = [
       { label: "Financing & Payments", href: "/fence-financing" },
       { label: "Fence Maintenance Guide", href: "/fence-maintenance-guide" },
       { label: "Fence FAQ", href: "/fence-faq" },
-      { label: "Fence Materials", href: "/materials" },
+      { label: "Fence Materials", href: "/materials/fence-materials-central-kansas" },
       { label: "Contact", href: "/contact" },
     ],
   },

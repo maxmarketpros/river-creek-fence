@@ -96,7 +96,7 @@ const config: FenceTypeConfig = {
   },
 
   costSnapshot: {
-    range: "$8–$30",
+    range: "$8–$35",
     unit: "per linear foot, installed",
     summary:
       "Horse fencing covers a wide range depending on the system. No-climb woven mesh and smooth high-tensile sit toward the lower-to-middle of this range, while four-rail wood or vinyl ranch rail and continuous pipe land at the higher end. Gates run $200–$2,500+ each.",
@@ -161,7 +161,7 @@ const config: FenceTypeConfig = {
     {
       question: "How much does horse fencing cost in Central Kansas?",
       answer:
-        "Installed horse fencing generally runs about $8–$30 per linear foot depending on the system — no-climb mesh and smooth wire toward the lower-to-middle, four-rail wood or vinyl and pipe toward the top, plus $200–$2,500+ per gate. The only way to get a real number is a free on-site estimate, where we measure, talk options, and hand you a written price with no pressure.",
+        "Installed horse fencing generally runs about $8–$35 per linear foot depending on the system — no-climb mesh and smooth wire toward the lower-to-middle, four-rail wood or vinyl and pipe toward the top, plus $200–$2,500+ per gate. The only way to get a real number is a free on-site estimate, where we measure, talk options, and hand you a written price with no pressure.",
     },
   ],
 

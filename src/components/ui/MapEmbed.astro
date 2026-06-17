@@ -4,16 +4,24 @@ import { cn } from "@/lib/utils";
 
 interface Props {
   class?: string;
+  /** When set, centers the map on this place (e.g. "Yoder, KS") via a keyless embed. */
+  query?: string;
+  /** Optional iframe title override (for per-city accessibility). */
+  title?: string;
 }
 
-const { class: className } = Astro.props as Props;
-const embedUrl = getMapEmbedUrl();
+const { class: className, query, title } = Astro.props as Props;
 const { city, state } = businessConfig.address;
+const embedUrl = query
+  ? `https://www.google.com/maps?q=${encodeURIComponent(query)}&z=12&output=embed`
+  : getMapEmbedUrl();
+const iframeTitle =
+  title ?? `Map showing ${query ?? `${city}, ${state}`} service area`;
 ---
 
 <iframe
   src={embedUrl}
-  title={`Map showing ${city}, ${state} service area`}
+  title={iframeTitle}
   class={cn("w-full border-0", className)}
   allowfullscreen
   loading="lazy"

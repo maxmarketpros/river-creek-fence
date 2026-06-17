@@ -96,10 +96,10 @@ const config: FenceTypeConfig = {
   },
 
   costSnapshot: {
-    range: "$25–$55",
+    range: "$12–$60",
     unit: "per linear foot, installed",
     summary:
-      "Most Central Kansas pool barriers fall in this range. Chain link sits at the low end ($18–$35), while ornamental aluminum and vinyl run $30–$55 — gates and code-compliant hardware add to the total.",
+      "Most Central Kansas pool barriers fall in this range. Chain link sits at the low end ($12–$22), while ornamental aluminum and vinyl run $25–$60 — gates and code-compliant hardware add to the total.",
     factors: [
       "Material — chain link vs. vinyl vs. ornamental aluminum",
       "Barrier height and total length around the pool or yard",
@@ -151,7 +151,7 @@ const config: FenceTypeConfig = {
     {
       question: "How much does pool fence installation cost in Central Kansas?",
       answer:
-        "Most installed pool barriers here run about $25–$55 per linear foot. Chain link sits at the low end around $18–$35, while ornamental aluminum and vinyl land in the $30–$55 range, and code-compliant gates add to the total. The only way to get a real number is a free on-site estimate — we'll measure, talk options, and hand you a written price.",
+        "Most installed pool barriers here run about $12–$60 per linear foot. Chain link sits at the low end around $12–$22, while ornamental aluminum and vinyl land in the $25–$60 range, and code-compliant gates add to the total. The only way to get a real number is a free on-site estimate — we'll measure, talk options, and hand you a written price.",
     },
     {
       question: "Why is a four-sided pool fence so important?",

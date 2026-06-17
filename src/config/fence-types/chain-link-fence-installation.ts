@@ -99,7 +99,7 @@ const config: FenceTypeConfig = {
   galleryHeading: "Recent Chain Link Fence Installation Projects",
 
   costSnapshot: {
-    range: "$18–$35",
+    range: "$12–$22",
     unit: "per linear foot, installed",
     summary:
       "Most Central Kansas chain link fences land in this range, with standard galvanized residential runs near the low end and tall, heavy-gauge commercial or security fence pushing toward the top.",
@@ -159,7 +159,7 @@ const config: FenceTypeConfig = {
     {
       question: "How much does a chain link fence cost in Central Kansas?",
       answer:
-        "Most installed chain link fences run about $18–$35 per linear foot here, depending on height, mesh gauge, galvanized versus vinyl-coated finish, gates, and terrain. A standard galvanized residential run sits near the low end; tall, heavy-gauge commercial or security fence runs higher. A free on-site estimate gets you a real written number.",
+        "Most installed chain link fences run about $12–$22 per linear foot here, depending on height, mesh gauge, galvanized versus vinyl-coated finish, gates, and terrain. A standard galvanized residential run sits near the low end; tall, heavy-gauge commercial or security fence runs higher. A free on-site estimate gets you a real written number.",
     },
     {
       question: "Do you install commercial and security chain link fencing?",

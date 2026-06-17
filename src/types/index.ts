@@ -166,6 +166,64 @@ export interface FenceTypeConfig {
   related: RelatedLink[];
 }
 
+/**
+ * Service-area / city landing page config (`/service-areas/<slug>`). A LOCATION
+ * page (not a product page), so it carries local context, per-city map coords,
+ * curated internal links, and town-specific FAQs. Rendered by
+ * `src/pages/service-areas/[slug].astro`. Every page must be genuinely unique to
+ * avoid doorway/thin-content penalties.
+ */
+export interface CityPageConfig {
+  /** e.g. "yoder-ks" — matches catalog.cities. */
+  slug: string;
+  /** e.g. "Yoder". */
+  name: string;
+  /** e.g. "Reno County". */
+  county: string;
+  /** ~55–60 chars, ends "| River Creek Fence". */
+  metaTitle: string;
+  /** Unique per town (town + a fence keyword). */
+  h1: string;
+  /** Hero subtitle + meta description (mention free estimate / 5-yr warranty). */
+  excerpt: string;
+  /**
+   * Unique per-town section <h2> headings. Each must be distinct across all city
+   * pages (not "<thing> in {City}" with only the name swapped) so the set doesn't
+   * read as templated/doorway content.
+   */
+  introHeading: string;
+  contextHeading: string;
+  processHeading: string;
+  reviewsHeading: string;
+  mapHeading: string;
+  faqHeading: string;
+  /** "stock-N" key chosen by town character. */
+  heroImageKey: string;
+  /** Per-city coordinates — drives the map + schema geo. */
+  lat: number;
+  lng: number;
+  /** e.g. "about 12 miles southwest of Haven". */
+  distanceFromHaven: string;
+  /** 2–3 unique paragraphs — local overview (intro SplitSection). */
+  intro: string[];
+  /** Content image #1 ("stock-N") for the intro section. */
+  introImageKey: string;
+  /** 1–2 paragraphs — landmarks/character/what the town fences. */
+  localContext: string[];
+  /** Content image #2 ("stock-N") for the local-context section. */
+  contextImageKey: string;
+  /** 6 clickable cards → curated internal links for THIS town. */
+  featuredServices: UseCaseSection;
+  /** 4–6 town-specific FAQs (town name woven in) — also emitted as FAQPage schema. */
+  localFaqs: ServiceFAQ[];
+  /** 3–5 neighbor city pages (same county / nearest). */
+  nearbyTowns: RelatedLink[];
+  /** 4–6 fence types/property/services + cost guide / contact. */
+  related: RelatedLink[];
+  ctaHeading: string;
+  ctaText: string;
+}
+
 export interface TestimonialItem {
   name: string;
   title: string;

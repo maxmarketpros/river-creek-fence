@@ -96,10 +96,10 @@ const config: FenceTypeConfig = {
   },
 
   costSnapshot: {
-    range: "$18–$45",
+    range: "$12–$60",
     unit: "per linear foot, installed",
     summary:
-      "Most dog fences in Central Kansas land in this range. Chain link runs $18–$35/ft, wood $22–$38/ft, and vinyl $30–$55/ft — height, dig protection, and gates move the final number.",
+      "Most dog fences in Central Kansas land in this range. Chain link runs $12–$22/ft, wood $20–$40/ft, and vinyl $35–$60/ft — height, dig protection, and gates move the final number.",
     factors: [
       "Material — chain link, wood, or vinyl",
       "Height — 4 ft for small dogs vs. 5–6 ft for jumpers",
@@ -156,7 +156,7 @@ const config: FenceTypeConfig = {
     {
       question: "How much does a dog fence cost in Central Kansas?",
       answer:
-        "Most installed dog fences here run about $18–$45 per linear foot, depending on material and height — chain link is on the lower end, wood in the middle, and tall vinyl toward the top. The only way to get a real number is a free on-site estimate, where we measure, talk options, and hand you a written price with no pressure.",
+        "Most installed dog fences here run about $12–$60 per linear foot, depending on material and height — chain link is on the lower end, wood in the middle, and tall vinyl toward the top. The only way to get a real number is a free on-site estimate, where we measure, talk options, and hand you a written price with no pressure.",
     },
     {
       question: "Can you fence just part of the yard for the dog?",

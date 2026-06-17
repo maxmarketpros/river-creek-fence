@@ -146,7 +146,7 @@ const config: FenceTypeConfig = {
     {
       question: "How much does it cost to fence an acreage in Central Kansas?",
       answer:
-        "It depends heavily on what each section needs to do. Working wire perimeter runs about $2–$8 per foot installed, while wood ranch rail and split-rail frontage run roughly $15–$30 per foot. A typical acreage blends both, so the only way to get a real number is a free on-site estimate where we measure, map it by purpose, and hand you a written price.",
+        "It depends heavily on what each section needs to do. Working wire perimeter runs about $2–$8 per foot installed, while wood ranch rail and split-rail frontage run roughly $12–$25 per foot. A typical acreage blends both, so the only way to get a real number is a free on-site estimate where we measure, map it by purpose, and hand you a written price.",
     },
     {
       question: "Do you build the gates and entrances too?",

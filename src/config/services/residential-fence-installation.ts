@@ -148,7 +148,7 @@ const config: ServiceConfig = {
     {
       question: "How much does a residential fence cost in the Wichita area?",
       answer:
-        "It comes down to the material, length, and your yard's layout. Cedar privacy fencing usually runs about $25–$45 per linear foot installed, vinyl a bit more, and chain link around $15–$30. The honest answer comes from a free in-home estimate — we'll measure, walk your options, and hand you a written price with no guesswork.",
+        "It comes down to the material, length, and your yard's layout. Cedar privacy fencing usually runs about $30–$50 per linear foot installed, vinyl a bit more, and chain link around $12–$22. The honest answer comes from a free in-home estimate — we'll measure, walk your options, and hand you a written price with no guesswork.",
     },
     {
       question: "What fence is best for a backyard with kids and a dog?",

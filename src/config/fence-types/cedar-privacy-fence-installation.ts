@@ -99,7 +99,7 @@ const config: FenceTypeConfig = {
   galleryHeading: "Recent Cedar Privacy Fence Projects",
 
   costSnapshot: {
-    range: "$25–$45",
+    range: "$30–$50",
     unit: "per linear foot, installed",
     summary:
       "Most Central Kansas cedar privacy fences fall in this range for standard 6-foot panels. Taller 8-foot runs, decorative tops, and gates push toward the high end.",
@@ -159,7 +159,7 @@ const config: FenceTypeConfig = {
     {
       question: "How much does a cedar privacy fence cost in Central Kansas?",
       answer:
-        "Most installed cedar privacy fences run about $25–$45 per linear foot here, depending on height, board style, gates, and terrain. The only way to get a real number is a free on-site estimate — we'll measure, talk options, and hand you a written price with no pressure.",
+        "Most installed cedar privacy fences run about $30–$50 per linear foot here, depending on height, board style, gates, and terrain. The only way to get a real number is a free on-site estimate — we'll measure, talk options, and hand you a written price with no pressure.",
     },
     {
       question: "Will a privacy fence hold up to Kansas wind?",

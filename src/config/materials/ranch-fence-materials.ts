@@ -99,7 +99,7 @@ const config: FenceTypeConfig = {
     range: "$4–$12",
     unit: "per linear foot, materials only",
     summary:
-      "Materials-only pricing for ranch fence runs roughly $4–$12 per foot depending on whether you're buying used pipe, sucker rod, continuous panels, or treated posts and wood rail — a fraction of the $12–$25 per foot for a fully installed pipe or continuous fence. Ranch gates are priced per gate.",
+      "Materials-only pricing for ranch fence runs roughly $4–$12 per foot depending on whether you're buying used pipe, sucker rod, continuous panels, or treated posts and wood rail — a fraction of the $14–$30 per foot for a fully installed pipe or continuous fence. Ranch gates are priced per gate.",
     factors: [
       "Material type — used pipe and rod vs. continuous panels vs. treated wood rail",
       "Steel diameter and wall thickness, or post and rail grade for wood",
@@ -161,7 +161,7 @@ const config: FenceTypeConfig = {
     {
       question: "How much do ranch fence materials cost?",
       answer:
-        "Materials-only ranch fence runs roughly $4–$12 per foot here depending on whether you're buying used pipe, sucker rod, continuous panels, or treated posts and wood rail, with ranch gates priced per gate. That's a fraction of the $12–$25 per foot for a fully installed pipe or continuous fence. We'll spec your footage and give you a straight price on whatever mix fits your project.",
+        "Materials-only ranch fence runs roughly $4–$12 per foot here depending on whether you're buying used pipe, sucker rod, continuous panels, or treated posts and wood rail, with ranch gates priced per gate. That's a fraction of the $14–$30 per foot for a fully installed pipe or continuous fence. We'll spec your footage and give you a straight price on whatever mix fits your project.",
     },
   ],
 

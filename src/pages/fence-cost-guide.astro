@@ -1,21 +1,28 @@
 ---
-import { Ruler, Mountain, Layers, DoorOpen } from "lucide-react";
+import { FileCheck2, Shovel, Ruler } from "lucide-react";
 import Layout from "@/layouts/Layout.astro";
 import PageHero from "@/components/sections/PageHero.astro";
 import CTASection from "@/components/sections/CTASection.astro";
 import QuoteSection from "@/components/sections/QuoteSection.astro";
+import StatsRow from "@/components/sections/StatsRow.astro";
+import SplitSection from "@/components/sections/SplitSection.astro";
+import ChecklistGrid from "@/components/sections/ChecklistGrid.astro";
+import BenefitGrid from "@/components/sections/BenefitGrid.astro";
+import UseCaseGrid from "@/components/sections/UseCaseGrid.astro";
+import FAQSection from "@/components/sections/FAQSection.astro";
 import Container from "@/components/ui/Container.astro";
 import SectionHeading from "@/components/ui/SectionHeading.astro";
 import CostTable from "@/components/ui/CostTable.astro";
 import Button from "@/components/ui/Button.astro";
 import { businessConfig } from "@/config/business";
+import { costGuideFaqKeys } from "@/config/faqs";
 import { generatePageMetadata } from "@/lib/metadata";
 import { generateBreadcrumbSchema } from "@/lib/structured-data";
 
 const meta = generatePageMetadata({
   title: "Fence Cost Guide | River Creek Fence — Central Kansas Prices",
   description:
-    "What does a fence cost in Central Kansas? Local installed price ranges for wood, vinyl, chain link, ranch, and farm fencing in Reno County — plus what affects your price. Free estimates.",
+    "2026 installed fence prices for Reno County and Central Kansas — wood, vinyl, chain link, ranch, and farm fencing — plus real project totals, local cost factors, and permits. Free estimates.",
   path: "/fence-cost-guide",
 });
 
@@ -24,30 +31,233 @@ const breadcrumbSchema = generateBreadcrumbSchema([
   { name: "Fence Cost Guide", href: "/fence-cost-guide" },
 ]);
 
+const stats = [
+  { value: "$0", label: "On-site estimates" },
+  { value: "5-Year", label: "Workmanship warranty" },
+  { value: "20+", label: "Towns served" },
+  { value: "5.0", label: "Star Google rating" },
+];
+
 const residentialRows = [
-  { type: "Cedar Privacy Fence", range: "$25–$45 / ft", notes: "Most popular for backyards; cedar weathers beautifully and lasts." },
-  { type: "Treated Pine Privacy", range: "$22–$38 / ft", notes: "A budget-friendly solid privacy option." },
-  { type: "Chain Link", range: "$18–$35 / ft", notes: "Durable and affordable — great for pets and security." },
-  { type: "Vinyl / PVC", range: "$30–$55 / ft", notes: "Low-maintenance, never needs painting." },
-  { type: "Ornamental Aluminum/Steel", range: "$30–$55 / ft", notes: "Decorative look with low upkeep." },
-  { type: "Wrought Iron", range: "$35–$65 / ft", notes: "Classic, heavy-duty, and long-lasting." },
+  {
+    type: "Cedar Privacy Fence",
+    range: "$30–$50 / ft",
+    notes: "Our most-requested backyard fence; cedar weathers beautifully and lasts.",
+    popular: true,
+  },
+  {
+    type: "Treated Pine Privacy",
+    range: "$20–$35 / ft",
+    notes: "A budget-friendly solid privacy option that holds up when it's maintained.",
+  },
+  {
+    type: "Board-on-Board / Shadowbox",
+    range: "$20–$40 / ft",
+    notes: "Overlapping or two-sided boards — looks good from both yards and lets the Kansas wind through.",
+  },
+  {
+    type: "Chain Link",
+    range: "$12–$22 / ft",
+    notes: "Durable and affordable — great for pets, kids, and security.",
+  },
+  {
+    type: "Vinyl / PVC",
+    range: "$35–$60 / ft",
+    notes: "Costs more up front, but never needs paint or stain.",
+  },
+  {
+    type: "Ornamental Aluminum",
+    range: "$25–$45 / ft",
+    notes: "Decorative open-picket look with almost no upkeep; popular around pools.",
+  },
+  {
+    type: "Wrought Iron / Steel",
+    range: "$35–$75 / ft",
+    notes: "Heavy-duty and classic; price climbs with height and ornamental detail.",
+  },
+  {
+    type: "Split Rail / Ranch Rail",
+    range: "$12–$25 / ft",
+    notes: "Defines property lines with a rustic look; add wire mesh to contain pets.",
+  },
 ];
 
 const agRows = [
-  { type: "Barbed Wire (3–5 strand)", range: "$2–$5 / ft", notes: "The Kansas standard for cattle boundaries." },
-  { type: "Woven / Field Wire", range: "$4–$8 / ft", notes: "Best for hogs, sheep, goats, and weaned calves." },
-  { type: "High-Tensile (electric-ready)", range: "$2.50–$5 / ft", notes: "Low-maintenance fencing for rotational grazing." },
-  { type: "Pipe / Continuous Fence", range: "$12–$25 / ft", notes: "Heavy-duty ranch and corral fencing." },
-  { type: "Split Rail / Ranch Rail", range: "$15–$30 / ft", notes: "Defines property lines with a rustic look." },
-  { type: "Walk & Drive Gates", range: "$200–$2,500+", notes: "Per gate, depending on size, material, and automation." },
+  {
+    type: "Barbed Wire (3–5 strand)",
+    range: "$2–$5 / ft",
+    notes: "The Kansas standard for cattle boundaries and big grazing runs.",
+    popular: true,
+  },
+  {
+    type: "Woven / Field Wire",
+    range: "$4–$8 / ft",
+    notes: "Tight, no-gap fence for hogs, sheep, goats, and weaned calves.",
+  },
+  {
+    type: "High-Tensile (electric-ready)",
+    range: "$2–$5 / ft",
+    notes: "Low-maintenance fence that spans long distances — great for rotational grazing.",
+  },
+  {
+    type: "Pipe / Continuous Fence",
+    range: "$14–$30 / ft",
+    notes: "Heavy-duty ranch and corral fence that takes the pressure where stock crowds.",
+  },
+  {
+    type: "Cattle / Horse Panel",
+    range: "$6–$12 / ft",
+    notes: "Welded panels for pens and working areas; safe and strong for livestock.",
+  },
+  {
+    type: "Walk & Drive Gates",
+    range: "$200–$2,500+",
+    notes: "Per gate, depending on width, material, and whether it's automated.",
+  },
 ];
 
-const factors = [
-  { icon: Ruler, title: "Length & Height", description: "Longer runs lower your per-foot cost; taller fences use more material and labor." },
-  { icon: Mountain, title: "Terrain & Soil", description: "Slopes, rock, clearing, and old-fence removal all affect the work involved." },
-  { icon: Layers, title: "Material & Grade", description: "Cedar vs. pine, aluminum vs. iron, and wire gauge all change the price." },
-  { icon: DoorOpen, title: "Gates & Extras", description: "Drive gates, automation, and custom touches add to the total." },
+const projectRows = [
+  {
+    type: "Cedar privacy backyard (~150 ft)",
+    range: "$4,500–$7,500",
+    notes: "6 ft solid cedar with a couple of gates on level ground.",
+    popular: true,
+  },
+  {
+    type: "Chain-link backyard (~150 ft)",
+    range: "$1,800–$3,000",
+    notes: "4–6 ft galvanized chain link with one walk gate.",
+  },
+  {
+    type: "Vinyl privacy backyard (~150 ft)",
+    range: "$5,000–$8,500",
+    notes: "6 ft low-maintenance vinyl with matching gates.",
+  },
+  {
+    type: "One acre of pasture",
+    range: "$1,700–$3,800",
+    notes: "Roughly 835 ft of barbed or woven wire with braced corners.",
+  },
+  {
+    type: "Automated driveway gate",
+    range: "$1,500–$5,000",
+    notes: "Single or dual swing gate with an opener; wiring and access vary the price.",
+  },
 ];
+
+const includedItems = [
+  "All materials — posts, panels, pickets, wire, and hardware",
+  "Setting posts below the Kansas frost line, with concrete on corners, ends, and gates",
+  "Hanging and adjusting every gate so it swings true",
+  "The Kansas 811 utility locate before we dig",
+  "Full cleanup and haul-off of scrap and offcuts",
+  "Our 5-year workmanship warranty, in writing",
+];
+
+const costFactors = [
+  {
+    icon: "Ruler",
+    title: "Length & Height",
+    description:
+      "Longer runs lower your per-foot cost; taller privacy fence uses more material and labor. Corners, ends, and gates always cost more than straight line.",
+  },
+  {
+    icon: "Layers",
+    title: "Material & Grade",
+    description:
+      "Cedar vs. treated pine, aluminum vs. iron, and wire gauge move the number more than almost anything else — it's the biggest lever on your total.",
+  },
+  {
+    icon: "Mountain",
+    title: "Soil & Frost Line",
+    description:
+      "Our clay-loam bakes hard and heaves with every freeze and thaw. We set posts below the roughly 24-inch south-central Kansas frost line and anchor corners and gates in concrete.",
+  },
+  {
+    icon: "Wind",
+    title: "Kansas Wind & Bracing",
+    description:
+      "Open-prairie wind is exactly why bracing matters. Deeper posts and properly braced corners cost a little more up front and save you a leaning fence down the road.",
+  },
+  {
+    icon: "Trash2",
+    title: "Old-Fence Removal",
+    description:
+      "Tearing out and hauling off an old fence runs about $3–$5 a foot, more where the posts are set in concrete. Clearing brush, vines, and roots adds to it.",
+  },
+  {
+    icon: "Map",
+    title: "Terrain & Access",
+    description:
+      "Slopes, rock, trees, and hard-to-reach back acreage all add time. Flat, open, easy-access ground prices at the lower end of every range.",
+  },
+];
+
+const permits = [
+  {
+    icon: FileCheck2,
+    title: "Permits",
+    description:
+      "Some projects in Hutchinson and other cities need a fence permit, and unincorporated Reno County goes through Planning & Zoning. We'll tell you if yours does and help you work through it.",
+  },
+  {
+    icon: Shovel,
+    title: "Free Utility Locates",
+    description:
+      "We always call Kansas 811 before we dig — it's free, and it has to be done at least two business days ahead. No risk of hitting a buried gas, power, or water line.",
+  },
+  {
+    icon: Ruler,
+    title: "Height & HOA Rules",
+    description:
+      "Front-yard fences are usually capped around 4 ft and back yards around 6 ft, and HOAs can add their own rules. We build to what's allowed where you are.",
+  },
+];
+
+const exploreSection = {
+  eyebrow: "Dig Deeper",
+  heading: "Explore Fence Types & Guides",
+  subtitle:
+    "Compare materials side by side, see what each one costs to own over the years, and plan your project with confidence.",
+  items: [
+    {
+      title: "Wood & Cedar Fencing",
+      description: "Warm, classic privacy that suits Kansas yards and acreage.",
+      icon: "Trees",
+      href: "/fence-types/wood-fence-installation",
+    },
+    {
+      title: "Vinyl Fencing",
+      description: "Low-maintenance privacy that never needs paint or stain.",
+      icon: "RectangleHorizontal",
+      href: "/fence-types/vinyl-fence-installation",
+    },
+    {
+      title: "Chain Link Fencing",
+      description: "Affordable, durable containment for pets, kids, and security.",
+      icon: "Grid2x2",
+      href: "/fence-types/chain-link-fence-installation",
+    },
+    {
+      title: "Farm & Ranch Wire",
+      description: "Barbed, woven, and high-tensile fence built for livestock.",
+      icon: "Tractor",
+      href: "/services/farm-fence-installation",
+    },
+    {
+      title: "Financing & Payments",
+      description: "Flexible ways to pay so you can fence the whole project now.",
+      icon: "HandCoins",
+      href: "/fence-financing",
+    },
+    {
+      title: "Fence Maintenance Guide",
+      description: "Simple upkeep tips to stretch the life of your investment.",
+      icon: "Wrench",
+      href: "/fence-maintenance-guide",
+    },
+  ],
+};
 ---
 
 <Layout
@@ -75,16 +285,18 @@ const factors = [
     }}
   />
 
+  <StatsRow stats={stats} bgColor="surface" />
+
   <section class="section-padding">
     <Container class="max-w-4xl">
       <p class="text-lg leading-relaxed text-muted">
         Fence pricing isn't one-size-fits-all — but you deserve a real ballpark
         before anyone shows up at your door. Below are typical <strong
           class="text-foreground">installed</strong
-        > price ranges for fences in Reno County and Central Kansas. Your exact
-        price depends on length, terrain, materials, and gates, and the only way
-        to know for sure is a free on-site estimate. We never charge to come
-        look and quote your project.
+        > price ranges for fences around Reno County and south-central Kansas,
+        refreshed for 2026. Your exact price depends on length, terrain,
+        materials, and gates, and the only way to know for sure is a free on-site
+        estimate. We never charge to come look and quote your project.
       </p>
 
       <div class="mt-10">
@@ -101,6 +313,22 @@ const factors = [
         <CostTable rows={agRows} unitLabel="Installed price range" />
       </div>
 
+      <div class="mt-12">
+        <h2 class="mb-4 text-2xl font-bold text-foreground">
+          What a Whole Project Typically Runs
+        </h2>
+        <p class="mb-4 text-base leading-relaxed text-muted">
+          Per-foot numbers are useful, but most folks want to know what the
+          whole job costs. Here are realistic Central Kansas totals for a few
+          common projects to anchor your budget.
+        </p>
+        <CostTable
+          rows={projectRows}
+          typeLabel="Project"
+          unitLabel="Typical total"
+        />
+      </div>
+
       <p class="mt-6 text-sm text-muted">
         Prices shown are general estimates for Central Kansas as of 2026 and are
         not a quote. Material costs and site conditions vary — your written
@@ -109,36 +337,85 @@ const factors = [
     </Container>
   </section>
 
+  <ChecklistGrid
+    standalone
+    bgColor="surface"
+    columns={2}
+    eyebrow="No Hidden Costs"
+    heading="What's Included in Our Installed Price"
+    subtitle="The per-foot ranges above aren't stripped-down material costs — they're the full installed price. Every job covers the work below at no extra charge."
+    items={includedItems}
+  />
+
+  <BenefitGrid
+    benefits={costFactors}
+    eyebrow="What Affects Your Price"
+    heading="Why Two Fences Rarely Cost the Same"
+    subtitle="The same fence can price differently across town. Here's what moves the number on a Central Kansas job — and why."
+    bgColor="white"
+  />
+
   <section class="section-padding bg-surface">
     <Container>
       <SectionHeading
-        eyebrow="What Affects Your Price"
-        heading="Why Two Fences Rarely Cost the Same"
+        eyebrow="Before We Dig"
+        heading="Permits, Locates & the Fine Print"
+        subtitle="A few local details worth knowing up front. Don't worry about memorizing them — we walk you through anything that applies during your estimate."
         align="center"
       />
-      <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+      <div class="grid gap-6 md:grid-cols-3">
         {
-          factors.map((f) => (
+          permits.map((p) => (
             <div class="rounded-2xl border border-border bg-white p-6 shadow-card">
               <div class="flex h-12 w-12 items-center justify-center rounded-xl bg-primary-100">
-                <f.icon className="h-6 w-6 text-primary-700" />
+                <p.icon className="h-6 w-6 text-primary-700" />
               </div>
-              <h3 class="mt-4 text-lg font-bold text-foreground">{f.title}</h3>
+              <h3 class="mt-4 text-lg font-bold text-foreground">{p.title}</h3>
               <p class="mt-2 text-sm leading-relaxed text-muted">
-                {f.description}
+                {p.description}
               </p>
             </div>
           ))
         }
       </div>
-      <div class="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
-        <Button href="/contact">Get Your Free Estimate</Button>
-        <Button href="/fence-financing" variant="outline">
-          See Payment & Financing Options
-        </Button>
-      </div>
     </Container>
   </section>
+
+  <SplitSection imageKey="stock-43" imagePosition="right" bgColor="white">
+    <span
+      class="mb-3 inline-block rounded-full bg-primary-100 px-4 py-1.5 text-xs font-semibold uppercase tracking-widest text-primary-800"
+      >Honest, Upfront Pricing</span
+    >
+    <h2 class="text-3xl font-bold tracking-tight text-foreground md:text-4xl">
+      What a Free On-Site Estimate Actually Covers
+    </h2>
+    <p class="mt-4 text-base leading-relaxed text-muted md:text-lg">
+      When Cody comes out, he measures every run by hand, walks your property
+      corners, and checks the terrain, soil, and access that decide how the job
+      goes in. He looks for rock, slope, old fence to pull, and where the gates
+      need to swing — the details that separate a real price from a phone guess.
+    </p>
+    <p class="mt-4 text-base leading-relaxed text-muted md:text-lg">
+      Then you get one firm, written price for the whole project — no padding,
+      no pressure, and no obligation to move forward. If you'd rather wait or
+      shop around, that's fine by us. The estimate is yours to keep, free.
+    </p>
+    <div class="mt-8 flex flex-col gap-4 sm:flex-row">
+      <Button href="/contact">Get a Free Quote</Button>
+      <Button href={`tel:${businessConfig.phoneRaw}`} variant="outline">
+        Call {businessConfig.phone}
+      </Button>
+    </div>
+  </SplitSection>
+
+  <UseCaseGrid section={exploreSection} bgColor="surface" />
+
+  <FAQSection
+    eyebrow="Cost Questions"
+    heading="Fence Cost & Payment FAQs"
+    faqKeys={costGuideFaqKeys}
+    bgColor="white"
+  />
 
   <CTASection
     heading="Want an Exact Number?"

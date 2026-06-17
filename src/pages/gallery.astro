@@ -1,19 +1,19 @@
 ---
 import Layout from "@/layouts/Layout.astro";
 import PageHero from "@/components/sections/PageHero.astro";
-import Gallery from "@/components/sections/Gallery.astro";
 import CTASection from "@/components/sections/CTASection.astro";
 import QuoteSection from "@/components/sections/QuoteSection.astro";
 import Container from "@/components/ui/Container.astro";
-import SectionHeading from "@/components/ui/SectionHeading.astro";
+import Button from "@/components/ui/Button.astro";
 import { businessConfig } from "@/config/business";
 import { generatePageMetadata } from "@/lib/metadata";
 import { generateBreadcrumbSchema } from "@/lib/structured-data";
+import { Video, Phone, ArrowRight, ArrowUpRight } from "lucide-react";
 
 const meta = generatePageMetadata({
   title: "Project Gallery | River Creek Fence — Central Kansas",
   description:
-    "Browse fence projects from River Creek Fence — wood privacy, ranch rail, pipe, chain link, and farm fencing across Reno County and Central Kansas. Get a free estimate today.",
+    "Real aerial drone footage of completed River Creek Fence projects across Reno County and Central Kansas is coming soon. Call Cody for references or a free on-site estimate.",
   path: "/gallery",
 });
 
@@ -38,7 +38,7 @@ const breadcrumbSchema = generateBreadcrumbSchema([
 
   <PageHero
     heading="Project Gallery"
-    subtitle="A look at the kinds of fences we build for homes, farms, ranches, and businesses across Central Kansas."
+    subtitle="We're putting together aerial drone footage of real River Creek Fence projects across Central Kansas — check back soon."
     imageKey="stock-13"
     breadcrumbs={[{ label: "Home", href: "/" }, { label: "Project Gallery" }]}
     primaryCta={{ label: "Get a Free Quote", href: "/contact" }}
@@ -48,18 +48,79 @@ const breadcrumbSchema = generateBreadcrumbSchema([
     }}
   />
 
-  <section class="pt-16 md:pt-24">
-    <Container>
-      <SectionHeading
-        eyebrow="Our Work"
-        heading="Fences Built Across Central Kansas"
-        subtitle="Tap any photo to view it larger. Every job gets the same attention to detail, whether it's a backyard in Hutchinson or a pasture outside Haven."
-        align="center"
-      />
+  <section class="section-padding">
+    <Container class="max-w-3xl text-center">
+      <span
+        class="inline-flex items-center gap-2 rounded-full bg-primary-100 px-4 py-1.5 text-sm font-semibold text-primary-800"
+      >
+        <Video className="h-4 w-4" /> Coming Soon
+      </span>
+
+      <h2 class="mt-6 text-2xl font-bold text-foreground md:text-3xl">
+        Real Project Drone Footage Is On the Way
+      </h2>
+
+      <p class="mx-auto mt-4 max-w-2xl text-base leading-relaxed text-muted md:text-lg">
+        We're out filming the actual fences we've built — finished privacy
+        runs, ranch rail, pipe corners, and farm lines across Reno County and
+        Central Kansas. No stock photos, no borrowed pictures — just real work
+        from Cody and the crew, shot from the air so you can see how a job
+        holds the line across a yard or a pasture.
+      </p>
+      <p class="mx-auto mt-4 max-w-2xl text-base leading-relaxed text-muted md:text-lg">
+        It's coming soon. In the meantime, give Cody a call — he's happy to
+        share references or point you to a project a lot like the one you have
+        in mind.
+      </p>
+
+      <div class="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
+        <Button href={`tel:${businessConfig.phoneRaw}`}>
+          Call {businessConfig.phone}
+          <Phone slot="icon" className="h-5 w-5" />
+        </Button>
+        <Button href="/contact" variant="outline">
+          Request a Free Estimate
+          <ArrowRight slot="icon" className="h-5 w-5" />
+        </Button>
+      </div>
+
+      <div class="mt-12 border-t border-border pt-8">
+        <p class="text-sm font-semibold uppercase tracking-widest text-muted">
+          In the meantime, explore
+        </p>
+        <div class="mt-4 flex flex-wrap items-center justify-center gap-3">
+          <a
+            href="/services"
+            class="inline-flex items-center gap-1.5 rounded-full border border-border bg-white px-4 py-2 text-sm font-medium text-foreground-light transition-colors hover:border-primary-500 hover:text-primary-700"
+          >
+            Our Services
+            <ArrowUpRight className="h-4 w-4 text-primary-700" />
+          </a>
+          <a
+            href="/fence-cost-guide"
+            class="inline-flex items-center gap-1.5 rounded-full border border-border bg-white px-4 py-2 text-sm font-medium text-foreground-light transition-colors hover:border-primary-500 hover:text-primary-700"
+          >
+            Fence Cost Guide
+            <ArrowUpRight className="h-4 w-4 text-primary-700" />
+          </a>
+          <a
+            href="/reviews"
+            class="inline-flex items-center gap-1.5 rounded-full border border-border bg-white px-4 py-2 text-sm font-medium text-foreground-light transition-colors hover:border-primary-500 hover:text-primary-700"
+          >
+            Customer Reviews
+            <ArrowUpRight className="h-4 w-4 text-primary-700" />
+          </a>
+          <a
+            href="/service-areas"
+            class="inline-flex items-center gap-1.5 rounded-full border border-border bg-white px-4 py-2 text-sm font-medium text-foreground-light transition-colors hover:border-primary-500 hover:text-primary-700"
+          >
+            Service Areas
+            <ArrowUpRight className="h-4 w-4 text-primary-700" />
+          </a>
+        </div>
+      </div>
     </Container>
   </section>
-
-  <Gallery />
 
   <CTASection
     heading="See Something You Like?"

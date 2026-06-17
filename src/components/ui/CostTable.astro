@@ -5,43 +5,96 @@ export interface CostRow {
   type: string;
   range: string;
   notes?: string;
+  /** Highlights the row as the most-requested option. */
+  popular?: boolean;
 }
 
 interface Props {
   rows: CostRow[];
   unitLabel?: string;
+  /** Header label for the first column (e.g. "Fence Type" or "Project"). */
+  typeLabel?: string;
   class?: string;
 }
 
-const { rows, unitLabel = "Installed price range", class: className } =
-  Astro.props as Props;
+const {
+  rows,
+  unitLabel = "Installed price range",
+  typeLabel = "Fence Type",
+  class: className,
+} = Astro.props as Props;
+
+const pill =
+  "rounded-full bg-primary-500 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide text-black";
 ---
 
-<div class={cn("overflow-hidden rounded-2xl border border-border", className)}>
-  <table class="w-full border-collapse text-left text-sm">
+<div
+  class={cn(
+    "overflow-hidden rounded-2xl border border-border shadow-card",
+    className,
+  )}
+>
+  {/* Desktop / tablet table */}
+  <table class="hidden w-full border-collapse text-left text-sm md:table">
     <thead>
       <tr class="bg-black text-white">
-        <th class="px-4 py-3 font-bold md:px-6">Fence Type</th>
-        <th class="px-4 py-3 font-bold md:px-6">{unitLabel}</th>
-        <th class="hidden px-4 py-3 font-bold md:table-cell md:px-6">Good to know</th>
+        <th class="px-6 py-3.5 font-bold">{typeLabel}</th>
+        <th class="px-6 py-3.5 font-bold">{unitLabel}</th>
+        <th class="px-6 py-3.5 font-bold">Good to know</th>
       </tr>
     </thead>
     <tbody>
       {
         rows.map((row, i) => (
-          <tr class={cn("border-t border-border", i % 2 === 1 && "bg-surface")}>
-            <td class="px-4 py-3 font-semibold text-foreground md:px-6">
-              {row.type}
+          <tr
+            class={cn(
+              "border-t border-border",
+              i % 2 === 1 && "bg-surface",
+              row.popular &&
+                "bg-primary-50 shadow-[inset_4px_0_0_0_var(--color-primary-500)]",
+            )}
+          >
+            <td class="px-6 py-4 align-top font-semibold text-foreground">
+              <span class="flex flex-wrap items-center gap-2">
+                {row.type}
+                {row.popular && <span class={pill}>Most popular</span>}
+              </span>
             </td>
-            <td class="whitespace-nowrap px-4 py-3 font-bold text-primary-700 md:px-6">
+            <td class="whitespace-nowrap px-6 py-4 align-top text-base font-bold text-primary-700">
               {row.range}
             </td>
-            <td class="hidden px-4 py-3 text-muted md:table-cell md:px-6">
-              {row.notes}
-            </td>
+            <td class="px-6 py-4 align-top text-muted">{row.notes}</td>
           </tr>
         ))
       }
     </tbody>
   </table>
+
+  {/* Mobile stacked cards — keeps the notes visible */}
+  <ul class="divide-y divide-border md:hidden">
+    {
+      rows.map((row) => (
+        <li
+          class={cn(
+            "p-4",
+            row.popular &&
+              "bg-primary-50 shadow-[inset_4px_0_0_0_var(--color-primary-500)]",
+          )}
+        >
+          <div class="flex items-start justify-between gap-3">
+            <span class="font-bold text-foreground">{row.type}</span>
+            <span class="whitespace-nowrap font-bold text-primary-700">
+              {row.range}
+            </span>
+          </div>
+          {row.popular && (
+            <span class={cn(pill, "mt-1.5 inline-block")}>Most popular</span>
+          )}
+          {row.notes && (
+            <p class="mt-1.5 text-sm leading-relaxed text-muted">{row.notes}</p>
+          )}
+        </li>
+      ))
+    }
+  </ul>
 </div>

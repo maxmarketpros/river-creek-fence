@@ -148,7 +148,7 @@ const config: ServiceConfig = {
     {
       question: "How much does fence installation cost in Central Kansas?",
       answer:
-        "It depends on the fence type, length, and terrain. Wood privacy fencing typically runs about $25–$45 per linear foot installed, chain link around $20–$35, and agricultural wire fencing is far less per foot. The best way to get a real number is a free on-site estimate — we'll measure, talk through options, and give you a written price.",
+        "It depends on the fence type, length, and terrain. Wood privacy fencing typically runs about $30–$50 per linear foot installed, chain link around $12–$22, and agricultural wire fencing is far less per foot. The best way to get a real number is a free on-site estimate — we'll measure, talk through options, and give you a written price.",
     },
     {
       question: "How long does it take to install a fence?",

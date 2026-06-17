@@ -1,49 +1,68 @@
 ---
+import { ArrowRight, Phone, ArrowUpRight, MapPin } from "lucide-react";
 import Layout from "@/layouts/Layout.astro";
 import PageHero from "@/components/sections/PageHero.astro";
-import ComingSoon from "@/components/sections/ComingSoon.astro";
+import SplitSection from "@/components/sections/SplitSection.astro";
+import UseCaseGrid from "@/components/sections/UseCaseGrid.astro";
+import ProcessGrid from "@/components/sections/ProcessGrid.astro";
+import ReviewsGrid from "@/components/sections/ReviewsGrid.astro";
+import FAQSection from "@/components/sections/FAQSection.astro";
+import CTASection from "@/components/sections/CTASection.astro";
 import QuoteSection from "@/components/sections/QuoteSection.astro";
-import { cities } from "@/config/catalog";
+import SectionHeading from "@/components/ui/SectionHeading.astro";
+import Container from "@/components/ui/Container.astro";
+import Button from "@/components/ui/Button.astro";
+import MapEmbed from "@/components/ui/MapEmbed.astro";
+import { cityConfigs } from "@/config/cities-content";
+import { businessConfig } from "@/config/business";
 import { generatePageMetadata } from "@/lib/metadata";
-import { generateBreadcrumbSchema } from "@/lib/structured-data";
+import {
+  generateCityServiceSchema,
+  generateBreadcrumbSchema,
+} from "@/lib/structured-data";
+import type { CityPageConfig } from "@/types";
 
-export function getStaticPaths() {
-  return cities.map((city, index) => ({
-    params: { slug: city.slug },
-    props: { city, index },
+export async function getStaticPaths() {
+  return cityConfigs.map((config) => ({
+    params: { slug: config.slug },
+    props: { config },
   }));
 }
 
-const { city, index } = Astro.props;
-const h1 = `Fence Company in ${city.name}, KS`;
+interface Props {
+  config: CityPageConfig;
+}
+
+const { config } = Astro.props as Props;
+
+const ctaProps = {
+  primary: { label: "Get a Free Quote", href: "/contact" },
+  secondary: {
+    label: `Call ${businessConfig.phone}`,
+    href: `tel:${businessConfig.phoneRaw}`,
+  },
+};
 
 const meta = generatePageMetadata({
-  title: `Fence Company in ${city.name}, KS`,
-  description: `River Creek Fence is a trusted fence company serving ${city.name}, KS and ${city.county}. Residential, farm, ranch, and commercial fence installation and repair. Free estimates, 5-year warranty.`,
-  path: `/service-areas/${city.slug}`,
+  title: config.metaTitle,
+  description: config.excerpt,
+  path: `/service-areas/${config.slug}`,
 });
 
+const serviceSchema = generateCityServiceSchema(config);
 const breadcrumbSchema = generateBreadcrumbSchema([
   { name: "Home", href: "/" },
   { name: "Service Areas", href: "/service-areas" },
-  { name: `${city.name}, KS`, href: `/service-areas/${city.slug}` },
+  { name: `${config.name}, KS`, href: `/service-areas/${config.slug}` },
 ]);
 
-const heroRotation = [13, 73, 1, 11, 17, 33, 23];
-const heroKey = `stock-${heroRotation[index % heroRotation.length]}`;
+const faqItems = config.localFaqs.map((f, i) => ({
+  id: `${config.slug}-faq-${i}`,
+  question: f.question,
+  answer: f.answer,
+}));
 
-const nearby = cities
-  .filter((c) => c.county === city.county && c.slug !== city.slug)
-  .slice(0, 3)
-  .map((c) => ({ label: c.name, href: `/service-areas/${c.slug}` }));
-
-const related = [
-  { label: "Fence Installation", href: "/services/fence-installation" },
-  { label: "Privacy Fence", href: "/services/privacy-fence-installation" },
-  { label: "Farm & Ranch Fencing", href: "/services/farm-fence-installation" },
-  ...nearby,
-  { label: "All Service Areas", href: "/service-areas" },
-];
+const mapQuery = `${config.name}, KS`;
 ---
 
 <Layout
@@ -56,27 +75,166 @@ const related = [
   <script
     type="application/ld+json"
     is:inline
+    set:html={JSON.stringify(serviceSchema)}
+  />
+  <script
+    type="application/ld+json"
+    is:inline
     set:html={JSON.stringify(breadcrumbSchema)}
   />
 
+  {/* Hero */}
   <PageHero
-    heading={h1}
-    subtitle={`Fence installation and repair for homeowners, farmers, and ranchers in ${city.name} and across ${city.county}.`}
-    imageKey={heroKey}
+    heading={config.h1}
+    subtitle={config.excerpt}
+    imageKey={config.heroImageKey}
     breadcrumbs={[
       { label: "Home", href: "/" },
       { label: "Service Areas", href: "/service-areas" },
-      { label: `${city.name}, KS` },
+      { label: `${config.name}, KS` },
     ]}
-    primaryCta={{ label: "Get a Free Quote", href: "/contact" }}
-    secondaryCta={{ label: "View Our Services", href: "/services" }}
+    primaryCta={ctaProps.primary}
+    secondaryCta={ctaProps.secondary}
   />
 
-  <ComingSoon
-    title={`fencing in ${city.name}, KS`}
-    intro={`River Creek Fence proudly serves ${city.name} and the surrounding ${city.county} area with residential, farm, ranch, and commercial fencing. We're finishing a dedicated ${city.name} page with local project photos and details — but we're already taking ${city.name} jobs today. Call Cody for a free, no-pressure estimate.`}
-    relatedLinks={related}
+  {/* Local intro */}
+  <SplitSection imageKey={config.introImageKey} imagePosition="right" imageAspect="4/3">
+    <SectionHeading
+      eyebrow={`Serving ${config.name}, KS`}
+      heading={config.introHeading ?? `Your Local Fence Company in ${config.name}`}
+    />
+    {
+      config.intro.map((p) => (
+        <p class="mb-4 text-base leading-relaxed text-muted md:text-lg">{p}</p>
+      ))
+    }
+    <div class="mt-6 flex flex-wrap gap-4">
+      <Button href="/contact">
+        Get a Free Quote
+        <ArrowRight slot="icon" className="h-5 w-5" />
+      </Button>
+      <Button href={`tel:${businessConfig.phoneRaw}`} variant="outline">
+        {businessConfig.phone}
+        <Phone slot="icon" className="h-5 w-5" />
+      </Button>
+    </div>
+  </SplitSection>
+
+  {/* Featured services (curated internal links for this town) */}
+  <UseCaseGrid section={config.featuredServices} bgColor="surface" />
+
+  {/* Local context */}
+  <SplitSection imageKey={config.contextImageKey} imagePosition="left" imageAspect="4/3">
+    <SectionHeading
+      eyebrow="Local Knowledge"
+      heading={config.contextHeading ?? `What We Fence Around ${config.name}`}
+    />
+    {
+      config.localContext.map((p) => (
+        <p class="mb-4 text-base leading-relaxed text-muted md:text-lg">{p}</p>
+      ))
+    }
+  </SplitSection>
+
+  {/* How we work */}
+  <ProcessGrid
+    eyebrow="Our Process"
+    heading={config.processHeading ?? `How We Build Fence in ${config.name}`}
+    subtitle={`From the first call to the final walk-through, here's how a ${config.name} fence project goes with River Creek Fence.`}
+    bgColor="surface"
   />
 
+  {/* Local proof */}
+  <ReviewsGrid
+    eyebrow="Reviews"
+    heading={config.reviewsHeading ?? `Why ${config.county} Trusts River Creek Fence`}
+    limit={6}
+    bgColor="white"
+  />
+
+  {/* Per-city map */}
+  <section class="section-padding bg-surface">
+    <Container>
+      <SectionHeading
+        eyebrow="Where We Work"
+        heading={config.mapHeading ?? `Serving ${config.name}, KS & the Surrounding Area`}
+        subtitle={`We're based right here in Central Kansas — ${config.distanceFromHaven}.`}
+        align="center"
+      />
+      <div class="overflow-hidden rounded-2xl border border-border shadow-card">
+        <MapEmbed
+          query={mapQuery}
+          title={`Map of ${config.name}, KS — River Creek Fence service area`}
+          class="h-[360px] w-full md:h-[440px]"
+        />
+      </div>
+    </Container>
+  </section>
+
+  {/* Nearby towns + related links */}
+  <section class="section-padding-sm">
+    <Container>
+      {
+        config.nearbyTowns.length > 0 && (
+          <div class="mb-10">
+            <h2 class="mb-6 flex items-center gap-2 text-xl font-bold text-foreground">
+              <MapPin className="h-5 w-5 text-primary-700" />
+              Nearby Towns We Serve
+            </h2>
+            <div class="flex flex-wrap gap-3">
+              {config.nearbyTowns.map((link) => (
+                <a
+                  href={link.href}
+                  class="inline-flex items-center gap-1.5 rounded-full border border-border bg-white px-4 py-2 text-sm font-medium text-foreground-light transition-colors hover:border-primary-500 hover:text-primary-700"
+                >
+                  {link.label}
+                  <ArrowUpRight className="h-4 w-4 text-primary-700" />
+                </a>
+              ))}
+            </div>
+          </div>
+        )
+      }
+
+      {
+        config.related.length > 0 && (
+          <div>
+            <h2 class="mb-6 text-xl font-bold text-foreground">
+              Related services &amp; resources
+            </h2>
+            <div class="flex flex-wrap gap-3">
+              {config.related.map((link) => (
+                <a
+                  href={link.href}
+                  class="inline-flex items-center gap-1.5 rounded-full border border-border bg-white px-4 py-2 text-sm font-medium text-foreground-light transition-colors hover:border-primary-500 hover:text-primary-700"
+                >
+                  {link.label}
+                  <ArrowUpRight className="h-4 w-4 text-primary-700" />
+                </a>
+              ))}
+            </div>
+          </div>
+        )
+      }
+    </Container>
+  </section>
+
+  {/* FAQ (emits FAQPage schema) */}
+  <FAQSection
+    eyebrow="Common Questions"
+    heading={config.faqHeading ?? `${config.name}, KS Fencing FAQ`}
+    items={faqItems}
+    bgColor="surface"
+  />
+
+  {/* CTA */}
+  <CTASection
+    heading={config.ctaHeading}
+    text={config.ctaText}
+    primaryCta={ctaProps.primary}
+    secondaryCta={ctaProps.secondary}
+  />
+
+  {/* Quote Form */}
   <QuoteSection />
 </Layout>

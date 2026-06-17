@@ -99,7 +99,7 @@ const config: FenceTypeConfig = {
   galleryHeading: "Recent Decorative Fence Installation Projects",
 
   costSnapshot: {
-    range: "$30–$55",
+    range: "$25–$55",
     unit: "per linear foot, installed",
     summary:
       "Most decorative and ornamental fence runs in Central Kansas land in this range. Simple picket or metal panels sit near the low end, while scrollwork, finials, custom panels, and decorative gates push toward the top.",
@@ -144,7 +144,7 @@ const config: FenceTypeConfig = {
     {
       question: "How much does a decorative fence cost in Central Kansas?",
       answer:
-        "Most installed decorative fences run about $30–$55 per linear foot here. Plain picket or metal panels sit near the low end, while finials, scrollwork, custom panels, and decorative gates push toward the top. The only way to get a real number is a free on-site estimate — we'll measure and hand you a written price.",
+        "Most installed decorative fences run about $25–$55 per linear foot here. Plain picket or metal panels sit near the low end, while finials, scrollwork, custom panels, and decorative gates push toward the top. The only way to get a real number is a free on-site estimate — we'll measure and hand you a written price.",
     },
     {
       question: "Does an ornamental metal fence need much upkeep?",

@@ -99,7 +99,7 @@ const config: FenceTypeConfig = {
   galleryHeading: "Recent Four-Rail Horse Fence Installation Projects",
 
   costSnapshot: {
-    range: "$18–$35",
+    range: "$15–$35",
     unit: "per linear foot, installed",
     summary:
       "Most four-rail horse fences in Central Kansas land in this range for a standard wood post-and-board run. Painted boards, added hot wire, gates, and long pasture perimeters move the number around.",
@@ -159,7 +159,7 @@ const config: FenceTypeConfig = {
     {
       question: "How much does a four-rail horse fence cost in Central Kansas?",
       answer:
-        "Most installed four-rail horse fences run about $18–$35 per linear foot here, depending on whether you go wood or vinyl, paint the boards, add gates or hot wire, and how long the run is. The real number comes from a free on-site estimate — we'll measure the pasture, talk options, and hand you a written price.",
+        "Most installed four-rail horse fences run about $15–$35 per linear foot here, depending on whether you go wood or vinyl, paint the boards, add gates or hot wire, and how long the run is. The real number comes from a free on-site estimate — we'll measure the pasture, talk options, and hand you a written price.",
     },
     {
       question: "Will a board fence hold up to Kansas wind and weather?",

@@ -4,15 +4,19 @@ import PageHero from "@/components/sections/PageHero.astro";
 import FAQSection from "@/components/sections/FAQSection.astro";
 import CTASection from "@/components/sections/CTASection.astro";
 import QuoteSection from "@/components/sections/QuoteSection.astro";
-import { faqs } from "@/config/faqs";
+import Container from "@/components/ui/Container.astro";
+import { faqs, faqCategories, getFaqsByKeys } from "@/config/faqs";
 import { businessConfig } from "@/config/business";
 import { generatePageMetadata } from "@/lib/metadata";
-import { generateBreadcrumbSchema } from "@/lib/structured-data";
+import {
+  generateBreadcrumbSchema,
+  generateFAQSchema,
+} from "@/lib/structured-data";
 
 const meta = generatePageMetadata({
   title: "Fence FAQ | River Creek Fence — Central Kansas",
   description:
-    "Answers to common fence questions for Central Kansas property owners — cost, materials, timelines, warranty, farm fencing, and how we beat Kansas wind. River Creek Fence, Haven KS.",
+    "45+ answers across cost, materials, installation, farm & ranch fencing, maintenance, and our 5-year warranty for Central Kansas property owners. River Creek Fence, Haven KS.",
   path: "/fence-faq",
 });
 
@@ -20,6 +24,8 @@ const breadcrumbSchema = generateBreadcrumbSchema([
   { name: "Home", href: "/" },
   { name: "Fence FAQ", href: "/fence-faq" },
 ]);
+
+const faqSchema = generateFAQSchema(faqs);
 ---
 
 <Layout
@@ -34,6 +40,11 @@ const breadcrumbSchema = generateBreadcrumbSchema([
     is:inline
     set:html={JSON.stringify(breadcrumbSchema)}
   />
+  <script
+    type="application/ld+json"
+    is:inline
+    set:html={JSON.stringify(faqSchema)}
+  />
 
   <PageHero
     heading="Fence FAQ"
@@ -47,12 +58,44 @@ const breadcrumbSchema = generateBreadcrumbSchema([
     }}
   />
 
-  <FAQSection
-    eyebrow="Common Questions"
-    heading="Fence Questions, Answered"
-    subtitle="Still have a question? Call Cody at (620) 899-5595 — happy to help."
-    items={faqs}
-  />
+  <section class="section-padding-sm">
+    <Container class="max-w-3xl">
+      <p class="text-center text-base leading-relaxed text-muted md:text-lg">
+        We pulled together the questions Central Kansas property owners ask us
+        most and grouped them by topic — from free estimates and pricing to
+        materials, post depth, farm and ranch fencing, and keeping a fence
+        standing straight for decades. Jump to a topic below, or call Cody at
+        {businessConfig.phone} and we'll talk it through.
+      </p>
+      <div class="mt-8 flex flex-wrap justify-center gap-3">
+        {
+          faqCategories.map((cat) => (
+            <a
+              href={`#${cat.id}`}
+              class="inline-flex items-center gap-1.5 rounded-full border border-border bg-white px-4 py-2 text-sm font-medium text-foreground-light transition-colors hover:border-primary-500 hover:text-primary-700"
+            >
+              {cat.title}
+            </a>
+          ))
+        }
+      </div>
+    </Container>
+  </section>
+
+  {
+    faqCategories.map((cat, i) => (
+      <FAQSection
+        id={cat.id}
+        class="scroll-mt-24"
+        eyebrow="FAQ"
+        heading={cat.title}
+        subtitle={cat.description}
+        items={getFaqsByKeys(cat.keys)}
+        emitSchema={false}
+        bgColor={i % 2 === 0 ? "white" : "surface"}
+      />
+    ))
+  }
 
   <CTASection
     heading="Have a Question We Didn't Cover?"

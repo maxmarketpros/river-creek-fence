@@ -1,15 +1,20 @@
 ---
-import { CalendarClock, HandCoins, ShieldCheck } from "lucide-react";
 import Layout from "@/layouts/Layout.astro";
 import PageHero from "@/components/sections/PageHero.astro";
+import StatsRow from "@/components/sections/StatsRow.astro";
+import BenefitGrid from "@/components/sections/BenefitGrid.astro";
+import SplitSection from "@/components/sections/SplitSection.astro";
 import PaymentOptions from "@/components/sections/PaymentOptions.astro";
+import FAQSection from "@/components/sections/FAQSection.astro";
 import CTASection from "@/components/sections/CTASection.astro";
 import QuoteSection from "@/components/sections/QuoteSection.astro";
 import Container from "@/components/ui/Container.astro";
 import SectionHeading from "@/components/ui/SectionHeading.astro";
+import Button from "@/components/ui/Button.astro";
 import { businessConfig } from "@/config/business";
 import { generatePageMetadata } from "@/lib/metadata";
 import { generateBreadcrumbSchema } from "@/lib/structured-data";
+import { financingFaqKeys } from "@/config/faqs";
 
 const meta = generatePageMetadata({
   title: "Fence Financing & Payment Options | River Creek Fence",
@@ -23,10 +28,86 @@ const breadcrumbSchema = generateBreadcrumbSchema([
   { name: "Financing & Payments", href: "/fence-financing" },
 ]);
 
+const stats = [
+  { value: "$0", label: "To get a quote" },
+  { value: "0%", label: "Pressure, ever" },
+  { value: "Flexible", label: "Payment plans" },
+  { value: "5.0", label: "Star Google rating" },
+];
+
 const financing = [
-  { icon: HandCoins, title: "Pay Your Way", description: "Cash, check, and all major credit and debit cards — whatever's easiest for you." },
-  { icon: CalendarClock, title: "Financing & Payment Plans", description: "For larger ranch, farm, and acreage fences, we can break the cost into manageable payments. Just ask." },
-  { icon: ShieldCheck, title: "No Surprises", description: "Your written estimate is the price. No hidden fees, no pressure, and no charge to come quote it." },
+  {
+    icon: "HandCoins",
+    title: "Pay Your Way",
+    description:
+      "Cash, check, and all major credit and debit cards — whatever's easiest for you.",
+  },
+  {
+    icon: "CalendarClock",
+    title: "Financing & Payment Plans",
+    description:
+      "For larger ranch, farm, and acreage fences, we can break the cost into manageable payments. Just ask.",
+  },
+  {
+    icon: "ShieldCheck",
+    title: "No Surprises",
+    description:
+      "Your written estimate is the price. No hidden fees, no pressure, and no charge to come quote it.",
+  },
+];
+
+const steps = [
+  {
+    n: "1",
+    title: "Get your free estimate",
+    description:
+      "We come out to your property, measure the run, and hand you one firm written price — no charge, no obligation.",
+  },
+  {
+    n: "2",
+    title: "Pick how you'd like to pay",
+    description:
+      "Cash, check, card, or a payment plan that spreads the cost across the months ahead. You choose what fits.",
+  },
+  {
+    n: "3",
+    title: "Quick, simple approval",
+    description:
+      "If a payment plan is the way you'd like to go, just ask and we'll walk you through it — no runaround.",
+  },
+  {
+    n: "4",
+    title: "We build now, you pay over time",
+    description:
+      "Your fence goes up on schedule with posts set below the Kansas frost line; the payments fit your budget.",
+  },
+];
+
+const financeable = [
+  {
+    icon: "Tractor",
+    title: "Ranch & Acreage Perimeter",
+    description:
+      "Fencing a quarter-section of Reno County pasture adds up fast. Spread the cost of woven wire, barbed wire, or field fence across the whole run instead of all at once.",
+  },
+  {
+    icon: "Home",
+    title: "Full-Yard Privacy Fence",
+    description:
+      "Wrapping the whole backyard in cedar or vinyl privacy fence is a bigger job than a single section. A payment plan makes the full enclosure easy to say yes to.",
+  },
+  {
+    icon: "Building2",
+    title: "Commercial & Security Fence",
+    description:
+      "Chain-link, ornamental, or security fencing for a business or lot is a real investment. We'll help you stage the cost so it works with your operating budget.",
+  },
+  {
+    icon: "CloudLightning",
+    title: "Storm-Damage Rebuilds",
+    description:
+      "When Central Kansas wind flattens a long stretch of fence, you shouldn't have to wait. Build the rebuild now and pay it down over time.",
+  },
 ];
 ---
 
@@ -55,6 +136,8 @@ const financing = [
     }}
   />
 
+  <StatsRow stats={stats} bgColor="surface" />
+
   <section class="section-padding">
     <Container class="max-w-4xl">
       <p class="text-lg leading-relaxed text-muted">
@@ -64,17 +147,33 @@ const financing = [
         payment method that works best for you, and for bigger projects, ask us
         about financing and payment plans that spread the cost out over time.
       </p>
+    </Container>
+  </section>
 
-      <div class="mt-10 grid gap-6 md:grid-cols-3">
+  <BenefitGrid
+    benefits={financing}
+    eyebrow="Simple & Flexible"
+    heading="Paying for Your Fence, Made Easy"
+    bgColor="white"
+  />
+
+  <section class="section-padding bg-surface">
+    <Container>
+      <SectionHeading
+        eyebrow="Step by Step"
+        heading="How Financing Works"
+        align="center"
+      />
+      <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
         {
-          financing.map((f) => (
+          steps.map((s) => (
             <div class="rounded-2xl border border-border bg-white p-6 shadow-card">
-              <div class="flex h-12 w-12 items-center justify-center rounded-xl bg-primary-100">
-                <f.icon className="h-6 w-6 text-primary-700" />
-              </div>
-              <h3 class="mt-4 text-lg font-bold text-foreground">{f.title}</h3>
+              <span class="flex h-11 w-11 items-center justify-center rounded-full bg-primary-100 text-lg font-bold text-primary-700">
+                {s.n}
+              </span>
+              <h3 class="mt-4 text-lg font-bold text-foreground">{s.title}</h3>
               <p class="mt-2 text-sm leading-relaxed text-muted">
-                {f.description}
+                {s.description}
               </p>
             </div>
           ))
@@ -85,21 +184,48 @@ const financing = [
 
   <PaymentOptions bgColor="surface" />
 
-  <section class="section-padding">
-    <Container class="max-w-3xl text-center">
-      <SectionHeading
-        eyebrow="Ask Us About Financing"
-        heading="Bigger Project? Let's Make It Work"
-        align="center"
-      />
-      <p class="text-base leading-relaxed text-muted md:text-lg">
-        Ranch and acreage fencing can be a big line item. When you request your
-        free estimate, just let us know you'd like to explore financing or a
-        payment plan, and we'll walk you through the options so the project fits
-        your budget and your timeline.
-      </p>
-    </Container>
-  </section>
+  <BenefitGrid
+    benefits={financeable}
+    eyebrow="Bigger Projects Welcome"
+    heading="Fences Worth Spreading Out"
+    bgColor="white"
+  />
+
+  <SplitSection imageKey="stock-13" imagePosition="left" bgColor="surface">
+    <span
+      class="mb-3 inline-block rounded-full bg-primary-100 px-4 py-1.5 text-xs font-semibold uppercase tracking-widest text-primary-800"
+    >
+      Ask Us About Financing
+    </span>
+    <h2 class="text-3xl font-bold tracking-tight text-foreground md:text-4xl">
+      Bigger Project? Let's Make It Work
+    </h2>
+    <p class="mt-4 text-base leading-relaxed text-muted md:text-lg">
+      Ranch and acreage fencing can be a big line item — a long perimeter, deep
+      corner braces, and the right wire for Kansas wind and livestock all add up.
+      We never want the budget to be the reason you settle for less fence than
+      your property actually needs.
+    </p>
+    <p class="mt-4 text-base leading-relaxed text-muted md:text-lg">
+      When you request your free on-site estimate, just let us know you'd like to
+      explore financing or a payment plan. We'll walk you through the options in
+      plain language so the project fits your budget and your timeline — no
+      pressure, no rush.
+    </p>
+    <div class="mt-8 flex flex-col gap-4 sm:flex-row">
+      <Button href="/contact" size="lg">Get a Free Quote</Button>
+      <Button href="/fence-cost-guide" variant="outline" size="lg"
+        >See the Cost Guide</Button
+      >
+    </div>
+  </SplitSection>
+
+  <FAQSection
+    eyebrow="Payment Questions"
+    heading="Financing & Payment FAQs"
+    faqKeys={financingFaqKeys}
+    bgColor="surface"
+  />
 
   <CTASection
     heading="Let's Talk Numbers"

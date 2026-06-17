@@ -96,12 +96,12 @@ const config: FenceTypeConfig = {
   },
 
   costSnapshot: {
-    range: "$22–$55",
+    range: "$20–$60",
     unit: "per linear foot, installed",
     summary:
       "Most Central Kansas backyard fences land in this range, installed. Treated-pine privacy runs sit toward the low end; cedar and full-height vinyl panels with gates push toward the high end.",
     factors: [
-      "Material — treated pine ($22–$38), cedar ($25–$45), or vinyl ($30–$55) per ft",
+      "Material — treated pine ($20–$35), cedar ($30–$50), or vinyl ($35–$60) per ft",
       "Fence height and top style — 6 ft privacy vs. shorter picket",
       "Number and size of gates, including wide gates for equipment",
       "Terrain, old-fence tear-out, and total length",
@@ -156,7 +156,7 @@ const config: FenceTypeConfig = {
     {
       question: "How much does it cost to fence a backyard around here?",
       answer:
-        "Most installed backyard fences run about $22–$55 per linear foot in Central Kansas, depending on material, height, gates, and terrain. Treated pine sits at the low end, cedar in the middle, and full-height vinyl toward the top. The only way to get a real number is a free on-site estimate, and we hand you a written price with no pressure.",
+        "Most installed backyard fences run about $20–$60 per linear foot in Central Kansas, depending on material, height, gates, and terrain. Treated pine sits at the low end, cedar in the middle, and full-height vinyl toward the top. The only way to get a real number is a free on-site estimate, and we hand you a written price with no pressure.",
     },
     {
       question: "Can you add a wide gate so I can get equipment into the yard?",

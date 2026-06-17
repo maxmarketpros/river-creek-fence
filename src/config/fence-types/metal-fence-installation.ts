@@ -99,7 +99,7 @@ const config: FenceTypeConfig = {
   galleryHeading: "Recent Metal Fence Installation Projects",
 
   costSnapshot: {
-    range: "$30–$55",
+    range: "$25–$55",
     unit: "per linear foot, installed",
     summary:
       "Most ornamental metal fences in Central Kansas land in this range. Standard aluminum runs sit at the lower end, while heavy welded steel, taller security heights, and decorative tops push toward the top.",
@@ -159,7 +159,7 @@ const config: FenceTypeConfig = {
     {
       question: "How much does a metal fence cost in Central Kansas?",
       answer:
-        "Most installed ornamental metal fences run about $30–$55 per linear foot here, depending on whether you go aluminum or steel, picket height, gates, and how much slope or core-drilling the site needs. The only way to get a real number is a free on-site estimate — we'll measure, walk options, and hand you a written price with no pressure.",
+        "Most installed ornamental metal fences run about $25–$55 per linear foot here, depending on whether you go aluminum or steel, picket height, gates, and how much slope or core-drilling the site needs. The only way to get a real number is a free on-site estimate — we'll measure, walk options, and hand you a written price with no pressure.",
     },
     {
       question: "Can a metal fence follow a sloped or uneven yard?",

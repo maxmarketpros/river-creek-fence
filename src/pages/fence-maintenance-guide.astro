@@ -1,12 +1,19 @@
 ---
-import { Sun, Snowflake, Wind, Droplets, Wrench, TreePine } from "lucide-react";
+import { Sun, Snowflake, Wind, TreePine } from "lucide-react";
 import Layout from "@/layouts/Layout.astro";
 import PageHero from "@/components/sections/PageHero.astro";
+import StatsRow from "@/components/sections/StatsRow.astro";
+import FeatureList from "@/components/sections/FeatureList.astro";
+import ChecklistGrid from "@/components/sections/ChecklistGrid.astro";
+import SplitSection from "@/components/sections/SplitSection.astro";
+import FAQSection from "@/components/sections/FAQSection.astro";
 import CTASection from "@/components/sections/CTASection.astro";
 import QuoteSection from "@/components/sections/QuoteSection.astro";
 import Container from "@/components/ui/Container.astro";
 import SectionHeading from "@/components/ui/SectionHeading.astro";
+import Button from "@/components/ui/Button.astro";
 import { businessConfig } from "@/config/business";
+import { maintenanceFaqKeys } from "@/config/faqs";
 import { generatePageMetadata } from "@/lib/metadata";
 import { generateBreadcrumbSchema } from "@/lib/structured-data";
 
@@ -29,11 +36,50 @@ const seasonal = [
   { icon: Snowflake, title: "Winter", description: "Knock heavy snow off panels and gates so the weight doesn't bow them, and watch for drifting that puts pressure on the line." },
 ];
 
-const materials = [
-  { icon: Droplets, title: "Wood & Cedar", description: "Reseal or stain every 2–3 years to fight Kansas sun and moisture. Replace cracked pickets early before water gets into the posts." },
-  { icon: Wrench, title: "Chain Link & Metal", description: "Hit any chips or rust spots with primer and paint, keep hinges oiled, and tighten tension bands so the fabric stays taut." },
-  { icon: Wind, title: "Vinyl", description: "Rinse with a hose and mild soap once or twice a year. Check that posts haven't shifted and caps are seated after big storms." },
-  { icon: TreePine, title: "Farm & Ranch Wire", description: "Walk it regularly. Re-stretch sagging wire, replace broken staples and clips, and reset leaning braces before a small gap becomes an escape." },
+const materialCare = [
+  {
+    title: "Wood & Cedar",
+    description:
+      "Reseal or stain every 2–3 years to fight the Kansas sun and moisture, and replace cracked pickets early before water works its way into the posts. A fresh coat every couple of seasons is the single best thing you can do for a wood fence out here.",
+    imageKey: "stock-7",
+    href: "/fence-types/wood-fence-installation",
+    ctaLabel: "Explore wood fencing",
+  },
+  {
+    title: "Chain Link & Metal",
+    description:
+      "Hit any chips or rust spots with primer and paint, keep the hinges oiled, and tighten the tension bands so the fabric stays taut. A quick once-over after storm season keeps a metal fence tight and rust-free for decades.",
+    imageKey: "stock-35",
+    href: "/fence-types/chain-link-fence-installation",
+    ctaLabel: "Explore chain link",
+  },
+  {
+    title: "Vinyl",
+    description:
+      "Rinse it down with a hose and mild soap once or twice a year — that's most of the job. After big storms, check that the posts haven't shifted and the caps are still seated. Vinyl shrugs off our weather and never needs paint or stain.",
+    imageKey: "stock-8",
+    href: "/fence-types/vinyl-fence-installation",
+    ctaLabel: "Explore vinyl fencing",
+  },
+  {
+    title: "Farm & Ranch Wire",
+    description:
+      "Walk it regularly. Re-stretch sagging wire, replace broken staples and clips, and reset leaning braces before a small gap turns into an escaped animal. Tight wire and solid corners are what keep livestock where they belong.",
+    imageKey: "stock-12",
+    href: "/fence-types/woven-wire-fence-installation",
+    ctaLabel: "Explore farm & ranch fence",
+  },
+];
+
+const checkupItems = [
+  "Walk the full fence line and look for new lean or sag",
+  "Tighten loose screws, bolts, hinges, and tension bands",
+  "Reseal or re-stain bare or graying wood",
+  "Clear leaves, grass, and debris off the base",
+  "Check that every gate latches and swings clean",
+  "Re-stretch sagging wire and replace broken staples or clips",
+  "Reset any post heaved by the freeze-thaw",
+  "Knock heavy snow off panels and gates after storms",
 ];
 ---
 
@@ -62,19 +108,38 @@ const materials = [
     }}
   />
 
-  <section class="section-padding">
-    <Container class="max-w-4xl">
-      <p class="text-lg leading-relaxed text-muted">
-        Central Kansas is hard on fences. Between the wind, ice storms, dry
-        summers, and ground that heaves with every freeze and thaw, even a
-        well-built fence needs a little attention to go the distance. The good
-        news: a few simple habits each season will keep yours standing straight
-        for decades. Here's how we'd care for it.
-      </p>
-    </Container>
-  </section>
+  <StatsRow
+    bgColor="surface"
+    stats={[
+      { value: "5-Year", label: "Workmanship warranty" },
+      { value: "2-3 yrs", label: "Between wood re-seals" },
+      { value: "4", label: "Seasons covered" },
+      { value: "Free", label: "Repair estimates" },
+    ]}
+  />
 
-  <section class="pb-16 md:pb-24">
+  <SplitSection imageKey="stock-13" imagePosition="right" bgColor="white">
+    <span
+      class="mb-3 inline-block rounded-full bg-primary-100 px-4 py-1.5 text-xs font-semibold uppercase tracking-widest text-primary-800"
+      >Built for Kansas</span
+    >
+    <h2 class="text-3xl font-bold tracking-tight text-foreground md:text-4xl">
+      Central Kansas Is Hard on Fences
+    </h2>
+    <p class="mt-4 text-base leading-relaxed text-muted md:text-lg">
+      Between the wind, ice storms, dry summers, and ground that heaves with
+      every freeze and thaw, even a well-built fence needs a little attention to
+      go the distance. The good news: a few simple habits each season will keep
+      yours standing straight for decades.
+    </p>
+    <p class="mt-4 text-base leading-relaxed text-muted md:text-lg">
+      Here's how we'd care for it — season by season and material by material —
+      plus a quick checklist you can run a few times a year. And when a fix is
+      bigger than a weekend job, we're a phone call away.
+    </p>
+  </SplitSection>
+
+  <section class="section-padding bg-surface">
     <Container>
       <SectionHeading
         eyebrow="Season by Season"
@@ -99,47 +164,52 @@ const materials = [
     </Container>
   </section>
 
-  <section class="section-padding bg-surface">
-    <Container>
-      <SectionHeading
-        eyebrow="By Material"
-        heading="Care Tips for Your Type of Fence"
-        align="center"
-      />
-      <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-        {
-          materials.map((m) => (
-            <div class="rounded-2xl border border-border bg-white p-6 shadow-card">
-              <div class="flex h-12 w-12 items-center justify-center rounded-xl bg-primary-100">
-                <m.icon className="h-6 w-6 text-primary-700" />
-              </div>
-              <h3 class="mt-4 text-lg font-bold text-foreground">{m.title}</h3>
-              <p class="mt-2 text-sm leading-relaxed text-muted">
-                {m.description}
-              </p>
-            </div>
-          ))
-        }
-      </div>
-    </Container>
-  </section>
+  <FeatureList
+    features={materialCare}
+    eyebrow="By Material"
+    heading="Care Tips for Your Type of Fence"
+    subtitle="Every fence material asks for something a little different. Here's what keeps each one looking good and standing strong in Central Kansas."
+    bgColor="white"
+  />
 
-  <section class="section-padding">
-    <Container class="max-w-3xl text-center">
-      <SectionHeading
-        eyebrow="When to Call Us"
-        heading="Some Fixes Are Better Left to a Pro"
-        align="center"
-      />
-      <p class="text-base leading-relaxed text-muted md:text-lg">
-        Leaning posts, storm damage, sagging gates, or long sections of failing
-        wire are worth a professional look before they get worse — and more
-        expensive. If your fence has taken a beating or just isn't standing the
-        way it should, we'll come out, tell you honestly whether it's a repair
-        or a replacement, and quote it free.
-      </p>
-    </Container>
-  </section>
+  <ChecklistGrid
+    standalone
+    bgColor="surface"
+    columns={2}
+    eyebrow="Print This Out"
+    heading="Your Seasonal Fence Checkup"
+    subtitle="A quick walk-around a few times a year keeps small problems small."
+    items={checkupItems}
+  />
+
+  <SplitSection imageKey="stock-55" imagePosition="left" bgColor="white">
+    <span class="mb-3 inline-block rounded-full bg-primary-100 px-4 py-1.5 text-xs font-semibold uppercase tracking-widest text-primary-800">Repair or Replace?</span>
+    <h2 class="text-3xl font-bold tracking-tight text-foreground md:text-4xl">Some Fixes Are Better Left to a Pro</h2>
+    <p class="mt-4 text-base leading-relaxed text-muted md:text-lg">
+      Leaning posts, storm damage, sagging gates, or long sections of failing
+      wire are worth a professional look before they get worse — and more
+      expensive. Once a post lets go or the freeze-thaw works it loose, the
+      rest of the line starts pulling against itself, and a small fix can turn
+      into a big one fast.
+    </p>
+    <p class="mt-4 text-base leading-relaxed text-muted md:text-lg">
+      If your fence has taken a beating or just isn't standing the way it
+      should, we'll come out, look it over, and tell you honestly whether it's
+      a repair or a replacement — no pressure either way, and the estimate is
+      always free.
+    </p>
+    <div class="mt-8 flex flex-wrap gap-4">
+      <Button href="/services/fence-repair">See Fence Repair</Button>
+      <Button href="/contact" variant="outline">Get a Free Estimate</Button>
+    </div>
+  </SplitSection>
+
+  <FAQSection
+    eyebrow="Upkeep Questions"
+    heading="Fence Maintenance & Warranty FAQs"
+    faqKeys={maintenanceFaqKeys}
+    bgColor="surface"
+  />
 
   <CTASection
     heading="Fence Seen Better Days?"

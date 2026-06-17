@@ -1,6 +1,11 @@
 import { siteConfig } from "@/config/site";
 import { businessConfig } from "@/config/business";
-import type { ServiceConfig, FenceTypeConfig, FAQItem } from "@/types";
+import type {
+  ServiceConfig,
+  FenceTypeConfig,
+  CityPageConfig,
+  FAQItem,
+} from "@/types";
 
 const businessId = `${siteConfig.url}/#business`;
 
@@ -136,6 +141,45 @@ export function generateFenceTypeSchema(
       "@type": "OfferCatalog",
       name: `${config.title} — Where It Fits`,
       itemListElement: config.useCases.items.map((item, i) => ({
+        "@type": "Offer",
+        position: i + 1,
+        itemOffered: { "@type": "Service", name: item.title },
+      })),
+    },
+  };
+}
+
+/**
+ * Per-city Service schema for a `/service-areas/<slug>` page. The provider is the
+ * single global business `@id`; `areaServed` is the specific city with its own
+ * geo coordinates so each page targets its town.
+ */
+export function generateCityServiceSchema(city: CityPageConfig) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    name: `Fence Installation & Repair in ${city.name}, KS`,
+    description: city.excerpt,
+    serviceType: "Fence installation, repair, and replacement",
+    provider: { "@id": businessId },
+    areaServed: {
+      "@type": "City",
+      name: `${city.name}, KS`,
+      containedInPlace: {
+        "@type": "AdministrativeArea",
+        name: `${city.county}, Kansas`,
+      },
+      geo: {
+        "@type": "GeoCoordinates",
+        latitude: city.lat,
+        longitude: city.lng,
+      },
+    },
+    url: `${siteConfig.url}/service-areas/${city.slug}`,
+    hasOfferCatalog: {
+      "@type": "OfferCatalog",
+      name: `Fence Services in ${city.name}, KS`,
+      itemListElement: city.featuredServices.items.map((item, i) => ({
         "@type": "Offer",
         position: i + 1,
         itemOffered: { "@type": "Service", name: item.title },

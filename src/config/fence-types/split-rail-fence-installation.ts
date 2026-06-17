@@ -99,7 +99,7 @@ const config: FenceTypeConfig = {
   galleryHeading: "Recent Split Rail Fence Installation Projects",
 
   costSnapshot: {
-    range: "$15–$30",
+    range: "$12–$25",
     unit: "per linear foot, installed",
     summary:
       "Most Central Kansas split rail fences land in this range for standard pressure-treated runs. Cedar rails, a four-rail height, and added wire mesh push toward the high end.",
@@ -159,7 +159,7 @@ const config: FenceTypeConfig = {
     {
       question: "How much does a split rail fence cost in Central Kansas?",
       answer:
-        "Most installed split rail fences run about $15–$30 per linear foot here, depending on wood choice, the number of rails, terrain, and whether you add wire mesh. The open design covers a lot of ground affordably. The only way to get a firm number is a free on-site estimate — we'll measure and hand you a written price.",
+        "Most installed split rail fences run about $12–$25 per linear foot here, depending on wood choice, the number of rails, terrain, and whether you add wire mesh. The open design covers a lot of ground affordably. The only way to get a firm number is a free on-site estimate — we'll measure and hand you a written price.",
     },
     {
       question: "Do I need to stain or seal a split rail fence?",

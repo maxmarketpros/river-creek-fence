@@ -96,10 +96,10 @@ const config: FenceTypeConfig = {
   },
 
   costSnapshot: {
-    range: "$2–$25",
+    range: "$2–$30",
     unit: "per linear foot, installed",
     summary:
-      "Cattle fence covers a wide range because the right build depends on the pressure. Boundary barbed wire runs $2–$5 per foot, woven wire $4–$8, and pipe or continuous panel for corrals and high-pressure corners $12–$25 per foot.",
+      "Cattle fence covers a wide range because the right build depends on the pressure. Boundary barbed wire runs $2–$5 per foot, woven wire $4–$8, and pipe or continuous panel for corrals and high-pressure corners $14–$30 per foot.",
     factors: [
       "Material — barbed wire vs. woven vs. pipe/continuous",
       "Where the pressure sits — open boundary or working corral",
@@ -141,7 +141,7 @@ const config: FenceTypeConfig = {
     {
       question: "How much does cattle fence cost per foot?",
       answer:
-        "It ranges from about $2 to $25 per linear foot installed, depending on the build. Boundary barbed wire runs $2–$5, woven wire $4–$8, and pipe or continuous panel for corrals and high-pressure spots $12–$25. Long open runs come in low; heavy corral work runs higher. A free on-site estimate is the only way to get a real number for your place.",
+        "It ranges from about $2 to $25 per linear foot installed, depending on the build. Boundary barbed wire runs $2–$5, woven wire $4–$8, and pipe or continuous panel for corrals and high-pressure spots $14–$30. Long open runs come in low; heavy corral work runs higher. A free on-site estimate is the only way to get a real number for your place.",
     },
     {
       question: "Why use pipe or continuous fence instead of just barbed wire?",

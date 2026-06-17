@@ -99,7 +99,7 @@ const config: FenceTypeConfig = {
   galleryHeading: "Recent Wood Ranch Rail Fencing Projects",
 
   costSnapshot: {
-    range: "$15–$30",
+    range: "$12–$25",
     unit: "per linear foot, installed",
     summary:
       "Most Central Kansas wood ranch rail fences land in this range. Two-rail boundary runs sit at the low end, while four-rail horse lines, braced corners, and entry gates push toward the top.",
@@ -159,7 +159,7 @@ const config: FenceTypeConfig = {
     {
       question: "How much does wood ranch rail fencing cost in Central Kansas?",
       answer:
-        "Most installed wood ranch rail fences run about $15–$30 per linear foot here, depending on rail count, total length, gates, and terrain. A two-rail boundary sits at the low end and a braced four-rail horse line at the top. The only way to get a real number is a free on-site estimate — we'll measure and hand you a written price with no pressure.",
+        "Most installed wood ranch rail fences run about $12–$25 per linear foot here, depending on rail count, total length, gates, and terrain. A two-rail boundary sits at the low end and a braced four-rail horse line at the top. The only way to get a real number is a free on-site estimate — we'll measure and hand you a written price with no pressure.",
     },
     {
       question: "Can you match a new rail line to my existing fence or gate?",

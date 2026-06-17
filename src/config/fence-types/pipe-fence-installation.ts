@@ -97,7 +97,7 @@ const config: FenceTypeConfig = {
 
 
   costSnapshot: {
-    range: "$12–$25",
+    range: "$14–$30",
     unit: "per linear foot, installed",
     summary:
       "Most Central Kansas pipe fence falls in this range depending on pipe size and how many rails you run. Heavy corral and crowding-pen builds, gates, and rocky digging push toward the high end.",
@@ -152,7 +152,7 @@ const config: FenceTypeConfig = {
     {
       question: "How much does pipe fence cost per foot in Central Kansas?",
       answer:
-        "Most installed pipe fence runs about $12–$25 per linear foot here, depending on pipe diameter, how many rails you run, and the number of gates and braces. Heavy corral work and rocky digging land at the top of that range. A free on-site estimate is the only way to get a real number.",
+        "Most installed pipe fence runs about $14–$30 per linear foot here, depending on pipe diameter, how many rails you run, and the number of gates and braces. Heavy corral work and rocky digging land at the top of that range. A free on-site estimate is the only way to get a real number.",
     },
     {
       question: "Will a pipe fence rust out in our weather?",

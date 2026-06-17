@@ -99,7 +99,7 @@ const config: FenceTypeConfig = {
     range: "$3–$9",
     unit: "per linear foot, materials only",
     summary:
-      "Materials-only pricing for a standard 6-foot wood fence — pickets, rails, and posts. Treated pine sits at the low end; western red cedar runs higher. Set, installed, and finished, expect the $22–$45 per-foot installed range from our cost guide.",
+      "Materials-only pricing for a standard 6-foot wood fence — pickets, rails, and posts. Treated pine sits at the low end; western red cedar runs higher. Set, installed, and finished, expect the $20–$50 per-foot installed range from our cost guide.",
     factors: [
       "Wood — treated pine vs. western red cedar",
       "Picket grade and thickness (standard, premium, select)",
@@ -156,7 +156,7 @@ const config: FenceTypeConfig = {
     {
       question: "How much does wood fence material cost per foot?",
       answer:
-        "Materials only, a standard 6-foot wood fence generally runs about $3–$9 per linear foot — treated pine on the low end, western red cedar higher — depending on grade, post spacing, and rail count. Set and installed, that lands in the $22–$45 per-foot range from our cost guide. Send your footage for a firm materials list.",
+        "Materials only, a standard 6-foot wood fence generally runs about $3–$9 per linear foot — treated pine on the low end, western red cedar higher — depending on grade, post spacing, and rail count. Set and installed, that lands in the $20–$50 per-foot range from our cost guide. Send your footage for a firm materials list.",
     },
     {
       question: "How deep should I set wood fence posts in Central Kansas?",

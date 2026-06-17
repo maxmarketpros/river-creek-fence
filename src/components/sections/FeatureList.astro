@@ -1,11 +1,19 @@
 ---
+import { ArrowUpRight } from "lucide-react";
 import Container from "@/components/ui/Container.astro";
 import SectionHeading from "@/components/ui/SectionHeading.astro";
 import ImageSlot from "@/components/ui/ImageSlot.astro";
 import { cn } from "@/lib/utils";
 
 interface Props {
-  features: { title: string; description: string; imageKey?: string }[];
+  features: {
+    title: string;
+    description: string;
+    imageKey?: string;
+    /** Optional internal link rendered as a "{ctaLabel} →" under the text. */
+    href?: string;
+    ctaLabel?: string;
+  }[];
   eyebrow?: string;
   heading?: string;
   subtitle?: string;
@@ -58,6 +66,15 @@ const {
               <p class="mt-4 text-base leading-relaxed text-muted md:text-lg">
                 {feature.description}
               </p>
+              {feature.href && (
+                <a
+                  href={feature.href}
+                  class="group mt-5 inline-flex items-center gap-1.5 text-sm font-semibold text-primary-700 transition-colors hover:text-primary-800"
+                >
+                  {feature.ctaLabel ?? "Learn more"}
+                  <ArrowUpRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                </a>
+              )}
             </div>
             {feature.imageKey && (
               <ImageSlot

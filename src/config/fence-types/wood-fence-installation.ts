@@ -99,7 +99,7 @@ const config: FenceTypeConfig = {
   galleryHeading: "Recent Wood Fence Installation Projects",
 
   costSnapshot: {
-    range: "$22–$45",
+    range: "$20–$50",
     unit: "per linear foot, installed",
     summary:
       "Most Central Kansas wood fences land in this range. A simple picket or rail run sits near the low end, while tall privacy panels, decorative tops, and added gates push toward the high end.",
@@ -159,7 +159,7 @@ const config: FenceTypeConfig = {
     {
       question: "How much does a wood fence cost in Central Kansas?",
       answer:
-        "Most installed wood fences run about $22–$45 per linear foot here, depending on the style, height, number of gates, and lumber grade. A simple picket sits near the low end and a tall privacy run lands toward the top. The only way to get a real number is a free on-site estimate — we'll measure, talk options, and hand you a written price with no pressure.",
+        "Most installed wood fences run about $20–$50 per linear foot here, depending on the style, height, number of gates, and lumber grade. A simple picket sits near the low end and a tall privacy run lands toward the top. The only way to get a real number is a free on-site estimate — we'll measure, talk options, and hand you a written price with no pressure.",
     },
     {
       question: "Will a wood privacy fence hold up to Kansas wind?",

@@ -99,7 +99,7 @@ const config: FenceTypeConfig = {
   galleryHeading: "Recent Vinyl Fence Installation Projects",
 
   costSnapshot: {
-    range: "$30–$55",
+    range: "$35–$60",
     unit: "per linear foot, installed",
     summary:
       "Most Central Kansas vinyl fences land in this range, installed. Picket and ranch-rail styles sit toward the low end, while tall 6-foot privacy panels and gates push toward the high end.",
@@ -159,7 +159,7 @@ const config: FenceTypeConfig = {
     {
       question: "How much does a vinyl fence cost in Central Kansas?",
       answer:
-        "Most installed vinyl fences run about $30–$55 per linear foot here, depending on style, height, gates, and terrain. Picket and rail styles sit lower; tall privacy panels run higher. The only way to get a real number is a free on-site estimate, and we'll hand you a written price with no pressure.",
+        "Most installed vinyl fences run about $35–$60 per linear foot here, depending on style, height, gates, and terrain. Picket and rail styles sit lower; tall privacy panels run higher. The only way to get a real number is a free on-site estimate, and we'll hand you a written price with no pressure.",
     },
     {
       question: "What colors and styles does vinyl fencing come in?",

@@ -99,7 +99,7 @@ const config: FenceTypeConfig = {
     range: "$4–$12",
     unit: "per linear foot, materials only",
     summary:
-      "Materials-only pricing for steel pipe fence runs roughly $4–$12 per foot depending on whether you're buying used line pipe, sucker rod, or continuous welded panels — well under the $12–$25 per foot for a fully installed pipe or continuous fence.",
+      "Materials-only pricing for steel pipe fence runs roughly $4–$12 per foot depending on whether you're buying used line pipe, sucker rod, or continuous welded panels — well under the $14–$30 per foot for a fully installed pipe or continuous fence.",
     factors: [
       "New vs. used oilfield pipe and current steel prices",
       "Pipe diameter and wall thickness — 2-3/8\" up to 4-1/2\"+",

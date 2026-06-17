@@ -97,7 +97,7 @@ const config: FenceTypeConfig = {
 
 
   costSnapshot: {
-    range: "$12–$25",
+    range: "$14–$30",
     unit: "per linear foot, installed",
     summary:
       "Most Central Kansas continuous-fence runs land in this range. Standard perimeter panel sits at the lower end; heavier pipe posts, tighter corrals, and gates push toward the high end.",
@@ -157,7 +157,7 @@ const config: FenceTypeConfig = {
     {
       question: "How much does continuous fence cost in Central Kansas?",
       answer:
-        "Most installed continuous fence runs about $12–$25 per linear foot here, depending on the number of rails, pipe weight, gates, and how rough the ground is. Straight perimeter is on the lower end; tight corrals and heavy pipe push higher. A free on-site estimate is the only way to get a real, written number.",
+        "Most installed continuous fence runs about $14–$30 per linear foot here, depending on the number of rails, pipe weight, gates, and how rough the ground is. Straight perimeter is on the lower end; tight corrals and heavy pipe push higher. A free on-site estimate is the only way to get a real, written number.",
     },
     {
       question: "Can you tie continuous fence into existing pipe fence or gates?",
