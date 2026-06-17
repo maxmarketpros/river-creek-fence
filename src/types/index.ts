@@ -76,6 +76,96 @@ export interface BenefitItem {
   icon: string;
 }
 
+/** One at-a-glance spec shown in the fence-type SpecBar. */
+export interface SpecItem {
+  icon: string;
+  /** Short label, e.g. "Lifespan". */
+  label: string;
+  /** Short value, e.g. "20–30 yrs". */
+  value: string;
+}
+
+/** One numbered install step on a fence-type page. */
+export interface BuildStep {
+  title: string;
+  description: string;
+}
+
+/** A "where this fence fits" card — links to a related service/property page. */
+export interface UseCaseItem {
+  title: string;
+  description: string;
+  icon: string;
+  /** Optional internal link target — makes the whole card clickable. */
+  href?: string;
+}
+
+export interface UseCaseSection {
+  eyebrow: string;
+  heading: string;
+  subtitle: string;
+  items: UseCaseItem[];
+}
+
+/** Per-material cost snapshot that links out to the full Cost Guide. */
+export interface CostSnapshot {
+  /** Installed price range, e.g. "$25–$45". */
+  range: string;
+  /** Unit + qualifier, e.g. "per linear foot, installed". */
+  unit: string;
+  /** 1–2 sentences on what the range covers. */
+  summary: string;
+  /** 3–4 factors that move the price. */
+  factors: string[];
+}
+
+/**
+ * Fence-type page config (`/fence-types/<slug>`). Richer than ServiceConfig:
+ * adds a spec bar, pros/considerations, a per-type photo gallery, a cost
+ * snapshot, and material-specific build steps. Rendered by
+ * `src/pages/fence-types/[slug].astro`.
+ */
+export interface FenceTypeConfig {
+  slug: string;
+  title: string;
+  /** H1 — Central-Kansas phrasing. */
+  h1: string;
+  metaTitle: string;
+  /** Hero subtitle + meta description. */
+  excerpt: string;
+  /** Lucide icon name. */
+  icon: string;
+  overviewHeading: string;
+  /** 3 paragraphs of unique copy (image: `${slug}-b`). */
+  description: string[];
+  /** Exactly 4 at-a-glance specs. */
+  atAGlance: SpecItem[];
+  prosConsHeading: string;
+  /** 4–6 "great for" bullets. */
+  pros: string[];
+  /** 3–4 honest "things to know" bullets. */
+  considerations: string[];
+  /** Feature section (image: `${slug}-a`). 2 paragraphs. */
+  featureHeading: string;
+  featureBody: string[];
+  /** "Where this fence fits" topic grid — 6 cards, each linking out. */
+  useCases: UseCaseSection;
+  /** Stock photo numbers for the per-type gallery (mapped pair first). */
+  gallery?: number[];
+  galleryHeading?: string;
+  /** Per-material cost snapshot. */
+  costSnapshot: CostSnapshot;
+  buildStepsHeading: string;
+  /** 3–4 material-specific install steps. */
+  buildSteps: BuildStep[];
+  /** Inline FAQs (5–6) — also emitted as FAQPage schema. */
+  faqs: ServiceFAQ[];
+  ctaHeading: string;
+  ctaText: string;
+  /** Internal links to 3–4 related pages. */
+  related: RelatedLink[];
+}
+
 export interface TestimonialItem {
   name: string;
   title: string;

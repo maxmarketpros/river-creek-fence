@@ -1,0 +1,100 @@
+---
+import { Check, Info } from "lucide-react";
+import Container from "@/components/ui/Container.astro";
+import SectionHeading from "@/components/ui/SectionHeading.astro";
+import { cn } from "@/lib/utils";
+
+interface Props {
+  heading: string;
+  subtitle?: string;
+  pros: string[];
+  considerations: string[];
+  prosLabel?: string;
+  considerationsLabel?: string;
+  bgColor?: "white" | "surface";
+  class?: string;
+}
+
+const {
+  heading,
+  subtitle,
+  pros,
+  considerations,
+  prosLabel = "Great for",
+  considerationsLabel = "Things to know",
+  bgColor = "surface",
+  class: className,
+} = Astro.props as Props;
+---
+
+<section
+  class={cn(
+    "section-padding",
+    bgColor === "surface" && "bg-surface",
+    className,
+  )}
+>
+  <Container>
+    <SectionHeading
+      eyebrow="Honest Take"
+      heading={heading}
+      subtitle={subtitle}
+      align="center"
+    />
+
+    <div class="mx-auto grid max-w-4xl gap-6 md:grid-cols-2">
+      {/* Pros */}
+      <div class="rounded-2xl border border-primary-200 bg-white p-6 shadow-card md:p-8">
+        <div class="mb-5 flex items-center gap-3">
+          <span
+            class="inline-flex h-9 w-9 items-center justify-center rounded-xl bg-primary-500 text-black"
+          >
+            <Check className="h-5 w-5" strokeWidth={3} />
+          </span>
+          <h3 class="text-lg font-bold text-foreground">{prosLabel}</h3>
+        </div>
+        <ul class="space-y-3">
+          {
+            pros.map((p) => (
+              <li class="flex gap-3">
+                <Check
+                  className="mt-0.5 h-5 w-5 shrink-0 text-primary-600"
+                  strokeWidth={2.5}
+                />
+                <span class="text-sm leading-relaxed text-foreground-light md:text-base">
+                  {p}
+                </span>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+
+      {/* Considerations */}
+      <div class="rounded-2xl border border-border bg-white p-6 shadow-card md:p-8">
+        <div class="mb-5 flex items-center gap-3">
+          <span
+            class="inline-flex h-9 w-9 items-center justify-center rounded-xl bg-foreground text-primary-400"
+          >
+            <Info className="h-5 w-5" strokeWidth={2.5} />
+          </span>
+          <h3 class="text-lg font-bold text-foreground">
+            {considerationsLabel}
+          </h3>
+        </div>
+        <ul class="space-y-3">
+          {
+            considerations.map((c) => (
+              <li class="flex gap-3">
+                <span class="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-muted-light" />
+                <span class="text-sm leading-relaxed text-foreground-light md:text-base">
+                  {c}
+                </span>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </div>
+  </Container>
+</section>

@@ -1,0 +1,73 @@
+---
+import { ArrowRight, Check } from "lucide-react";
+import Container from "@/components/ui/Container.astro";
+import Button from "@/components/ui/Button.astro";
+import { cn } from "@/lib/utils";
+import type { CostSnapshot } from "@/types";
+
+interface Props {
+  cost: CostSnapshot;
+  /** Fence type title, used in the heading. */
+  title: string;
+  class?: string;
+}
+
+const { cost, title, class: className } = Astro.props as Props;
+---
+
+<section class={cn("section-padding", className)}>
+  <Container>
+    <div
+      class="mx-auto grid max-w-5xl gap-8 overflow-hidden rounded-3xl border border-border bg-white shadow-card md:grid-cols-5 md:gap-0"
+    >
+      {/* Price panel */}
+      <div
+        class="flex flex-col justify-center bg-foreground p-8 text-center md:col-span-2 md:p-10 md:text-left"
+      >
+        <span
+          class="text-xs font-semibold uppercase tracking-widest text-primary-400"
+        >
+          Typical Investment
+        </span>
+        <div class="mt-3 text-4xl font-bold text-white md:text-5xl">
+          {cost.range}
+        </div>
+        <div class="mt-2 text-sm font-medium text-white/70">{cost.unit}</div>
+        <p class="mt-5 text-sm leading-relaxed text-white/80">{cost.summary}</p>
+      </div>
+
+      {/* Factors + CTA */}
+      <div class="p-8 md:col-span-3 md:p-10">
+        <h2 class="text-2xl font-bold text-foreground">
+          What Affects Your {title} Price
+        </h2>
+        <ul class="mt-5 grid gap-3 sm:grid-cols-2">
+          {
+            cost.factors.map((f) => (
+              <li class="flex gap-2.5">
+                <Check
+                  className="mt-0.5 h-5 w-5 shrink-0 text-primary-600"
+                  strokeWidth={2.5}
+                />
+                <span class="text-sm leading-relaxed text-foreground-light">
+                  {f}
+                </span>
+              </li>
+            ))
+          }
+        </ul>
+        <div class="mt-7 flex flex-wrap gap-3">
+          <Button href="/fence-cost-guide">
+            See the Full Cost Guide
+            <ArrowRight slot="icon" className="h-5 w-5" />
+          </Button>
+          <Button href="/contact" variant="outline">Get a Free Quote</Button>
+        </div>
+        <p class="mt-4 text-xs text-muted">
+          Ranges are general estimates for Central Kansas and are not a quote —
+          your written on-site estimate is always free.
+        </p>
+      </div>
+    </div>
+  </Container>
+</section>

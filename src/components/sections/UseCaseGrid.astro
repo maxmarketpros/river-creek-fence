@@ -1,0 +1,72 @@
+---
+import { ArrowUpRight } from "lucide-react";
+import Container from "@/components/ui/Container.astro";
+import SectionHeading from "@/components/ui/SectionHeading.astro";
+import IconTile from "@/components/ui/IconTile.astro";
+import { cn } from "@/lib/utils";
+import type { UseCaseSection } from "@/types";
+
+interface Props {
+  section: UseCaseSection;
+  bgColor?: "white" | "surface";
+  class?: string;
+}
+
+const { section, bgColor = "white", class: className } = Astro.props as Props;
+const { eyebrow, heading, subtitle, items } = section;
+---
+
+<section
+  class={cn(
+    "section-padding",
+    bgColor === "surface" && "bg-surface",
+    className,
+  )}
+>
+  <Container>
+    <SectionHeading
+      eyebrow={eyebrow}
+      heading={heading}
+      subtitle={subtitle}
+      align="center"
+    />
+
+    <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+      {
+        items.map((item) => {
+          const inner = (
+            <>
+              <div class="flex items-start justify-between gap-3">
+                <IconTile icon={item.icon} variant="lime" size="md" />
+                {item.href && (
+                  <ArrowUpRight className="h-5 w-5 text-muted-light transition-colors group-hover:text-primary-600" />
+                )}
+              </div>
+              <h3 class="mt-5 text-lg font-bold text-foreground">
+                {item.title}
+              </h3>
+              <p class="mt-2 text-sm leading-relaxed text-muted">
+                {item.description}
+              </p>
+            </>
+          );
+          const base =
+            "group rounded-2xl border border-border bg-white p-6 transition-all duration-300 md:p-7";
+          return item.href ? (
+            <a
+              href={item.href}
+              class={cn(
+                base,
+                "block hover:-translate-y-0.5 hover:border-primary-300 hover:shadow-card-hover",
+              )}
+            >
+              {inner}
+            </a>
+          ) : (
+            <div class={base}>{inner}</div>
+          );
+        })
+      }
+    </div>
+  </Container>
+</section>

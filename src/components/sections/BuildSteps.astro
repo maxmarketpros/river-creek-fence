@@ -1,0 +1,64 @@
+---
+import Container from "@/components/ui/Container.astro";
+import SectionHeading from "@/components/ui/SectionHeading.astro";
+import { cn } from "@/lib/utils";
+import type { BuildStep } from "@/types";
+
+interface Props {
+  heading: string;
+  subtitle?: string;
+  steps: BuildStep[];
+  eyebrow?: string;
+  bgColor?: "white" | "surface";
+  class?: string;
+}
+
+const {
+  heading,
+  subtitle,
+  steps,
+  eyebrow = "Our Process",
+  bgColor = "surface",
+  class: className,
+} = Astro.props as Props;
+---
+
+<section
+  class={cn(
+    "section-padding",
+    bgColor === "surface" && "bg-surface",
+    className,
+  )}
+>
+  <Container>
+    <SectionHeading
+      eyebrow={eyebrow}
+      heading={heading}
+      subtitle={subtitle}
+      align="center"
+    />
+
+    <div
+      class={cn(
+        "grid gap-6",
+        steps.length === 3
+          ? "md:grid-cols-3"
+          : "sm:grid-cols-2 lg:grid-cols-4",
+      )}
+    >
+      {
+        steps.map((step, i) => (
+          <div class="relative rounded-2xl border border-border bg-white p-6 shadow-card md:p-7">
+            <span class="inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-foreground text-xl font-bold text-primary-400">
+              {String(i + 1).padStart(2, "0")}
+            </span>
+            <h3 class="mt-4 text-lg font-bold text-foreground">{step.title}</h3>
+            <p class="mt-2 text-sm leading-relaxed text-muted">
+              {step.description}
+            </p>
+          </div>
+        ))
+      }
+    </div>
+  </Container>
+</section>

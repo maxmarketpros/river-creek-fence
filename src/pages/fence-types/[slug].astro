@@ -1,37 +1,72 @@
 ---
+import { ArrowRight, Phone, ArrowUpRight } from "lucide-react";
 import Layout from "@/layouts/Layout.astro";
 import PageHero from "@/components/sections/PageHero.astro";
-import ComingSoon from "@/components/sections/ComingSoon.astro";
+import SpecBar from "@/components/sections/SpecBar.astro";
+import SplitSection from "@/components/sections/SplitSection.astro";
+import ProsCons from "@/components/sections/ProsCons.astro";
+import UseCaseGrid from "@/components/sections/UseCaseGrid.astro";
+import TypeGallery from "@/components/sections/TypeGallery.astro";
+import CostSnapshot from "@/components/sections/CostSnapshot.astro";
+import BuildSteps from "@/components/sections/BuildSteps.astro";
+import FAQSection from "@/components/sections/FAQSection.astro";
+import CTASection from "@/components/sections/CTASection.astro";
 import QuoteSection from "@/components/sections/QuoteSection.astro";
-import { fenceTypes } from "@/config/catalog";
+import SectionHeading from "@/components/ui/SectionHeading.astro";
+import Container from "@/components/ui/Container.astro";
+import Button from "@/components/ui/Button.astro";
+import { fenceTypeConfigs } from "@/config/fence-types";
+import { businessConfig } from "@/config/business";
+import { imageManifest } from "@/config/images";
 import { generatePageMetadata } from "@/lib/metadata";
-import { generateBreadcrumbSchema } from "@/lib/structured-data";
+import {
+  generateFenceTypeSchema,
+  generateBreadcrumbSchema,
+} from "@/lib/structured-data";
+import type { FenceTypeConfig } from "@/types";
 
-export function getStaticPaths() {
-  return fenceTypes.map((item) => ({ params: { slug: item.slug }, props: { item } }));
+export async function getStaticPaths() {
+  return fenceTypeConfigs.map((config) => ({
+    params: { slug: config.slug },
+    props: { config },
+  }));
 }
 
-const { item } = Astro.props;
-const h1 = `${item.title} in Central Kansas`;
+interface Props {
+  config: FenceTypeConfig;
+}
+
+const { config } = Astro.props as Props;
+
+const ctaProps = {
+  primary: { label: "Get a Free Quote", href: "/contact" },
+  secondary: {
+    label: `Call ${businessConfig.phone}`,
+    href: `tel:${businessConfig.phoneRaw}`,
+  },
+};
 
 const meta = generatePageMetadata({
-  title: item.title,
-  description: `${item.title} by River Creek Fence — serving Haven, Hutchinson, Wichita, and Reno County, KS. Free estimates and a 5-year warranty from a fence company with real farm experience.`,
-  path: `/fence-types/${item.slug}`,
+  title: config.metaTitle,
+  description: config.excerpt,
+  path: `/fence-types/${config.slug}`,
 });
 
+const serviceSchema = generateFenceTypeSchema(config);
 const breadcrumbSchema = generateBreadcrumbSchema([
   { name: "Home", href: "/" },
-  { name: "Fence Types", href: "/services" },
-  { name: item.title, href: `/fence-types/${item.slug}` },
+  { name: "Services", href: "/services" },
+  { name: config.title, href: `/fence-types/${config.slug}` },
 ]);
 
-const related = [
-  { label: "Fence Installation", href: "/services/fence-installation" },
-  { label: "Privacy Fence", href: "/services/privacy-fence-installation" },
-  { label: "Fence Cost Guide", href: "/fence-cost-guide" },
-  { label: "Get a Free Quote", href: "/contact" },
-];
+const faqItems = config.faqs.map((f, i) => ({
+  id: `${config.slug}-faq-${i}`,
+  question: f.question,
+  answer: f.answer,
+}));
+
+const showGallery = !!config.gallery && config.gallery.length >= 4;
+const heroPreload = imageManifest[`${config.slug}-hero`]?.src;
 ---
 
 <Layout
@@ -40,27 +75,150 @@ const related = [
   canonical={meta.canonical}
   ogImage={meta.ogImage}
   ogTitle={meta.ogTitle}
+  preloadImage={heroPreload}
 >
+  <script
+    type="application/ld+json"
+    is:inline
+    set:html={JSON.stringify(serviceSchema)}
+  />
   <script
     type="application/ld+json"
     is:inline
     set:html={JSON.stringify(breadcrumbSchema)}
   />
 
+  {/* Hero */}
   <PageHero
-    heading={h1}
-    subtitle={`Durable ${item.title.toLowerCase()} built for Kansas wind, weather, and the way you use your property.`}
-    imageKey={`${item.slug}-hero`}
+    heading={config.h1}
+    subtitle={config.excerpt}
+    imageKey={`${config.slug}-hero`}
     breadcrumbs={[
       { label: "Home", href: "/" },
       { label: "Services", href: "/services" },
-      { label: item.title },
+      { label: config.title },
     ]}
-    primaryCta={{ label: "Get a Free Quote", href: "/contact" }}
-    secondaryCta={{ label: "View Our Services", href: "/services" }}
+    primaryCta={ctaProps.primary}
+    secondaryCta={ctaProps.secondary}
   />
 
-  <ComingSoon title={item.title} relatedLinks={related} />
+  {/* At-a-glance specs (overlaps hero) */}
+  <SpecBar items={config.atAGlance} />
 
+  {/* Overview (content image #1: `${slug}-b`) */}
+  <SplitSection
+    imageKey={`${config.slug}-b`}
+    imagePosition="right"
+    imageAspect="4/3"
+  >
+    <SectionHeading eyebrow="Overview" heading={config.overviewHeading} />
+    {
+      config.description.map((p) => (
+        <p class="mb-4 text-base leading-relaxed text-muted md:text-lg">{p}</p>
+      ))
+    }
+    <div class="mt-6 flex flex-wrap gap-4">
+      <Button href="/contact">
+        Get a Free Quote
+        <ArrowRight slot="icon" className="h-5 w-5" />
+      </Button>
+      <Button href={`tel:${businessConfig.phoneRaw}`} variant="outline">
+        {businessConfig.phone}
+        <Phone slot="icon" className="h-5 w-5" />
+      </Button>
+    </div>
+  </SplitSection>
+
+  {/* Pros & considerations */}
+  <ProsCons
+    heading={config.prosConsHeading}
+    pros={config.pros}
+    considerations={config.considerations}
+    bgColor="surface"
+  />
+
+  {/* Feature (content image #2: `${slug}-a`) */}
+  <SplitSection
+    imageKey={`${config.slug}-a`}
+    imagePosition="left"
+    imageAspect="4/3"
+  >
+    <SectionHeading eyebrow="Built to Last" heading={config.featureHeading} />
+    {
+      config.featureBody.map((p) => (
+        <p class="mb-4 text-base leading-relaxed text-muted md:text-lg">{p}</p>
+      ))
+    }
+  </SplitSection>
+
+  {/* Where this fence fits (internal links) */}
+  <UseCaseGrid section={config.useCases} bgColor="surface" />
+
+  {/* Per-type gallery (only when enough matching photos exist) */}
+  {
+    showGallery && (
+      <TypeGallery
+        imageNumbers={config.gallery!}
+        heading={config.galleryHeading ?? `Recent ${config.title} Projects`}
+        altSubject={config.title}
+      />
+    )
+  }
+
+  {/* Cost snapshot */}
+  <CostSnapshot
+    cost={config.costSnapshot}
+    title={config.title}
+    class={showGallery ? "bg-surface" : ""}
+  />
+
+  {/* How we build it */}
+  <BuildSteps
+    heading={config.buildStepsHeading}
+    steps={config.buildSteps}
+    bgColor={showGallery ? "white" : "surface"}
+  />
+
+  {/* FAQ (emits FAQPage schema) */}
+  <FAQSection
+    eyebrow="Common Questions"
+    heading={`${config.title} FAQ`}
+    items={faqItems}
+    bgColor={showGallery ? "surface" : "white"}
+  />
+
+  {/* Related links */}
+  {
+    config.related.length > 0 && (
+      <section class="section-padding-sm">
+        <Container>
+          <h2 class="mb-6 text-xl font-bold text-foreground">
+            Related services &amp; resources
+          </h2>
+          <div class="flex flex-wrap gap-3">
+            {config.related.map((link) => (
+              <a
+                href={link.href}
+                class="inline-flex items-center gap-1.5 rounded-full border border-border bg-white px-4 py-2 text-sm font-medium text-foreground-light transition-colors hover:border-primary-500 hover:text-primary-700"
+              >
+                {link.label}
+                <ArrowUpRight className="h-4 w-4 text-primary-700" />
+              </a>
+            ))}
+          </div>
+        </Container>
+      </section>
+    )
+  }
+
+  {/* CTA */}
+  <CTASection
+    heading={config.ctaHeading}
+    text={config.ctaText}
+    primaryCta={ctaProps.primary}
+    secondaryCta={ctaProps.secondary}
+  />
+
+  {/* Quote Form */}
   <QuoteSection />
 </Layout>

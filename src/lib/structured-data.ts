@@ -1,6 +1,6 @@
 import { siteConfig } from "@/config/site";
 import { businessConfig } from "@/config/business";
-import type { ServiceConfig, FAQItem } from "@/types";
+import type { ServiceConfig, FenceTypeConfig, FAQItem } from "@/types";
 
 const businessId = `${siteConfig.url}/#business`;
 
@@ -104,6 +104,41 @@ export function generateServiceSchema(service: ServiceConfig) {
         "@type": "Offer",
         position: i + 1,
         itemOffered: { "@type": "Service", name: feature },
+      })),
+    },
+  };
+}
+
+export function generateFenceTypeSchema(
+  config: FenceTypeConfig,
+  basePath = "fence-types",
+) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    name: config.title,
+    description: config.excerpt,
+    serviceType: config.title,
+    provider: { "@id": businessId },
+    areaServed: areaServed(),
+    url: `${siteConfig.url}/${basePath}/${config.slug}`,
+    offers: {
+      "@type": "Offer",
+      priceCurrency: "USD",
+      priceSpecification: {
+        "@type": "PriceSpecification",
+        price: config.costSnapshot.range,
+        priceCurrency: "USD",
+        unitText: config.costSnapshot.unit,
+      },
+    },
+    hasOfferCatalog: {
+      "@type": "OfferCatalog",
+      name: `${config.title} — Where It Fits`,
+      itemListElement: config.useCases.items.map((item, i) => ({
+        "@type": "Offer",
+        position: i + 1,
+        itemOffered: { "@type": "Service", name: item.title },
       })),
     },
   };
