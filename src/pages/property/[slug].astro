@@ -17,7 +17,7 @@ import Container from "@/components/ui/Container.astro";
 import Button from "@/components/ui/Button.astro";
 import { propertyConfigs } from "@/config/property";
 import { businessConfig } from "@/config/business";
-import { imageManifest } from "@/config/images";
+import { getHeroPreload } from "@/config/images";
 import { generatePageMetadata } from "@/lib/metadata";
 import {
   generateFenceTypeSchema,
@@ -66,7 +66,7 @@ const faqItems = config.faqs.map((f, i) => ({
 }));
 
 const showGallery = !!config.gallery && config.gallery.length >= 4;
-const heroPreload = imageManifest[`${config.slug}-hero`]?.src;
+const heroPreload = await getHeroPreload(`${config.slug}-hero`);
 ---
 
 <Layout

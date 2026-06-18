@@ -44,7 +44,7 @@ const IconComponent = (LucideIcons as any)[service.icon] || LucideIcons.Wrench;
       href={`/services/${service.slug}`}
       class="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold uppercase tracking-wider text-primary-700 transition-colors hover:text-primary-800"
     >
-      Learn More
+      Learn More<span class="sr-only"> about {service.title}</span>
       <ArrowRight
         className="h-4 w-4 transition-transform group-hover:translate-x-1"
       />

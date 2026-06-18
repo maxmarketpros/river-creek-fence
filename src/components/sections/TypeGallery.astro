@@ -1,6 +1,8 @@
 ---
+import { Image, getImage } from "astro:assets";
 import Container from "@/components/ui/Container.astro";
 import SectionHeading from "@/components/ui/SectionHeading.astro";
+import { stock } from "@/config/images";
 import { cn } from "@/lib/utils";
 
 interface Props {
@@ -22,10 +24,16 @@ const {
   class: className,
 } = Astro.props as Props;
 
-const images = imageNumbers.map((n) => ({
-  src: `/images/stock/${n}.jpg`,
-  alt: `${altSubject} project completed by River Creek Fence in Central Kansas`,
-}));
+const items = await Promise.all(
+  imageNumbers.map(async (n) => {
+    const meta = stock[n];
+    const alt = `${altSubject} project completed by River Creek Fence in Central Kansas`;
+    const full = await getImage({ src: meta, width: 1600, format: "webp" });
+    return { meta, alt, full: full.src };
+  }),
+);
+
+const lightboxImages = items.map((it) => ({ alt: it.alt, full: it.full }));
 ---
 
 <section
@@ -47,19 +55,20 @@ const images = imageNumbers.map((n) => ({
       class="columns-2 gap-3 md:columns-3 md:gap-4 [&>*]:mb-3 md:[&>*]:mb-4"
     >
       {
-        images.map((img, i) => (
+        items.map((item, i) => (
           <button
             type="button"
             class="group block w-full overflow-hidden rounded-xl border border-border focus:outline-none focus:ring-2 focus:ring-primary-500"
             data-typegallery-item
             data-index={i}
-            aria-label={`View ${img.alt}`}
+            aria-label={`View ${item.alt}`}
           >
-            <img
-              src={img.src}
-              alt={img.alt}
-              width="1920"
-              height="1080"
+            <Image
+              src={item.meta}
+              alt={item.alt}
+              widths={[300, 500, 700]}
+              sizes="(max-width: 768px) 50vw, 33vw"
+              format="webp"
               loading="lazy"
               decoding="async"
               class="h-auto w-full transition-transform duration-300 group-hover:scale-105"
@@ -111,7 +120,7 @@ const images = imageNumbers.map((n) => ({
   </div>
 </section>
 
-<script is:inline define:vars={{ images }}>
+<script is:inline define:vars={{ images: lightboxImages }}>
   (function () {
     const lightbox = document.getElementById("typegallery-lightbox");
     const lbImg = document.getElementById("typegallery-lightbox-img");
@@ -120,7 +129,7 @@ const images = imageNumbers.map((n) => ({
 
     function show(i) {
       current = (i + images.length) % images.length;
-      lbImg.src = images[current].src;
+      lbImg.src = images[current].full;
       lbImg.alt = images[current].alt;
       lightbox.classList.remove("hidden");
       lightbox.classList.add("flex");

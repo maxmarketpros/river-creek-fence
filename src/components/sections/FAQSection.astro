@@ -17,6 +17,8 @@ interface Props {
   class?: string;
   id?: string;
   emitSchema?: boolean;
+  /** Render the decorative "picket fence" baseline behind the content. */
+  decor?: boolean;
 }
 
 const {
@@ -29,6 +31,7 @@ const {
   class: className,
   id,
   emitSchema = true,
+  decor = false,
 } = Astro.props as Props;
 
 const displayFaqs = items || (faqKeys ? getFaqsByKeys(faqKeys) : faqs);
@@ -52,10 +55,19 @@ const faqSchema = emitSchema && displayFaqs.length > 0
   class={cn(
     "section-padding",
     bgColor === "surface" && "bg-surface",
+    decor && "relative",
     className,
   )}
 >
-  <Container>
+  {
+    decor && (
+      <div
+        class="fence-baseline pointer-events-none absolute inset-0 z-0"
+        aria-hidden="true"
+      />
+    )
+  }
+  <Container class={cn(decor && "relative z-10")}>
     <div class="mx-auto max-w-3xl">
       <SectionHeading
         eyebrow={eyebrow}

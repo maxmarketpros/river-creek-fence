@@ -1,8 +1,6 @@
 ---
-import { existsSync } from "node:fs";
-import { fileURLToPath } from "node:url";
-import { ImageIcon } from "lucide-react";
-import { imageManifest } from "@/config/images";
+import { Picture } from "astro:assets";
+import { imageManifest, HERO_WIDTHS } from "@/config/images";
 import { cn } from "@/lib/utils";
 
 interface Props {
@@ -19,119 +17,48 @@ const {
   imageKey,
   aspectRatio,
   priority = false,
+  sizes,
   class: className,
   fill = false,
   overlayClassName,
 } = Astro.props as Props;
 
 const config = imageManifest[imageKey];
-
-// Only probe the filesystem during `astro dev` so missing images show as
-// helpful placeholders while authoring. In production builds we trust the
-// manifest and always render the <img>. Using `import.meta.url` here at
-// build time resolves against the compiled module location (e.g.
-// node_modules/.astro/...), not this source file, so `../../../public`
-// walks to the wrong directory and existsSync returns false for every
-// image — turning every real image into a gray placeholder in dist/.
-let imageExists = true;
-if (import.meta.env.DEV && config) {
-  const publicDir = fileURLToPath(new URL("../../../public", import.meta.url));
-  imageExists = existsSync(publicDir + config.src);
+if (!config) {
+  // Images are bundled and resolved at build now — an unknown key is a bug,
+  // so fail loudly rather than silently shipping a placeholder.
+  throw new Error(`ImageSlot: unknown imageKey "${imageKey}"`);
 }
-const shouldRender = !!config && imageExists;
 
-const focalX = config?.focalPoint?.x ?? 0.5;
-const focalY = config?.focalPoint?.y ?? 0.5;
+const focalX = config.focalPoint?.x ?? 0.5;
+const focalY = config.focalPoint?.y ?? 0.5;
 const objectPosition = `${focalX * 100}% ${focalY * 100}%`;
 
-const isDarkContext =
-  overlayClassName?.includes("bg-black") ||
-  overlayClassName?.includes("bg-gradient") ||
-  overlayClassName?.includes("foreground");
+// Full-bleed heroes get the wider ladder (and match the LCP preload widths);
+// in-content images use a smaller set so we never over-fetch.
+const widths = fill ? HERO_WIDTHS : [400, 640, 800, 1100];
+const resolvedSizes =
+  sizes ?? (fill ? "100vw" : "(min-width: 768px) 50vw, 100vw");
 ---
 
-{
-  !shouldRender && fill && (
-    <div class={cn("relative overflow-hidden", className)}>
-      <div
-        class={cn(
-          "absolute inset-0 flex flex-col items-center justify-center gap-3",
-          isDarkContext ? "bg-foreground" : "bg-surface-dark",
-        )}
-      >
-        <ImageIcon
-          className={cn(
-            "h-12 w-12",
-            isDarkContext ? "text-white/20" : "text-foreground-light",
-          )}
-          strokeWidth={1.5}
-        />
-        <span
-          class={cn(
-            "text-xs font-medium uppercase tracking-wider",
-            isDarkContext ? "text-white/20" : "text-foreground-light",
-          )}
-        >
-          {imageKey}
-        </span>
-      </div>
-      {overlayClassName && <div class={cn("absolute inset-0", overlayClassName)} />}
-    </div>
-  )
-}
-
-{
-  !shouldRender && !fill && (
-    <div
-      class={cn(
-        "flex flex-col items-center justify-center gap-3 rounded-xl bg-surface-dark border border-border",
-        className,
-      )}
-      style={`aspect-ratio: ${aspectRatio || "4/3"}`}
-    >
-      <ImageIcon className="h-10 w-10 text-foreground-light" strokeWidth={1.5} />
-      <span class="text-xs font-medium uppercase tracking-wider text-foreground-light">
-        {imageKey}
-      </span>
-    </div>
-  )
-}
-
-{
-  shouldRender && fill && (
-    <div class={cn("relative overflow-hidden", className)}>
-      <img
-        src={config.src}
-        alt={config.alt}
-        width={config.width}
-        height={config.height}
-        loading={priority ? "eager" : "lazy"}
-        decoding={priority ? "sync" : "async"}
-        class="absolute inset-0 h-full w-full object-cover"
-        style={`object-position: ${objectPosition}`}
-      />
-      {overlayClassName && <div class={cn("absolute inset-0", overlayClassName)} />}
-    </div>
-  )
-}
-
-{
-  shouldRender && !fill && (
-    <div
-      class={cn("relative overflow-hidden rounded-xl", className)}
-      style={aspectRatio ? `aspect-ratio: ${aspectRatio}` : undefined}
-    >
-      <img
-        src={config.src}
-        alt={config.alt}
-        width={config.width}
-        height={config.height}
-        loading={priority ? "eager" : "lazy"}
-        decoding={priority ? "sync" : "async"}
-        class="absolute inset-0 h-full w-full object-cover"
-        style={`object-position: ${objectPosition}`}
-      />
-      {overlayClassName && <div class={cn("absolute inset-0", overlayClassName)} />}
-    </div>
-  )
-}
+<div
+  class={cn(
+    fill ? "relative overflow-hidden" : "relative overflow-hidden rounded-xl",
+    className,
+  )}
+  style={!fill && aspectRatio ? `aspect-ratio: ${aspectRatio}` : undefined}
+>
+  <Picture
+    src={config.src}
+    alt={config.alt}
+    widths={widths}
+    sizes={resolvedSizes}
+    formats={["avif", "webp"]}
+    loading={priority ? "eager" : "lazy"}
+    decoding={priority ? "sync" : "async"}
+    fetchpriority={priority ? "high" : undefined}
+    class="absolute inset-0 h-full w-full object-cover"
+    style={`object-position: ${objectPosition}`}
+  />
+  {overlayClassName && <div class={cn("absolute inset-0", overlayClassName)} />}
+</div>

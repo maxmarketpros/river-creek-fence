@@ -281,6 +281,7 @@ function MobileMenu({
 
   return createPortal(
     <div
+      id="mobile-menu"
       className={cn(
         "fixed inset-0 top-20 z-[9999] overflow-y-auto bg-black text-white transition-opacity duration-300 lg:hidden",
         isOpen
@@ -509,6 +510,8 @@ export function Header({ solidNav = false }: { solidNav?: boolean }) {
               onClick={() => setMobileOpen(!mobileOpen)}
               className="p-2 text-white transition-colors hover:text-primary-400 lg:hidden"
               aria-label="Toggle menu"
+              aria-expanded={mobileOpen}
+              aria-controls="mobile-menu"
             >
               {mobileOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
             </button>

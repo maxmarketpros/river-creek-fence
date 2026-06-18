@@ -93,6 +93,14 @@ const visualizerFaqs: FAQItem[] = [
   ogTitle={meta.ogTitle}
   solidNav={true}
 >
+  {/* Warm up the connection to the embedded visualizer app (this page only). */}
+  <link
+    slot="head"
+    rel="preconnect"
+    href={VISUALIZER_ORIGIN}
+    crossorigin
+  />
+
   <script
     type="application/ld+json"
     is:inline
@@ -165,6 +173,7 @@ const visualizerFaqs: FAQItem[] = [
       id="fence-visualizer"
       src={VISUALIZER_URL}
       title="River Creek Fence — AI Fence Visualizer"
+      loading="lazy"
       scrolling="no"
       allow="clipboard-write; fullscreen"
       class="block w-full border-0 bg-white"

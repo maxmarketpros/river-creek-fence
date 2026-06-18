@@ -1,5 +1,7 @@
 ---
+import { Image, getImage } from "astro:assets";
 import Container from "@/components/ui/Container.astro";
+import { stock } from "@/config/images";
 import { cn } from "@/lib/utils";
 
 interface Props {
@@ -10,10 +12,19 @@ interface Props {
 
 const { imageNumbers, class: className } = Astro.props as Props;
 const numbers = imageNumbers ?? Array.from({ length: 85 }, (_, i) => i + 1);
-const images = numbers.map((n) => ({
-  src: `/images/stock/${n}.jpg`,
-  alt: `Fence project completed by River Creek Fence in Central Kansas (#${n})`,
-}));
+
+const items = await Promise.all(
+  numbers.map(async (n) => {
+    const meta = stock[n];
+    const alt = `Fence project completed by River Creek Fence in Central Kansas (#${n})`;
+    // Optimized full-size URL for the lightbox (far smaller than the 1920px source).
+    const full = await getImage({ src: meta, width: 1600, format: "webp" });
+    return { meta, alt, full: full.src };
+  }),
+);
+
+// Only the lightbox needs data across the inline-script boundary.
+const lightboxImages = items.map((it) => ({ alt: it.alt, full: it.full }));
 ---
 
 <section class={cn("section-padding", className)}>
@@ -22,19 +33,20 @@ const images = numbers.map((n) => ({
       class="columns-2 gap-3 md:columns-3 md:gap-4 lg:columns-4 [&>*]:mb-3 md:[&>*]:mb-4"
     >
       {
-        images.map((img, i) => (
+        items.map((item, i) => (
           <button
             type="button"
             class="group block w-full overflow-hidden rounded-xl border border-border focus:outline-none focus:ring-2 focus:ring-primary-500"
             data-gallery-item
             data-index={i}
-            aria-label={`View ${img.alt}`}
+            aria-label={`View ${item.alt}`}
           >
-            <img
-              src={img.src}
-              alt={img.alt}
-              width="1920"
-              height="1080"
+            <Image
+              src={item.meta}
+              alt={item.alt}
+              widths={[300, 500, 700]}
+              sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
+              format="webp"
               loading="lazy"
               decoding="async"
               class="h-auto w-full transition-transform duration-300 group-hover:scale-105"
@@ -88,7 +100,7 @@ const images = numbers.map((n) => ({
 
 <script
   is:inline
-  define:vars={{ images }}
+  define:vars={{ images: lightboxImages }}
 >
   (function () {
     const lightbox = document.getElementById("gallery-lightbox");
@@ -98,7 +110,7 @@ const images = numbers.map((n) => ({
 
     function show(i) {
       current = (i + images.length) % images.length;
-      lbImg.src = images[current].src;
+      lbImg.src = images[current].full;
       lbImg.alt = images[current].alt;
       lightbox.classList.remove("hidden");
       lightbox.classList.add("flex");

@@ -1,20 +1,37 @@
+import type { ImageMetadata } from "astro";
+import { getImage } from "astro:assets";
 import type { ImageSlotConfig } from "@/types";
 
 // ===== IMAGE MANIFEST =====
-// All stock photos live in /public/images/stock/<n>.jpg (1920x1080).
+// All stock photos live in src/assets/stock/<n>.jpg (1920x1080) and are
+// optimized at build time by astro:assets (responsive AVIF/WebP via <Picture>).
 // Each page gets two keys: `${slug}-a` (primary / hero) and `${slug}-b` (secondary).
-// Stock photos are mapped ~2 per page in the order provided by the client.
 // `stock-<n>` keys expose every photo individually for the Project Gallery.
 
-const W = 1920;
-const H = 1080;
+// Eager glob so every stock photo resolves to an ImageMetadata object at build.
+const stockModules = import.meta.glob<{ default: ImageMetadata }>(
+  "/src/assets/stock/*.{jpg,jpeg,JPG,JPEG}",
+  { eager: true },
+);
+
+/** Stock photo number (1–85) → imported, optimizable asset. */
+export const stock: Record<number, ImageMetadata> = {};
+for (const [path, mod] of Object.entries(stockModules)) {
+  const n = Number(path.match(/\/(\d+)\.(?:jpe?g)$/i)?.[1]);
+  if (n) stock[n] = mod.default;
+}
+
+/** Responsive widths for full-bleed hero images (shared with hero preload). */
+export const HERO_WIDTHS = [640, 960, 1280, 1600, 1920];
 
 function img(n: number, alt: string, focalY = 0.5): ImageSlotConfig {
+  const src = stock[n];
+  if (!src) {
+    throw new Error(`Missing stock image #${n} in src/assets/stock/`);
+  }
   return {
-    src: `/images/stock/${n}.jpg`,
+    src,
     alt,
-    width: W,
-    height: H,
     focalPoint: { x: 0.5, y: focalY },
   };
 }
@@ -81,10 +98,6 @@ const pageImages: Array<[string, number, number, string, string]> = [
 ];
 
 export const imageManifest: Record<string, ImageSlotConfig> = {
-  // ===== BRANDING =====
-  logo: { src: "/images/logo.png", alt: "River Creek Fence logo", width: 500, height: 393 },
-  "logo-white": { src: "/images/logo.png", alt: "River Creek Fence logo", width: 500, height: 393 },
-
   // ===== HOMEPAGE =====
   "hero-home": img(63, "Decorative ornamental iron fence at a Central Kansas home", 0.5),
   "about-preview": img(38, "White vinyl fence and finished workmanship at a Central Kansas home", 0.45),
@@ -110,4 +123,30 @@ for (let n = 1; n <= 85; n++) {
     n,
     `Fence project completed by River Creek Fence in Central Kansas (#${n})`,
   );
+}
+
+/**
+ * Resolve the optimized LCP hero image for a manifest key and return a
+ * `<link rel="preload">`-ready descriptor. AVIF is preloaded because it's what
+ * the <Picture> serves to the majority of browsers; the `type` lets the rest
+ * skip the preload so it's never wasted. Widths/sizes mirror what `ImageSlot`
+ * renders for a `fill` hero, so the preloaded asset is the one actually used.
+ */
+export async function getHeroPreload(imageKey: string) {
+  const config = imageManifest[imageKey];
+  if (!config) {
+    throw new Error(`getHeroPreload: unknown imageKey "${imageKey}"`);
+  }
+  const optimized = await getImage({
+    src: config.src,
+    widths: HERO_WIDTHS,
+    sizes: "100vw",
+    format: "avif",
+  });
+  return {
+    href: optimized.src,
+    imagesrcset: optimized.srcSet.attribute,
+    imagesizes: "100vw",
+    type: "image/avif",
+  };
 }

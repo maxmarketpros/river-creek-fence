@@ -7,6 +7,10 @@ import { siteConfig } from "./src/config/site.ts";
 export default defineConfig({
   site: siteConfig.url,
   output: "static",
+  // "ignore" so the site's no-trailing-slash internal links (href="/about")
+  // resolve without a 404/redirect. Canonicals are still normalized to the
+  // trailing-slash form (see src/lib/metadata.ts) so they match the sitemap
+  // and the directory URL Netlify serves — no duplicate-content ambiguity.
   trailingSlash: "ignore",
   build: { format: "directory" },
   integrations: [

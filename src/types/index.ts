@@ -1,8 +1,7 @@
 export interface ImageSlotConfig {
-  src: string;
+  /** Imported asset (astro:assets) — carries width/height/format for optimization. */
+  src: import("astro").ImageMetadata;
   alt: string;
-  width: number;
-  height: number;
   focalPoint?: { x: number; y: number };
 }
 

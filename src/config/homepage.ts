@@ -1,8 +1,8 @@
 export const homepageContent = {
   hero: {
     heading: {
-      main: "Fence Company in Haven, KS",
-      location: "Serving Reno County & Central Kansas",
+      main: "Fence Company in",
+      location: "Central Kansas",
     },
     subtitle:
       "Residential, farm, ranch, and commercial fencing built by a Central Kansas crew with real farm experience. Free estimates, honest pricing, and a 5-year warranty.",
@@ -77,6 +77,84 @@ export const homepageContent = {
     heading: "Fence Questions, Answered",
     subtitle:
       "A few of the things Central Kansas property owners ask us most.",
+  },
+  fenceTypes: {
+    eyebrow: "Fence Styles",
+    heading: "Find the Right Fence for Your Property",
+    subtitle:
+      "Privacy, ranch, livestock, or ornamental — explore the styles we build most across Central Kansas.",
+    items: [
+      {
+        slug: "cedar-privacy-fence-installation",
+        label: "Cedar Privacy",
+        imageKey: "cedar-privacy-fence-installation-hero",
+        icon: "TreePine",
+      },
+      {
+        slug: "wood-fence-installation",
+        label: "Wood",
+        imageKey: "wood-fence-installation-hero",
+        icon: "Fence",
+      },
+      {
+        slug: "vinyl-fence-installation",
+        label: "Vinyl",
+        imageKey: "vinyl-fence-installation-hero",
+        icon: "PanelsTopLeft",
+      },
+      {
+        slug: "chain-link-fence-installation",
+        label: "Chain Link",
+        imageKey: "chain-link-fence-installation-hero",
+        icon: "Grid3x3",
+      },
+      {
+        slug: "wrought-iron-fence-installation",
+        label: "Ornamental Iron",
+        imageKey: "wrought-iron-fence-installation-hero",
+        icon: "Crown",
+      },
+      {
+        slug: "split-rail-fence-installation",
+        label: "Split Rail",
+        imageKey: "split-rail-fence-installation-hero",
+        icon: "Trees",
+      },
+      {
+        slug: "four-rail-horse-fence-installation",
+        label: "Horse Fence",
+        imageKey: "four-rail-horse-fence-installation-b",
+        icon: "Fence",
+      },
+      {
+        slug: "field-fence-installation",
+        label: "Field Fence",
+        imageKey: "field-fence-installation-hero",
+        icon: "Wheat",
+      },
+      {
+        slug: "woven-wire-fence-installation",
+        label: "Woven Wire",
+        imageKey: "woven-wire-fence-installation-hero",
+        icon: "Grid2x2",
+      },
+      {
+        slug: "wood-ranch-rail-fencing",
+        label: "Ranch Rail",
+        imageKey: "wood-ranch-rail-fencing-b",
+        icon: "Fence",
+      },
+    ],
+  },
+  visualizer: {
+    eyebrow: "Free AI Tool",
+    heading: {
+      line1: "See Your New Fence",
+      line2: "Before We Build It",
+    },
+    text: "Upload a photo of your yard, pick a fence style, and our AI visualizer shows you exactly how it'll look — in seconds, free, no sign-up.",
+    points: ["Upload a photo", "Pick a style", "See it instantly"],
+    cta: { label: "Try the Fence Visualizer", href: "/fence-visualizer" },
   },
   cta: {
     heading: "Ready to Get Started on Your Fence?",

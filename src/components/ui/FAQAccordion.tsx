@@ -15,7 +15,7 @@ export function FAQAccordion({ item, defaultOpen = false }: FAQAccordionProps) {
     <div className="border-b border-border">
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="flex w-full items-center justify-between py-5 text-left transition-colors hover:text-primary-600"
+        className="flex w-full items-center justify-between py-5 text-left transition-colors hover:text-primary-700"
         aria-expanded={isOpen}
       >
         <span className="pr-4 text-base font-semibold text-foreground md:text-lg">

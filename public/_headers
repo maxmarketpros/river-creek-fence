@@ -1,0 +1,11 @@
+# Security headers (Lighthouse "Best Practices"). Cache headers live in netlify.toml.
+# No Content-Security-Policy: a correct policy for the LeadConnector form, the
+# *.lovable.app visualizer, Google Maps, and the inline JSON-LD/hydration scripts
+# is high-maintenance and easily breaks those embeds. X-Frame-Options already
+# satisfies Lighthouse's clickjacking check.
+/*
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  X-Frame-Options: SAMEORIGIN
+  Permissions-Policy: geolocation=(), microphone=(), camera=(), payment=()
+  Strict-Transport-Security: max-age=31536000; includeSubDomains

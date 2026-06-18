@@ -5,6 +5,8 @@ import Hero from "@/components/sections/Hero.astro";
 import InfoBar from "@/components/layout/InfoBar.astro";
 import SplitSection from "@/components/sections/SplitSection.astro";
 import ServiceGrid from "@/components/sections/ServiceGrid.astro";
+import FenceTypesGrid from "@/components/sections/FenceTypesGrid.astro";
+import FenceVisualizerCallout from "@/components/sections/FenceVisualizerCallout.astro";
 import ProcessGrid from "@/components/sections/ProcessGrid.astro";
 import ReviewsGrid from "@/components/sections/ReviewsGrid.astro";
 import FAQSection from "@/components/sections/FAQSection.astro";
@@ -19,11 +21,11 @@ import { businessConfig } from "@/config/business";
 import { homepageContent } from "@/config/homepage";
 import { homepageFaqKeys } from "@/config/faqs";
 import { featuredReviews } from "@/config/reviews";
-import { imageManifest } from "@/config/images";
+import { getHeroPreload } from "@/config/images";
 
 const content = homepageContent;
 const title = `${siteConfig.name} | ${siteConfig.tagline}`;
-const heroPreload = imageManifest["hero-home"]?.src;
+const heroPreload = await getHeroPreload("hero-home");
 const phoneCta = {
   label: `Call ${businessConfig.phone}`,
   href: `tel:${businessConfig.phoneRaw}`,
@@ -33,7 +35,7 @@ const phoneCta = {
 <Layout
   title={title}
   description={siteConfig.description}
-  canonical={siteConfig.url}
+  canonical={`${siteConfig.url}/`}
   ogTitle={title}
   preloadImage={heroPreload}
 >
@@ -46,6 +48,7 @@ const phoneCta = {
     imagePosition="right"
     badge={content.aboutPreview.badge}
     imageAspect="4/5"
+    decor
   >
     <SectionHeading
       eyebrow={content.aboutPreview.eyebrow}
@@ -76,12 +79,19 @@ const phoneCta = {
   {/* Services */}
   <ServiceGrid limit={6} bgColor="surface" />
 
+  {/* Fence Types */}
+  <FenceTypesGrid />
+
+  {/* Fence Visualizer callout */}
+  <FenceVisualizerCallout />
+
   {/* Standards */}
   <SplitSection
     imageKey={content.standards.image}
     imagePosition="left"
     badge={content.standards.badge}
     imageAspect="4/5"
+    decor
   >
     <SectionHeading
       eyebrow={content.standards.eyebrow}
@@ -124,6 +134,7 @@ const phoneCta = {
     heading={content.faq.heading}
     subtitle={content.faq.subtitle}
     faqKeys={homepageFaqKeys}
+    decor
   />
 
   {/* CTA */}

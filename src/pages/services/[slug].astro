@@ -14,7 +14,7 @@ import Container from "@/components/ui/Container.astro";
 import Button from "@/components/ui/Button.astro";
 import { services } from "@/config/services";
 import { businessConfig } from "@/config/business";
-import { imageManifest } from "@/config/images";
+import { getHeroPreload } from "@/config/images";
 import { generatePageMetadata } from "@/lib/metadata";
 import {
   generateServiceSchema,
@@ -62,7 +62,7 @@ const faqItems = service.faqs.map((f, i) => ({
   answer: f.answer,
 }));
 
-const heroPreload = imageManifest[`${service.slug}-hero`]?.src;
+const heroPreload = await getHeroPreload(`${service.slug}-hero`);
 ---
 
 <Layout

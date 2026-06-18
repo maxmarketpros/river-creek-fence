@@ -4,6 +4,11 @@ import "@fontsource/plus-jakarta-sans/400.css";
 import "@fontsource/plus-jakarta-sans/500.css";
 import "@fontsource/plus-jakarta-sans/600.css";
 import "@fontsource/plus-jakarta-sans/700.css";
+// Build-hashed URLs for the two above-the-fold weights (400 body, 700 headings),
+// so the preloads below never go stale when the dependency updates. Preloading
+// 700 prevents the bold hero H1 from reflowing (CLS) when the font swaps in.
+import jakarta400 from "@fontsource/plus-jakarta-sans/files/plus-jakarta-sans-latin-400-normal.woff2?url";
+import jakarta700 from "@fontsource/plus-jakarta-sans/files/plus-jakarta-sans-latin-700-normal.woff2?url";
 
 import { Header } from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer.astro";
@@ -20,7 +25,13 @@ interface Props {
   ogImage?: string;
   ogTitle?: string;
   noindex?: boolean;
-  preloadImage?: string;
+  /** Optimized LCP hero image to preload (resolved via getImage on the page). */
+  preloadImage?: {
+    href: string;
+    imagesrcset?: string;
+    imagesizes?: string;
+    type?: string;
+  };
   /** Force the nav into its solid (black) state from the top — for light-hero pages. */
   solidNav?: boolean;
 }
@@ -80,16 +91,42 @@ const websiteSchema = generateWebsiteSchema();
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <link rel="manifest" href="/manifest.json" />
 
+    {/* Preload the above-the-fold font weights (400 body, 700 headings),
+        hash-safe via Vite ?url. crossorigin is required even same-origin or
+        the font double-downloads. */}
+    <link
+      rel="preload"
+      as="font"
+      type="font/woff2"
+      href={jakarta400}
+      crossorigin="anonymous"
+    />
+    <link
+      rel="preload"
+      as="font"
+      type="font/woff2"
+      href={jakarta700}
+      crossorigin="anonymous"
+    />
+
+    {/* Warm up connections to the third-party embed origins (LeadConnector
+        quote form). The Lovable visualizer origin is preconnected per-page. */}
+    <link rel="preconnect" href="https://link.msgsndr.com" crossorigin />
+    <link rel="preconnect" href="https://api.leadconnectorhq.com" crossorigin />
+
     {/* DNS prefetch for lazy-loaded map embeds */}
     <link rel="dns-prefetch" href="https://www.google.com" />
 
-    {/* Optional LCP image preload */}
+    {/* Optional LCP image preload (optimized hero from astro:assets) */}
     {
       preloadImage && (
         <link
           rel="preload"
           as="image"
-          href={preloadImage}
+          type={preloadImage.type}
+          href={preloadImage.href}
+          imagesrcset={preloadImage.imagesrcset}
+          imagesizes={preloadImage.imagesizes}
           fetchpriority="high"
         />
       )
@@ -136,7 +173,7 @@ const websiteSchema = generateWebsiteSchema();
     >
       Skip to main content
     </a>
-    <Header client:load solidNav={solidNav} />
+    <Header client:idle solidNav={solidNav} />
     <main id="main-content" class="flex-1">
       <slot />
     </main>

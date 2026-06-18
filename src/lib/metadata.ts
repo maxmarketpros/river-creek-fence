@@ -21,7 +21,11 @@ export function generatePageMetadata({
   path = "",
   ogImage,
 }: PageMetadataOptions): PageMeta {
-  const canonical = `${siteConfig.url}${path}`;
+  // Canonical must match the trailing-slash form the sitemap and Netlify serve
+  // (directory build → /about/). Normalize to exactly one trailing slash so the
+  // canonical never points at a URL that 301-redirects.
+  const normalizedPath = !path || path === "/" ? "/" : `${path.replace(/\/+$/, "")}/`;
+  const canonical = `${siteConfig.url}${normalizedPath}`;
   return {
     title,
     description,
